@@ -1,0 +1,26 @@
+
+
+<button class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
+<button class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</button>
+
+{{auth.authenticated()}}
+
+<br />
+<br />
+<br />
+<button (click)="securedPing()">authbutton</button>
+
+<div class="hi">what up</div>
+
+<br />
+
+
+
+<br />
+
+
+<a [routerLink]="['Home']">Home</a>
+beforeoutlet<br />
+<div class="hllu">
+    <router-outlet></router-outlet>
+</div>
