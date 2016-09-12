@@ -9,7 +9,7 @@ export class Auth {
 
     constructor() {
         //un comment to auth while routing enabled
-        debugger
+        //debugger
         this.lock.on('authenticated', (authResult) => {
             localStorage.setItem('id_token', authResult.idToken);
         });

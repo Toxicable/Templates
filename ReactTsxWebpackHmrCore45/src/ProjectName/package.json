@@ -1,0 +1,34 @@
+{
+  "name": "projectname",
+  "version": "1.0.0",
+  "description": "Tempalte project for React with Core on Net45 bundled with ",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "node server.js"
+  },
+  "author": "Fabian Wiles",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0.20",
+    "babel-eslint": "^4.1.3",
+    "babel-loader": "^6.0.1",
+    "babel-preset-es2015": "^6.0.15",
+    "babel-preset-react": "^6.0.15",
+    "babel-preset-stage-0": "^6.0.15",
+    "eslint": "^1.10.3",
+    "eslint-plugin-react": "^3.6.2",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.22.0",
+    "raw-loader": "^0.5.1",
+    "react-hot-loader": "^3.0.0-beta.2",
+    "ts-loader": "^0.8.2",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.12.1",
+    "webpack-notifier": "^1.4.0"
+  }
+}
