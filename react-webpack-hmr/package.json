@@ -1,0 +1,33 @@
+{
+  "name": "template-react",
+  "version": "1.0.0",
+  "description": "Template project for react with HMR",
+  "scripts": {
+    "start": "node server.js",
+    "lint": "eslint src"
+  },
+  "author": "Fabian Wiles",
+  "devDependencies": {
+    "babel-core": "^6.0.20",
+    "babel-eslint": "^4.1.3",
+    "babel-loader": "^6.0.1",
+    "babel-preset-es2015": "^6.0.15",
+    "babel-preset-react": "^6.0.15",
+    "babel-preset-stage-0": "^6.0.15",
+    "eslint": "^1.10.3",
+    "eslint-plugin-react": "^3.6.2",
+    "react-hot-loader": "^1.3.0",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.1",
+    "style-loader": "^0.13.1",
+    "css-loader": "^0.25.0",
+    "sass-loader": "^4.0.2",
+    "node-sass": "^3.10.0"
+  },
+  "dependencies": {
+    "material-ui": "^0.15.4",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "react-router": "^2.8.1"
+  }
+}

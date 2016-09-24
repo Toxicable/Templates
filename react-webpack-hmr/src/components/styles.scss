@@ -1,0 +1,20 @@
+$card-shadow: 5px 5px 5px #888888;
+
+body{
+  margin:0;
+  font-family:Roboto, sans-serif;
+}
+
+.task-card-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.task-card__item{
+  background-color: lightblue;
+  width:250px;
+  padding: 5px;
+  margin: 5px;
+  box-shadow: $card-shadow;
+}

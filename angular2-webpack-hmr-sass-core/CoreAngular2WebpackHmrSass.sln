@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{27B79B67-A048-490F-9E2F-775B2C5A73E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EED7C5B5-1D99-48C9-941D-6AAA65EF155C}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CoreAngular2WebpackHmrSass.Web", "src\CoreAngular2WebpackHmrSass.Web\CoreAngular2WebpackHmrSass.Web.xproj", "{662F8548-7BBF-4471-B11E-99BB515FDD28}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CoreAngular2WebpackHmrSass.Core", "src\CoreAngular2WebpackHmrSass.Core\CoreAngular2WebpackHmrSass.Core.xproj", "{302F609C-B7B5-4245-98F0-97796E7E3B32}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CoreAngular2WebpackHmrSass.Data", "src\CoreAngular2WebpackHmrSass.Data\CoreAngular2WebpackHmrSass.Data.xproj", "{0205CB80-B493-4A80-9856-8442C424885E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{662F8548-7BBF-4471-B11E-99BB515FDD28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{662F8548-7BBF-4471-B11E-99BB515FDD28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{662F8548-7BBF-4471-B11E-99BB515FDD28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{662F8548-7BBF-4471-B11E-99BB515FDD28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{302F609C-B7B5-4245-98F0-97796E7E3B32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{302F609C-B7B5-4245-98F0-97796E7E3B32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{302F609C-B7B5-4245-98F0-97796E7E3B32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{302F609C-B7B5-4245-98F0-97796E7E3B32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0205CB80-B493-4A80-9856-8442C424885E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0205CB80-B493-4A80-9856-8442C424885E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0205CB80-B493-4A80-9856-8442C424885E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0205CB80-B493-4A80-9856-8442C424885E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{662F8548-7BBF-4471-B11E-99BB515FDD28} = {27B79B67-A048-490F-9E2F-775B2C5A73E8}
+		{302F609C-B7B5-4245-98F0-97796E7E3B32} = {27B79B67-A048-490F-9E2F-775B2C5A73E8}
+		{0205CB80-B493-4A80-9856-8442C424885E} = {27B79B67-A048-490F-9E2F-775B2C5A73E8}
+	EndGlobalSection
+EndGlobal
