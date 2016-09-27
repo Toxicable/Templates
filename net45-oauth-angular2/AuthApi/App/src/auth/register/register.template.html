@@ -1,0 +1,25 @@
+<h1>Register</h1>
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <div>
+        <label>userName</label>
+        <input type="text" formControlName="userName" />
+        <div
+                *ngIf="registerForm.controls.userName.errors && registerForm.controls.userName.touched" >
+            This field is required!
+        </div>
+    </div>
+
+   <div>
+       <label>password</label>
+       <input type="text" formControlName="password" />
+   </div>
+
+    <div>
+        <label>confirmPassword</label>
+        <input type="text" formControlName="confirmPassword" />
+    </div>
+
+    <button type="submit" [disabled]="!registerForm.valid" >Submit</button>
+</form>
