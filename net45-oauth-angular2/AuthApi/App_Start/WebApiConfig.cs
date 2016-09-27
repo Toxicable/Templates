@@ -3,7 +3,7 @@ using System.Net.Http.Formatting;
 using System.Web.Http;
 using Newtonsoft.Json.Serialization;
 
-namespace TimeSheeting.Api
+namespace AuthApi
 {
     public static class WebApiConfig
     {

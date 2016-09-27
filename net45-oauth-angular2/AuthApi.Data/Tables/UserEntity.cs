@@ -1,17 +1,12 @@
-﻿using System.Data.Entity;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using System.Collections.Generic;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Collections;
-using System.Collections.Generic;
 
-namespace TimeSheeting.Api.Data.Tables
+namespace AuthApi.Data.Tables
 {
     public class UserEntity : IdentityUser
     {
 
-
+        public ICollection<RefreshTokenEntity> RefreshTokens { get; set; }
     }
 
     public enum UserRoles

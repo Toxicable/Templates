@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Web.Http;
+using AuthApi;
+using AuthApi.Api.Auth.Providers;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using TimeSheeting.Api;
-using TimeSheeting.Api.Providers;
 
 [assembly: OwinStartup(typeof(Startup))]
-namespace TimeSheeting.Api
+namespace AuthApi
 {
     public class Startup
     {
@@ -29,7 +29,8 @@ namespace TimeSheeting.Api
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/api/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = new SimpleAuthorizationServerProvider()
+                Provider = new SimpleAuthorizationServerProvider(),
+                RefreshTokenProvider = new SimpleRefreshTokenProvider()
             };
             
             app.UseOAuthAuthorizationServer(OAuthServerOptions);

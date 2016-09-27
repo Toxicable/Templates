@@ -2,7 +2,7 @@
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 
-namespace TimeSheeting.Api.Auth.Controllers
+namespace AuthApi.Api.Auth.Controllers
 {
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController

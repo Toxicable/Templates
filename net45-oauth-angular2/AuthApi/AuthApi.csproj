@@ -159,6 +159,8 @@
     <Content Include="wwwroot\vendor.6f6eb84a1bbb0c0b6569.js" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Auth\AuthHelper.cs" />
+    <Compile Include="Api\Auth\Providers\SimpleRefreshTokenProvider.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Api\Auth\AuthRepository.cs" />
     <Compile Include="Api\Auth\Controllers\AccountController.cs" />
@@ -203,8 +205,8 @@
     <TypeScriptCompile Include="App\src\auth\auth.component.ts" />
     <TypeScriptCompile Include="App\src\auth\auth.module.ts" />
     <TypeScriptCompile Include="App\src\auth\auth.service.ts" />
-    <TypeScriptCompile Include="App\src\auth\login\login.component.ts" />
-    <TypeScriptCompile Include="App\src\auth\models\login-model.ts" />
+    <TypeScriptCompile Include="App\src\auth\login\register.component.ts" />
+    <TypeScriptCompile Include="App\src\auth\models\register-model.ts" />
     <TypeScriptCompile Include="App\src\main.ts" />
     <TypeScriptCompile Include="App\src\polyfills.ts" />
     <TypeScriptCompile Include="App\src\vendor.ts" />

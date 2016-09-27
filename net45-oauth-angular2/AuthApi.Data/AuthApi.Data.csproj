@@ -64,6 +64,8 @@
     <Compile Include="Entity.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tables\ApiClientEntity.cs" />
+    <Compile Include="Tables\RefreshTokenEntity.cs" />
     <Compile Include="Tables\UserEntity.cs" />
   </ItemGroup>
   <ItemGroup>

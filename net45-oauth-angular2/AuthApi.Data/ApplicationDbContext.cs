@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Annotations;
-using System.Linq;
-using System.Web;
-using TimeSheeting.Api.Data.Tables;
+using AuthApi.Data.Tables;
+using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace TimeSheeting.Api.Data
+namespace AuthApi.Data
 {
     public class ApplicationDbContext : IdentityDbContext<UserEntity>
     {
@@ -17,8 +14,18 @@ namespace TimeSheeting.Api.Data
         {
         }
         
+        public DbSet<ApiClientEntity> ApiClients { get; set; }
+        public DbSet<RefreshTokenEntity> RefreshTokens { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<ApiClientEntity>().ToTable("ApiClients");
+            modelBuilder.Entity<RefreshTokenEntity>().ToTable("RefreshTokens");
+
+
+
+
             modelBuilder.Entity<UserEntity>().ToTable("Users");
             modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
             modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");

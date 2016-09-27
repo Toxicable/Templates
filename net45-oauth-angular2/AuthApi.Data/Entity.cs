@@ -1,4 +1,4 @@
-﻿namespace TimeSheeting.Api.Data
+﻿namespace AuthApi.Data
 {
     public class Entity
     { 

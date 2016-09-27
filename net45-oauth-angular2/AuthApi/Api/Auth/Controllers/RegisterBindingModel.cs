@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TimeSheeting.Api.Auth.Controllers
+namespace AuthApi.Api.Auth.Controllers
 {
     public class RegisterBindingModel
     {

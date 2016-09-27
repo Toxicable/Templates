@@ -2,8 +2,7 @@
 
 @Component({
     selector: 'my-app',
-    template: '<my-auth></my-auth>Hello'
+    templateUrl: './app.component.html'
 })
 export class AppComponent {
-    
 }
