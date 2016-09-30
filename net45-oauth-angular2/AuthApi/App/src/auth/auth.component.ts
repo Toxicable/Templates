@@ -7,4 +7,7 @@ import { LoginComponent } from './login/login.component'
     templateUrl: './auth.component.html'
 })
 export class AuthComponent {
+    //constructor(private authService: AuthService) { }
+
+   // private authService: AuthService = new AuthService();
 }

@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Linq;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using AuthApi;
 using AuthApi.Api.Auth.Providers;
 using Microsoft.Owin;
+using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.Owin.StaticFiles;
+using Newtonsoft.Json.Serialization;
 using Owin;
 
 [assembly: OwinStartup(typeof(Startup))]
@@ -13,13 +19,36 @@ namespace AuthApi
     {
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration config = new HttpConfiguration();
+            var config = new HttpConfiguration();
 
+            ConfigureApi(config);
             ConfigureOAuth(app);
 
-            WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
+
+            app.UseFileServer(new FileServerOptions
+            {
+                RequestPath = new PathString(string.Empty),
+                FileSystem = new PhysicalFileSystem("./"),
+                EnableDirectoryBrowsing = true,
+            });
+
+        }
+
+        public void ConfigureApi(HttpConfiguration config)
+        {
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
 
         public void ConfigureOAuth(IAppBuilder app)

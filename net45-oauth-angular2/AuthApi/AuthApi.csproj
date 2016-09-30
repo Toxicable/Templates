@@ -83,6 +83,10 @@
       <HintPath>..\packages\Microsoft.Owin.Cors.3.0.1\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Owin.FileSystems, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.FileSystems.3.0.1\lib\net45\Microsoft.Owin.FileSystems.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
       <Private>True</Private>
@@ -97,6 +101,10 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.StaticFiles, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.StaticFiles.3.0.1\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -153,15 +161,14 @@
     <Content Include="App\src\auth\login\login.template.html" />
     <Content Include="App\src\index.html" />
     <Content Include="Web.config" />
-    <Content Include="wwwroot\app.6f6eb84a1bbb0c0b6569.js" />
+    <Content Include="wwwroot\app.7409e3c86ecadc6e6471.js" />
     <Content Include="wwwroot\index.html" />
-    <Content Include="wwwroot\polyfills.6f6eb84a1bbb0c0b6569.js" />
-    <Content Include="wwwroot\vendor.6f6eb84a1bbb0c0b6569.js" />
+    <Content Include="wwwroot\polyfills.7409e3c86ecadc6e6471.js" />
+    <Content Include="wwwroot\vendor.7409e3c86ecadc6e6471.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Auth\AuthHelper.cs" />
     <Compile Include="Api\Auth\Providers\SimpleRefreshTokenProvider.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Api\Auth\AuthRepository.cs" />
     <Compile Include="Api\Auth\Controllers\AccountController.cs" />
     <Compile Include="Api\Auth\Controllers\ManageController.cs" />
@@ -172,20 +179,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="package.json" />
     <Content Include="App\typings\globals\core-js\typings.json" />
     <Content Include="App\typings\globals\jasmine\typings.json" />
     <Content Include="App\typings\globals\node\typings.json" />
-    <Content Include="tsconfig.json" />
+    <Content Include="App\package.json" />
+    <Content Include="App\tsconfig.json" />
+    <Content Include="App\typings.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="wwwroot\app.6f6eb84a1bbb0c0b6569.js.map" />
-    <Content Include="wwwroot\polyfills.6f6eb84a1bbb0c0b6569.js.map" />
-    <Content Include="wwwroot\vendor.6f6eb84a1bbb0c0b6569.js.map" />
+    <Content Include="wwwroot\app.7409e3c86ecadc6e6471.js.map" />
+    <Content Include="wwwroot\polyfills.7409e3c86ecadc6e6471.js.map" />
+    <Content Include="wwwroot\vendor.7409e3c86ecadc6e6471.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\src\auth\forget-password\" />
@@ -202,10 +210,13 @@
   <ItemGroup>
     <TypeScriptCompile Include="App\src\app\app.component.ts" />
     <TypeScriptCompile Include="App\src\app\app.module.ts" />
+    <TypeScriptCompile Include="App\src\app\app.routing.ts" />
     <TypeScriptCompile Include="App\src\auth\auth.component.ts" />
     <TypeScriptCompile Include="App\src\auth\auth.module.ts" />
     <TypeScriptCompile Include="App\src\auth\auth.service.ts" />
-    <TypeScriptCompile Include="App\src\auth\login\register.component.ts" />
+    <TypeScriptCompile Include="App\src\auth\auth.routing.ts" />
+    <TypeScriptCompile Include="App\src\auth\login\login.component.ts" />
+    <TypeScriptCompile Include="App\src\auth\models\login-model.ts" />
     <TypeScriptCompile Include="App\src\auth\models\register-model.ts" />
     <TypeScriptCompile Include="App\src\main.ts" />
     <TypeScriptCompile Include="App\src\polyfills.ts" />

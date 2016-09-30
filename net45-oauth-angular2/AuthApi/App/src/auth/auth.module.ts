@@ -7,19 +7,20 @@ import { AuthService }   from './auth.service';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component'
 import { RegisterComponent} from "./register/register.component";
-import {Http} from "@angular/http";
+import {Http, HttpModule} from "@angular/http";
 
 @NgModule({
     imports: [
         CommonModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpModule
     ],
     declarations: [
         AuthComponent,
         LoginComponent,
         RegisterComponent
     ],
-    providers: [AuthService, Http],
+    providers: [AuthService],
     exports: [AuthComponent],
     bootstrap: [AuthComponent]
 })

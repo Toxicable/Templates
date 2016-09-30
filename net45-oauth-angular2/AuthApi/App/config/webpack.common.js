@@ -1,10 +1,12 @@
 /**
  * Created by Fabian on 24/09/2016.
  */
-var webpack = require('webpack');
+var webpack           = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var helpers = require('./helpers');
+var helpers           = require('./helpers');
+//var precss            = require('precss');
+//var autoprefixer      = require('autoprefixer');
 
 module.exports = {
     entry: {
@@ -21,28 +23,34 @@ module.exports = {
         loaders: [
             {
                 test: /\.ts$/,
-                loaders: ['awesome-typescript-loader', 'angular2-template-loader']
+                loaders: ['awesome-typescript-loader', 'angular2-template-loader'],
+                exclude: /node_modules/
             },
             {
                 test: /\.html$/,
-                loader: 'html'
+                loader: 'html',
+                exclude: /node_modules/
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-                loader: 'file?name=assets/[name].[hash].[ext]'
+                loader: 'file?name=assets/[name].[hash].[ext]',
+                exclude: /node_modules/
             },
-            {
-                test: /\.css$/,
-                exclude: helpers.root('src', 'app'),
-                loader: ExtractTextPlugin.extract('style', 'css?sourceMap')
-            },
-            {
-                test: /\.css$/,
-                include: helpers.root('src', 'app'),
-                loader: 'raw'
-            }
+           // {
+            //    test: /\.scss$/,
+            //    exclude: /node_modules/,
+            //    loader: 'to-string!css-loader!postcss-loader!sass-loader'
+                //loader: ExtractTextPlugin.extract('to-string','css-loader','postcss-loader','sass-loader')
+            //}
         ]
     },
+
+  //  postcss: function () {
+  //      return {
+   //         defaults: [precss, autoprefixer],
+   //         cleaner:  [autoprefixer({ browsers: [] })]
+  //      };
+  //  },
 
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({

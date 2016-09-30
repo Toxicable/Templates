@@ -11,7 +11,7 @@ var helpers = require('./helpers');
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 var path = require('path');
-var wwwroot = path.resolve(__dirname, '../../wwwroot');
+var wwwroot = path.resolve(__dirname, '../../');
 
 module.exports = webpackMerge(commonConfig, {
     devtool: 'source-map',

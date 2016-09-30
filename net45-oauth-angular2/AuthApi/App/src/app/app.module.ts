@@ -7,15 +7,23 @@ import {AppComponent} from "./app.component";
 import {routing} from "./app.routing";
 import {AuthModule} from "../auth/auth.module";
 import {AuthService} from "../auth/auth.service";
+import {HttpModule, Http} from "@angular/http";
+import {HomeComponent} from "./home/home.component";
+import {NotFoundComponent} from "./not-found/not-found.component";
 
 @NgModule({
     imports:      [
         BrowserModule ,
         AuthModule,
-        routing
+        routing,
+        HttpModule
     ],
-    declarations: [ AppComponent    ],
-    providers:    [ AuthService    ],
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        NotFoundComponent
+    ],
+    providers:    [ AuthService ],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

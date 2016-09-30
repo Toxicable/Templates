@@ -4,25 +4,23 @@
 
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-import { LoginComponent }      from '../auth/login/login.component';
-import {RegisterComponent} from "../auth/register/register.component";
-import {ReactiveFormsModule} from "@angular/forms";
-import {AuthService} from "../auth/auth.service";
+import {HomeComponent} from "./home/home.component";
+import {NotFoundComponent} from "./not-found/not-found.component";
 
 const appRoutes: Routes = [
     {
         path: '',
-        component: LoginComponent
+        component: HomeComponent
     },
     {
-        path: 'login',
-        component: LoginComponent
+        path: 'home',
+        component: HomeComponent
     },
     {
-        path: 'register',
-        component: RegisterComponent
+        path: '**',
+        component: NotFoundComponent
     }
+
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
