@@ -4,7 +4,7 @@ import { LoginComponent } from './login/login.component'
 
 @Component({
     selector: 'my-auth',
-    templateUrl: './auth.component.html'
+    template: '<router-outlet></router-outlet>'
 })
 export class AuthComponent {
     //constructor(private authService: AuthService) { }

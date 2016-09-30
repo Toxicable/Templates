@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using AuthApi.Data.Tables;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Owin.Security;
@@ -15,7 +16,9 @@ namespace AuthApi.Api.Auth.Providers
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
 
-                string clientId = string.Empty;
+            var requestAddrtess = HttpContext.Current.Request.UrlReferrer;
+
+            string clientId = string.Empty;
                 string clientSecret = string.Empty;
                 ApiClientEntity client = null;
 

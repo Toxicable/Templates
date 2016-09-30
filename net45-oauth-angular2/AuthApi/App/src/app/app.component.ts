@@ -2,7 +2,7 @@
 
 @Component({
     selector: 'my-app',
-    templateUrl: './app.component.html',
+    template: '<navigation></navigation><router-outlet></router-outlet>',
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./app.component.scss']
 })

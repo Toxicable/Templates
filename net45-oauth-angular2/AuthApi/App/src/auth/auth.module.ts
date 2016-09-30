@@ -8,12 +8,14 @@ import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component'
 import { RegisterComponent} from "./register/register.component";
 import { HttpModule} from "@angular/http";
+import { authRouting } from './auth.routing'
 
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        HttpModule
+        HttpModule,
+        authRouting
     ],
     declarations: [
         AuthComponent,
@@ -21,7 +23,7 @@ import { HttpModule} from "@angular/http";
         RegisterComponent
     ],
     providers: [AuthService],
-    exports: [AuthComponent],
-    bootstrap: [AuthComponent]
+    //exports: [AuthComponent],
+    //bootstrap: [AuthComponent]
 })
 export class AuthModule { }

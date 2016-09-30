@@ -5,8 +5,7 @@
     <div>
         <label>userName</label>
         <input type="text" formControlName="userName" />
-        <div
-                *ngIf="registerForm.controls.userName.errors && registerForm.controls.userName.touched" >
+        <div *ngIf="registerForm.controls.userName.errors && registerForm.controls.userName.touched" >
             This field is required!
         </div>
     </div>

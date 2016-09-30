@@ -23,7 +23,6 @@ export class AuthService {
 
         let data = this.encodeObjectToParams(user);
 
-
         this.getTokens(data, "password").then(res => {
             localStorage.setItem("access_token", res.access_token);
             localStorage.setItem("refresh_token", res.refresh_token);
@@ -64,11 +63,6 @@ export class AuthService {
             .toPromise()
             .then((res) => res.json() as LoginResponse)
             .catch(this.handleError);
-    }
-    private extractData(res: Response) {
-        console.log(res);
-        let body = res.json();
-        return body.data || { };
     }
 
 
