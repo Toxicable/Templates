@@ -162,7 +162,7 @@
     <Content Include="App\src\index.html" />
     <Content Include="Web.config" />
     <Content Include="wwwroot\app.7409e3c86ecadc6e6471.js" />
-    <Content Include="wwwroot\index.html" />
+    <Content Include="index.html" />
     <Content Include="wwwroot\polyfills.7409e3c86ecadc6e6471.js" />
     <Content Include="wwwroot\vendor.7409e3c86ecadc6e6471.js" />
   </ItemGroup>

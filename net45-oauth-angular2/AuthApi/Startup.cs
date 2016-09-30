@@ -6,6 +6,7 @@ using System.Web.Http;
 using AuthApi;
 using AuthApi.Api.Auth.Providers;
 using Microsoft.Owin;
+using Microsoft.Owin.Extensions;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Owin.StaticFiles;
@@ -26,14 +27,8 @@ namespace AuthApi
 
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
-
-            app.UseFileServer(new FileServerOptions
-            {
-                RequestPath = new PathString(string.Empty),
-                FileSystem = new PhysicalFileSystem("./"),
-                EnableDirectoryBrowsing = true,
-            });
-
+            
+            app.UseStageMarker(PipelineStage.MapHandler);
         }
 
         public void ConfigureApi(HttpConfiguration config)
