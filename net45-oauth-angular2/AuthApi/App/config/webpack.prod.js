@@ -1,19 +1,15 @@
-/**
- * Created by Fabian on 24/09/2016.
- */
-
-var webpack = require('webpack');
-var webpackMerge = require('webpack-merge');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var commonConfig = require('./webpack.common.js');
-var helpers = require('./helpers');
+var webpack             = require('webpack');
+var webpackMerge        = require('webpack-merge');
+var ExtractTextPlugin   = require('extract-text-webpack-plugin');
+var common              = require('./webpack.common.js');
+var helpers             = require('./helpers');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 var path = require('path');
-var wwwroot = path.resolve(__dirname, '../../');
+var wwwroot = path.resolve(__dirname, '../../wwwroot');
 
-module.exports = webpackMerge(commonConfig, {
+module.exports  = webpackMerge(common, {
     devtool: 'source-map',
 
     output: {

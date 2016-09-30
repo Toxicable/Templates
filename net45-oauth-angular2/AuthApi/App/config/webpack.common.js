@@ -1,12 +1,9 @@
-/**
- * Created by Fabian on 24/09/2016.
- */
-var webpack           = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var helpers           = require('./helpers');
-//var precss            = require('precss');
-//var autoprefixer      = require('autoprefixer');
+var webpack              = require('webpack');
+var HtmlWebpackPlugin    = require('html-webpack-plugin');
+var ExtractTextPlugin    = require('extract-text-webpack-plugin');
+var helpers              = require('./helpers');
+var precss       = require('precss');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
     entry: {
@@ -35,22 +32,22 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
                 loader: 'file?name=assets/[name].[hash].[ext]',
                 exclude: /node_modules/
-            },
-           // {
-            //    test: /\.scss$/,
-            //    exclude: /node_modules/,
-            //    loader: 'to-string!css-loader!postcss-loader!sass-loader'
+            },{
+                test: /\.scss$/,
+                exclude: /node_modules/,
+                loader: 'to-string!css-loader!postcss-loader!sass-loader'
                 //loader: ExtractTextPlugin.extract('to-string','css-loader','postcss-loader','sass-loader')
-            //}
+            }
+
         ]
     },
 
-  //  postcss: function () {
-  //      return {
-   //         defaults: [precss, autoprefixer],
-   //         cleaner:  [autoprefixer({ browsers: [] })]
-  //      };
-  //  },
+    postcss: function () {
+        return {
+             defaults: [precss, autoprefixer],
+             cleaner:  [autoprefixer({ browsers: [] })]
+        };
+    },
 
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
@@ -62,3 +59,6 @@ module.exports = {
         })
     ]
 };
+
+
+

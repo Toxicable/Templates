@@ -1,12 +1,9 @@
-/**
- * Created by Fabian on 24/09/2016.
- */
-var webpackMerge = require('webpack-merge');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var commonConfig = require('./webpack.common.js');
-var helpers = require('./helpers');
+var webpackMerge         = require('webpack-merge');
+var ExtractTextPlugin    = require('extract-text-webpack-plugin');
+var common         = require('./webpack.common.js');
+var helpers              = require('./helpers');
 
-module.exports = webpackMerge(commonConfig, {
+module.exports = webpackMerge(common, {
     devtool: 'cheap-module-eval-source-map',
 
     output: {
