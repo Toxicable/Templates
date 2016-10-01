@@ -10,6 +10,8 @@ import {HttpModule} from "@angular/http";
 import {HomeComponent} from "./home/home.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {NavigationComponent} from "./navigation/navigation.component";
+import {AlertComponent} from "./alert/alert.component";
+import {AlertService} from "./alert/alert.service";
 
 @NgModule({
     imports:      [
@@ -21,9 +23,10 @@ import {NavigationComponent} from "./navigation/navigation.component";
         AppComponent,
         HomeComponent,
         NotFoundComponent,
-        NavigationComponent
+        NavigationComponent,
+        AlertComponent
     ],
-    providers:    [ AuthService ],
+    providers:    [ AuthService, AlertService ],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

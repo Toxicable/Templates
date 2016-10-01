@@ -161,10 +161,7 @@
     <Content Include="App\src\auth\login\login.template.html" />
     <Content Include="App\src\index.html" />
     <Content Include="Web.config" />
-    <Content Include="wwwroot\app.7409e3c86ecadc6e6471.js" />
     <Content Include="index.html" />
-    <Content Include="wwwroot\polyfills.7409e3c86ecadc6e6471.js" />
-    <Content Include="wwwroot\vendor.7409e3c86ecadc6e6471.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Auth\AuthHelper.cs" />
@@ -193,15 +190,13 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="wwwroot\app.7409e3c86ecadc6e6471.js.map" />
-    <Content Include="wwwroot\polyfills.7409e3c86ecadc6e6471.js.map" />
-    <Content Include="wwwroot\vendor.7409e3c86ecadc6e6471.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\src\auth\forget-password\" />
     <Folder Include="App\src\auth\register\" />
     <Folder Include="App\src\auth\verify\" />
     <Folder Include="App_Data\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AuthApi.Data\AuthApi.Data.csproj">

@@ -3,13 +3,18 @@ import { RegisterModel } from '../models/register-model'
 import { FormGroup,    FormControl,    Validators,    FormBuilder }    from '@angular/forms';
 import {AuthService} from "../auth.service";
 import {ValidationService} from "../../app/validation/validation.service";
+import {AlertComponent} from "../../app/alert/alert.component";
+import {AlertService} from "../../app/alert/alert.service";
 
 @Component({
     selector: 'register',
     templateUrl: './register.template.html'
 })
 export class RegisterComponent  implements OnInit {
-   constructor(private formBuilder: FormBuilder, private authService: AuthService) {   }
+   constructor(private formBuilder: FormBuilder,
+               private authService: AuthService,
+    private alertService: AlertService
+   ) {   }
     registerForm: FormGroup;
 
 
@@ -29,7 +34,7 @@ export class RegisterComponent  implements OnInit {
         //TODO: find better way to do this :/
         this.authService.register(data)
             .then( x => {
-                    //TODO: Handle errors here
+                    this.alertService.sendAlert("you won :D")
                     console.log(x)
                 },
                 x => {
