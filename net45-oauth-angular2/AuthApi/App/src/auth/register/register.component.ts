@@ -2,26 +2,41 @@ import {Component, OnInit, Inject} from '@angular/core'
 import { RegisterModel } from '../models/register-model'
 import { FormGroup,    FormControl,    Validators,    FormBuilder }    from '@angular/forms';
 import {AuthService} from "../auth.service";
+import {ValidationService} from "../../app/validation/validation.service";
 
 @Component({
     selector: 'register',
     templateUrl: './register.template.html'
 })
 export class RegisterComponent  implements OnInit {
-   constructor(private formBuilder: FormBuilder){}//, private authService: AuthService) {   }
+   constructor(private formBuilder: FormBuilder, private authService: AuthService) {   }
     registerForm: FormGroup;
+
 
     ngOnInit() {
            this.registerForm = this.formBuilder.group({
-                userName: ['', Validators.required],
-               password: ['', Validators.required],
-               confirmPassword: ['', Validators.required]
+               userName: ['', [Validators.required, ValidationService.emailValidator]],
+               passwords: this.formBuilder.group({
+                   password: ['', [Validators.required, ValidationService.passwordValidator]],
+                   confirmPassword: ['', [Validators.required, ValidationService.passwordValidator]]
+               }, {validator: ValidationService.passwordComparisonValidator})
          });
     }
 
+
     onSubmit(){
         console.log(this.registerForm)
-    }
+
+        this.authService.register(this.registerForm.value)
+            .then( x => {
+            //TODO: Handle errors here
+            console.log(x)
+            },
+            x => {
+                console.log("error: " + x)
+            }
+        )
+    };
 
 
 }

@@ -71,7 +71,7 @@ namespace AuthApi.Api.Auth.Providers
                     return Task.FromResult<object>(null);
                 }
 
-                context.OwinContext.Set<string>("as:clientAllowedOrigin", client.AllowedOrigin);
+                //context.OwinContext.Set<string>("as:clientAllowedOrigin", client.AllowedOrigin);
                 context.OwinContext.Set<string>("as:clientRefreshTokenLifeTime", client.RefreshTokenLifeTime.ToString());
 
                 context.Validated();

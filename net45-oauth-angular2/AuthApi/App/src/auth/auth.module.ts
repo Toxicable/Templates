@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component'
 import { RegisterComponent} from "./register/register.component";
 import { HttpModule} from "@angular/http";
 import { authRouting } from './auth.routing'
+import {ControlMessages} from "../app/validation/control-messages.component";
 
 @NgModule({
     imports: [
@@ -20,10 +21,9 @@ import { authRouting } from './auth.routing'
     declarations: [
         AuthComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        ControlMessages
     ],
     providers: [AuthService],
-    //exports: [AuthComponent],
-    //bootstrap: [AuthComponent]
 })
 export class AuthModule { }

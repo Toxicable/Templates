@@ -13,42 +13,36 @@ export class AuthService {
 
     private baseUrl = "http://localhost:51621/api/";
 
-    encodeObjectToParams(obj: any) {
-        return Object.keys(obj)
-            .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]))
-            .join('&');
+    logout(){
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
     }
 
     login(user: LoginModel) {
 
         let data = this.encodeObjectToParams(user);
-
         this.getTokens(data, "password").then(res => {
             localStorage.setItem("access_token", res.access_token);
             localStorage.setItem("refresh_token", res.refresh_token);
         });
-
-        
     }
 
-    register(model: RegisterModel) {
-
-        let data = this.encodeObjectToParams(model);
-
-        this.postRegistration(data).then();
-        //TODO: check to make sure reg was success
-        
-    }
-
-    private postRegistration(data: string) {
-        //data should have username, password and confirmpassword
+    register(data: RegisterModel): any {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         return this.http.post(this.baseUrl + "account/register", data, options)
             .toPromise()
-            .then((res) => res.json())
+            .then((res: Response) => res.json())
             .catch(this.handleError);
     }
+
+    private encodeObjectToParams(obj: any) {
+        return Object.keys(obj)
+            .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]))
+            .join('&');
+    }
+
+
 
     private getTokens(data: string, grantType: string): Promise<LoginResponse> {
         //if you're doing my password then you need to give the username and password
@@ -66,13 +60,11 @@ export class AuthService {
     }
 
 
-    private handleError (error: any) {
-        console.log(error);
-        // In a real world app, we might use a remote logging infrastructure
-        // We'd also dig deeper into the error to get a better message
-        let errMsg = (error.message) ? error.message :
-            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errMsg); // log to console instead
-        return Promise.resolve()// .reject(errMsg);
+    private handleError (response: any) {
+        //TODO: Add logging here
+        console.log("Server Error: ")
+        console.log(response)
+
+        return response.json();
     }
 }
