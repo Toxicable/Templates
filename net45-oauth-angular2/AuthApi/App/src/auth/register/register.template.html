@@ -20,7 +20,7 @@
            <input type="text" formControlName="confirmPassword" />
             <control-messages [control]="registerForm.controls.passwords.controls.confirmPassword"></control-messages>
         </div>
-        <div *ngIf="registerForm.controls.passwords.errors.invalidCompare && registerForm.controls.passwords.touched">
+        <div *ngIf="registerForm.controls.passwords.errors?.invalidCompare && registerForm.controls.passwords.touched">
             Passwords must match
         </div>
     </div>

@@ -21,13 +21,7 @@ export class ValidationService {
         let password = group.controls['password'] as FormControl;
         let confirmPassword = group.controls['confirmPassword'] as FormControl;
 
-        if(password.touched && confirmPassword.touched){
-            group.markAsTouched()
-        }else {
-            group.markAsUntouched()
-        }
-
-        if (password.touched && confirmPassword.touched){
+        if (password.dirty && confirmPassword.dirty){
             if(password.value == confirmPassword.value){
                 return null;
             }else return { invalidCompare: true }
