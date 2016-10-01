@@ -33,7 +33,7 @@ namespace AuthApi.Api.Auth.Controllers
                 return errorResult;
             }
 
-            return Ok();
+            return Ok(new RegistrationResponse(true, userModel.UserName));
         }
 
         protected override void Dispose(bool disposing)

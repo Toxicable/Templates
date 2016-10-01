@@ -25,10 +25,8 @@ export class RegisterComponent  implements OnInit {
 
 
     onSubmit(){
-        console.log(this.registerForm)
-
         let data = Object.assign({}, this.registerForm.value, this.registerForm.value.passwords);
-        console.log(data)
+        //TODO: find better way to do this :/
         this.authService.register(data)
             .then( x => {
                     //TODO: Handle errors here
