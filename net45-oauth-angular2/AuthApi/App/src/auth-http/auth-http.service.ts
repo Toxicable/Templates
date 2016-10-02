@@ -12,17 +12,24 @@ export class AuthHttpService {
 
     private baseUrl = "http://localhost:51621/api/";
 
-    get(endpoint: any): Promise<any>{
+    get(endpoint: string): Promise<any>{
 
-        let t = this.authService.validateToken();
+        return this.authService.validateToken()
+            .then( ()=> {
+                let options = this.getHeaders();
 
-        console.log(t);
-        let options = this.getHeaders();
+                //TODO: more work here
+                return this.http.get(this.baseUrl + endpoint, options)
+                    .toPromise()
+                    .then(res => res.json())
+                    .catch(this.handleError)
+            },
+            ()=>{
+                //invalid token here
+                //TODO: let the caller know that we're gonna needa do a redirection
+            });
 
-        return this.http.get(this.baseUrl + endpoint, options)
-           .toPromise()
-           .then(res => res.json())
-           .catch(this.handleError)
+
     }
 
     post(endpoint: any, data: any): Promise<any> {
@@ -50,7 +57,6 @@ export class AuthHttpService {
         }
     }
 
-
     private handleError (response: Response) {
         //TODO: Add logging here
         console.log("Server Error: ");
@@ -60,6 +66,6 @@ export class AuthHttpService {
         let result = new AuthHttpResult();
         result.errors = res.modelState[""].map(x => x);
 
-        return result;
+        return Promise.reject("man, something went wrong here soz :/");
     }
 }
