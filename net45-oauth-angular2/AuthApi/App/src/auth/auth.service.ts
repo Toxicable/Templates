@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response} from '@angular/http';
 import { LoginModel } from './models/login-model';
 import { RegisterModel } from './models/register-model';
-import {AuthModel} from "../auth-http/models/auth-model";
+import {AuthModel} from "./models/auth-model";
 
 @Injectable()
 export class AuthService {
@@ -19,6 +19,16 @@ export class AuthService {
 
     isAuthenticated(): boolean{
         return this.validateToken()
+    }
+
+    isInRole(role: string){
+       let model = this.getModel();
+
+        if(model.hasOwnProperty("role")){
+            //TODO: Implement roles server side
+            //return role === model.role
+        }
+        return false
     }
 
     login(user: LoginModel) {
@@ -70,21 +80,32 @@ export class AuthService {
         debugger
         if(new Date() > expires){
             //since the access token has expired you should be getting a new one with the refresh token
-            this.tryRefreshTokens();
+            var t =  this.tryRefreshTokens();
             //TODO: handle when refresh token has expired
+            //eg if this.tryRefreshTokens(); returns falsse
             return true
         }
 
         return true
     }
 
-   private tryRefreshTokens(){
+   private tryRefreshTokens(): Promise<boolean>{
+       debugger
         //TODO: Add case for when refresh token has expired
-        this.getTokens({
-            refresh_token: this.getRefreshToken()
-        }, "refresh_token")
-            .then(res => this.setToken(res))
+        return this.getTokens({ refresh_token: this.getRefreshToken() }, "refresh_token")
+            .then(res =>{
+                debugger
+                if (res.error == null){
 
+                    this.setToken(res)
+                    return true;
+                }else{
+                    //this means we got an error, most likely just invalid_grant
+                    //either way we'll just remove what's in there so we can return earlier on the revalidate function
+                    return false;
+                }
+
+            })
 
    }
 

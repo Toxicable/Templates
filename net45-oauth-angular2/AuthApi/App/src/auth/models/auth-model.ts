@@ -10,4 +10,5 @@ export class AuthModel{
     expires_in: number;
     token_type: string;
     userName: string;
+    error: string
 }
