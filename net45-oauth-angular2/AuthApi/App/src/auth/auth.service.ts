@@ -17,8 +17,35 @@ export class AuthService {
         this.removeToken();
     }
 
-    isAuthenticated(): boolean{
-        return this.validateToken()
+    isAuthenticated(): Promise<boolean>{
+        return this.validateToken().then(x => true);
+    }
+
+    getToken(){
+        return this.getModel().access_token;
+    }
+
+    getRefreshToken(): string {
+        return this.getModel().refresh_token;
+    }
+
+    login(user: LoginModel): Promise<void>  {
+
+        return this.getTokens(user, "password").then(res => {
+            this.setToken(res);
+            Promise.resolve();
+        });
+    }
+
+    register(data: RegisterModel): Promise<void> {
+        //TODO: return a better object than void
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post(this.baseUrl + "account/register", data, options)
+            .toPromise()
+            .then((res: Response) => Promise.resolve()) // res.json())
+            .catch(this.handleError);
     }
 
     isInRole(role: string){
@@ -31,81 +58,54 @@ export class AuthService {
         return false
     }
 
-    login(user: LoginModel) {
-
-        this.getTokens(user, "password").then(res => {
-            this.setToken(res)
-        });
-    }
-
-    register(data: RegisterModel): Promise<void> {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.post(this.baseUrl + "account/register", data, options)
-            .toPromise()
-            .then((res: Response) => res.json())
-            .catch(this.handleError);
-    }
-
-    getToken(){
-        return this.getModel().access_token;
-    }
-
-    validateToken(): boolean {
+    validateToken(): Promise<void> {
         let authModel = this.getModel();
 
         if(authModel == null){
-            return false;
+            Promise.reject("model dosen't exist")
         }
 
         let expires = new Date(authModel[".expires"]);
 
         if(new Date() > expires){
             //since the access token has expired you should be getting a new one with the refresh token
-            var t =  this.tryRefreshTokens();
-            //eg if this.tryRefreshTokens(); returns falsse
-            return true;
+            return this.tryRefreshTokens();
         }
 
-        return true;
+        return Promise.resolve();
     }
 
-    public getRefreshToken(){
-        return this.getModel().refresh_token;
-    }
-
-    private setToken(model: AuthModel){
-        console.log(model);
+    private setToken(model: AuthModel): void {
         localStorage.setItem(this.modelName, JSON.stringify(model));
     }
 
-    private getModel() {
+    private getModel(): AuthModel {
         return JSON.parse(localStorage.getItem(this.modelName)) as AuthModel;
     }
 
-    private removeToken() {
+    private removeToken(): void {
         localStorage.removeItem(this.modelName);
     }
 
-    private tryRefreshTokens(): Promise<boolean>{
+    private tryRefreshTokens(): Promise<void>{
         return this.getTokens({ refresh_token: this.getRefreshToken() }, "refresh_token")
             .then(res =>{
                 if (res.error == null){
-
+                    //we good to reset the token here
                     this.setToken(res)
-                    return true;
+                    return Promise.resolve()
                 }else{
                     //this means we got an error, most likely just invalid_grant
-                    //either way we'll just remove what's in there so we can return earlier on the revalidate function
-                    return false;
+                    //which means the refresh token was invalid
+                    //so we'll just remove what's in there so we can return earlier on the revalidate function
+                    return Promise.reject("refresh token has expired")
                 }
 
             });
-
     }
 
     private getTokens(data: any, grantType: string): Promise<AuthModel> {
-        //data can be any since it can either be empty or a login form for the different requests
+        //data can be any since it can either be a refresh token or login details
         //The request for tokens must be x-www-form-urlencoded IE: parameter string, it cant be json
 
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'});
@@ -128,10 +128,10 @@ export class AuthService {
         console.error(response);
 
         //TODO: find other errors that can occur here
-        return response.json();
+        return Promise.reject("Idk something went wrong look above");
     }
 
-    private encodeObjectToParams(obj: any) {
+    private encodeObjectToParams(obj: any): string {
         return Object.keys(obj)
             .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]))
             .join('&');
