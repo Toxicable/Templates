@@ -22,7 +22,7 @@ export class AuthService {
     }
 
     isInRole(role: string){
-       let model = this.getModel();
+        let model = this.getModel();
 
         if(model.hasOwnProperty("role")){
             //TODO: Implement roles server side
@@ -38,7 +38,7 @@ export class AuthService {
         });
     }
 
-    register(data: RegisterModel): any {
+    register(data: RegisterModel): Promise<void> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         return this.http.post(this.baseUrl + "account/register", data, options)
@@ -51,12 +51,31 @@ export class AuthService {
         return this.getModel().access_token;
     }
 
+    validateToken(): boolean {
+        let authModel = this.getModel();
+
+        if(authModel == null){
+            return false;
+        }
+
+        let expires = new Date(authModel[".expires"]);
+
+        if(new Date() > expires){
+            //since the access token has expired you should be getting a new one with the refresh token
+            var t =  this.tryRefreshTokens();
+            //eg if this.tryRefreshTokens(); returns falsse
+            return true;
+        }
+
+        return true;
+    }
+
     public getRefreshToken(){
         return this.getModel().refresh_token;
     }
 
     private setToken(model: AuthModel){
-        console.log(model)
+        console.log(model);
         localStorage.setItem(this.modelName, JSON.stringify(model));
     }
 
@@ -65,36 +84,12 @@ export class AuthService {
     }
 
     private removeToken() {
-        localStorage.removeItem("auth-model");
+        localStorage.removeItem(this.modelName);
     }
 
-    validateToken() {
-        let authModel = this.getModel()
-
-        if(authModel == null){
-            return false;
-        }
-
-        let expires = new Date(authModel[".expires"]);
-
-        debugger
-        if(new Date() > expires){
-            //since the access token has expired you should be getting a new one with the refresh token
-            var t =  this.tryRefreshTokens();
-            //TODO: handle when refresh token has expired
-            //eg if this.tryRefreshTokens(); returns falsse
-            return true
-        }
-
-        return true
-    }
-
-   private tryRefreshTokens(): Promise<boolean>{
-       debugger
-        //TODO: Add case for when refresh token has expired
+    private tryRefreshTokens(): Promise<boolean>{
         return this.getTokens({ refresh_token: this.getRefreshToken() }, "refresh_token")
             .then(res =>{
-                debugger
                 if (res.error == null){
 
                     this.setToken(res)
@@ -105,9 +100,9 @@ export class AuthService {
                     return false;
                 }
 
-            })
+            });
 
-   }
+    }
 
     private getTokens(data: any, grantType: string): Promise<AuthModel> {
         //data can be any since it can either be empty or a login form for the different requests
