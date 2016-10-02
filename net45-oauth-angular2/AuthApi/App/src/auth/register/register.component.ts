@@ -36,9 +36,6 @@ export class RegisterComponent  implements OnInit {
             .then( x => {
                     this.alertService.sendAlert("you won :D")
                     console.log(x)
-                },
-                x => {
-                    console.log("error: " + x)
                 }
             )
     };

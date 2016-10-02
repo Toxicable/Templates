@@ -25,7 +25,7 @@ namespace AuthApi.Api.Auth.Providers
 
             var refreshTokenId = Guid.NewGuid().ToString("n");
 
-            using (AuthRepository _repo = new AuthRepository())
+            using (AuthManager _repo = new AuthManager())
             {
                 var refreshTokenLifeTime = context.OwinContext.Get<string>("as:clientRefreshTokenLifeTime");
 
@@ -67,7 +67,7 @@ namespace AuthApi.Api.Auth.Providers
 
             string hashedTokenId = AuthHelper.GetHash(context.Token);
 
-            using (AuthRepository _repo = new AuthRepository())
+            using (AuthManager _repo = new AuthManager())
             {
                 var refreshToken = await _repo.FindRefreshToken(hashedTokenId);
                 //if it is null then this probably means that you're trying with an old token

@@ -12,6 +12,7 @@ import {NotFoundComponent} from "./not-found/not-found.component";
 import {NavigationComponent} from "./navigation/navigation.component";
 import {AlertComponent} from "./alert/alert.component";
 import {AlertService} from "./alert/alert.service";
+import {AuthHttpService} from "../auth-http/auth-http.service";
 
 @NgModule({
     imports:      [
@@ -26,7 +27,7 @@ import {AlertService} from "./alert/alert.service";
         NavigationComponent,
         AlertComponent
     ],
-    providers:    [ AuthService, AlertService ],
+    providers:    [ AuthService, AlertService, AuthHttpService ],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

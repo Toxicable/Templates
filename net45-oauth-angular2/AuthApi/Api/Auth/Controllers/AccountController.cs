@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 
@@ -7,11 +8,19 @@ namespace AuthApi.Api.Auth.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private readonly AuthRepository _repo;
+        private readonly AuthManager _repo;
 
         public AccountController()
         {
-            _repo = new AuthRepository();
+            _repo = new AuthManager();
+        }
+
+        [Authorize]
+        [Route("AuthTest")]
+        [HttpGet]
+        public async Task<string> AuthTest()
+        {
+            return User.Identity.Name;
         }
 
         // POST api/Account/Register
@@ -30,7 +39,7 @@ namespace AuthApi.Api.Auth.Controllers
 
             if (errorResult != null)
             {
-                return errorResult;
+                return BadRequest(ModelState);
             }
 
             return Ok(new RegistrationResponse(true, userModel.UserName));

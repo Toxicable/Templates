@@ -11,13 +11,13 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AuthApi.Api.Auth
 {
-    public class AuthRepository : IDisposable
+    public class AuthManager : IDisposable
     {
         private readonly ApplicationDbContext _ctx;
 
         private readonly UserManager<UserEntity> _userManager;
 
-        public AuthRepository()
+        public AuthManager()
         {
             _ctx = new ApplicationDbContext();
             _userManager = new UserManager<UserEntity>(new UserStore<UserEntity>(_ctx));

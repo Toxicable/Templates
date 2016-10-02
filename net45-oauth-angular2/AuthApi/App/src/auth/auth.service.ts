@@ -5,25 +5,26 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response} from '@angular/http';
 import { LoginModel } from './models/login-model';
 import { RegisterModel } from './models/register-model';
-import {LoginResponse} from "./models/login-response";
+import {AuthModel} from "../auth-http/models/auth-model";
 
 @Injectable()
 export class AuthService {
     constructor(private http: Http) {}
-
+    private modelName = "auth-model";
     private baseUrl = "http://localhost:51621/api/";
 
     logout(){
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
+        this.removeToken();
+    }
+
+    isAuthenticated(): boolean{
+        return this.validateToken()
     }
 
     login(user: LoginModel) {
 
-        let data = this.encodeObjectToParams(user);
-        this.getTokens(data, "password").then(res => {
-            localStorage.setItem("access_token", res.access_token);
-            localStorage.setItem("refresh_token", res.refresh_token);
+        this.getTokens(user, "password").then(res => {
+            this.setToken(res)
         });
     }
 
@@ -36,35 +37,87 @@ export class AuthService {
             .catch(this.handleError);
     }
 
+    getToken(){
+        return this.getModel().access_token;
+    }
+
+    public getRefreshToken(){
+        return this.getModel().refresh_token;
+    }
+
+    private setToken(model: AuthModel){
+        console.log(model)
+        localStorage.setItem(this.modelName, JSON.stringify(model));
+    }
+
+    private getModel() {
+        return JSON.parse(localStorage.getItem(this.modelName)) as AuthModel;
+    }
+
+    private removeToken() {
+        localStorage.removeItem("auth-model");
+    }
+
+    validateToken() {
+        let authModel = this.getModel()
+
+        if(authModel == null){
+            return false;
+        }
+
+        let expires = new Date(authModel[".expires"]);
+
+        debugger
+        if(new Date() > expires){
+            //since the access token has expired you should be getting a new one with the refresh token
+            this.tryRefreshTokens();
+            //TODO: handle when refresh token has expired
+            return true
+        }
+
+        return true
+    }
+
+   private tryRefreshTokens(){
+        //TODO: Add case for when refresh token has expired
+        this.getTokens({
+            refresh_token: this.getRefreshToken()
+        }, "refresh_token")
+            .then(res => this.setToken(res))
+
+
+   }
+
+    private getTokens(data: any, grantType: string): Promise<AuthModel> {
+        //data can be any since it can either be empty or a login form for the different requests
+        //The request for tokens must be x-www-form-urlencoded IE: parameter string, it cant be json
+
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'});
+        let options = new RequestOptions({ headers: headers });
+
+        Object.assign(data, {
+            grant_type: grantType,
+            client_id: "AngularApp"
+        });
+
+        return this.http.post(this.baseUrl + "token",  this.encodeObjectToParams(data), options)
+            .toPromise()
+            .then((res) => res.json() as AuthModel)
+            .catch(this.handleError);
+    }
+
+    private handleError (response: any) {
+        //TODO: Add logging here
+        console.error("Server Error: ");
+        console.error(response);
+
+        //TODO: find other errors that can occur here
+        return response.json();
+    }
+
     private encodeObjectToParams(obj: any) {
         return Object.keys(obj)
             .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]))
             .join('&');
-    }
-
-
-
-    private getTokens(data: string, grantType: string): Promise<LoginResponse> {
-        //if you're doing my password then you need to give the username and password
-        //if you're doing by refresh_token then to give the refresh_token
-
-        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'});  
-        let options = new RequestOptions({ headers: headers });
-
-        data = data + "&grant_type=" + grantType + "&client_id=AngularApp";
-
-        return this.http.post(this.baseUrl + "token",  data, options)
-            .toPromise()
-            .then((res) => res.json() as LoginResponse)
-            .catch(this.handleError);
-    }
-
-
-    private handleError (response: any) {
-        //TODO: Add logging here
-        console.log("Server Error: ")
-        console.log(response)
-
-        return response.json();
     }
 }
