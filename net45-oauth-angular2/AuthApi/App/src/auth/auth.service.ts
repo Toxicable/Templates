@@ -6,12 +6,14 @@ import { Http, Headers, RequestOptions, Response} from '@angular/http';
 import { LoginModel } from './models/login-model';
 import { RegisterModel } from './models/register-model';
 import {AuthModel} from "./models/auth-model";
+import {BadRequestResponse} from "./models/bad-request-response";
+import {BadTokenRequestResponse} from "./models/bad-token-request-response";
 
 @Injectable()
 export class AuthService {
     constructor(private http: Http) {}
     private modelName = "auth-model";
-    private baseUrl = "http://localhost:51621/api/";
+    private baseUrl = "api/";
 
     logout(){
         this.removeToken();
@@ -33,7 +35,10 @@ export class AuthService {
 
         return this.getTokens(user, "password").then(res => {
             this.setToken(res);
-            Promise.resolve();
+            return Promise.resolve();
+        },
+        res =>{
+            return Promise.reject(res);
         });
     }
 
@@ -44,8 +49,11 @@ export class AuthService {
         let options = new RequestOptions({ headers: headers });
         return this.http.post(this.baseUrl + "account/register", data, options)
             .toPromise()
-            .then((res: Response) => Promise.resolve()) // res.json())
-            .catch(this.handleError);
+            .then((res: Response) => Promise.resolve())
+            .catch((res: Response) =>{
+                let model = res.json() as BadRequestResponse
+                return Promise.reject(model.modelState[""][0]);
+            });
     }
 
     isInRole(role: string){
@@ -90,17 +98,13 @@ export class AuthService {
     private tryRefreshTokens(): Promise<void>{
         return this.getTokens({ refresh_token: this.getRefreshToken() }, "refresh_token")
             .then(res =>{
-                if (res.error == null){
-                    //we good to reset the token here
-                    this.setToken(res)
-                    return Promise.resolve()
-                }else{
-                    //this means we got an error, most likely just invalid_grant
-                    //which means the refresh token was invalid
-                    //so we'll just remove what's in there so we can return earlier on the revalidate function
-                    return Promise.reject("refresh token has expired")
-                }
+                //we good to reset the token here
+                this.setToken(res)
+                return Promise.resolve()
 
+            }, res =>{
+                //this might be the same as above
+                return Promise.reject("refresh token has expired")
             });
     }
 
@@ -119,16 +123,20 @@ export class AuthService {
         return this.http.post(this.baseUrl + "token",  this.encodeObjectToParams(data), options)
             .toPromise()
             .then((res) => res.json() as AuthModel)
-            .catch(this.handleError);
+            .catch(res => {
+                let model = res.json() as BadTokenRequestResponse
+                return Promise.reject(model.error_description)
+            });
     }
 
     private handleError (response: any) {
         //TODO: Add logging here
         console.error("Server Error: ");
         console.error(response);
+        let responseModel = response.json() as BadRequestResponse;
 
         //TODO: find other errors that can occur here
-        return Promise.reject("Idk something went wrong look above");
+        return Promise.reject(responseModel.modelState[""][0]);
     }
 
     private encodeObjectToParams(obj: any): string {

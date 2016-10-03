@@ -20,6 +20,12 @@ module.exports = webpackMerge(common, {
     devServer: {
         historyApiFallback: true,
         stats: 'minimal',
-        proxy:{ '/api':  'http://localhost:51621/api/' }
+        headers: { "Access-Control-Allow-Origin": "*" },
+        proxy: {
+            '/api/' : "http://localhost:51621",
+
+        }
+
+
     }
 });

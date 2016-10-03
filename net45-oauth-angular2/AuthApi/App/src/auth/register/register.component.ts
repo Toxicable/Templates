@@ -5,6 +5,7 @@ import {AuthService} from "../auth.service";
 import {ValidationService} from "../../app/validation/validation.service";
 import {AlertComponent} from "../../app/alert/alert.component";
 import {AlertService} from "../../app/alert/alert.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'register',
@@ -13,7 +14,8 @@ import {AlertService} from "../../app/alert/alert.service";
 export class RegisterComponent  implements OnInit {
    constructor(private formBuilder: FormBuilder,
                private authService: AuthService,
-    private alertService: AlertService
+    private alertService: AlertService,
+               private router: Router
    ) {   }
     registerForm: FormGroup;
 
@@ -34,8 +36,11 @@ export class RegisterComponent  implements OnInit {
         //TODO: find better way to do this :/
         this.authService.register(data)
             .then( x => {
-                    this.alertService.sendAlert("you won :D")
-                    console.log(x)
+                    this.alertService.sendAlert("Successfully registered");
+                    this.router.navigateByUrl("/auth/login");
+                },
+                x => {
+                    this.alertService.sendAlert("And error has occured: " + x);
                 }
             )
     };

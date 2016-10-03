@@ -15,7 +15,8 @@ export class AuthHttpService {
     get(endpoint: string): Promise<any>{
 
         return this.authService.validateToken()
-            .then( ()=> {
+            .then(
+                ()=> {
                 let options = this.getHeaders();
 
                 //TODO: more work here

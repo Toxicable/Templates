@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 
 namespace AuthApi.Api.Auth.Controllers
 {
@@ -28,6 +29,7 @@ namespace AuthApi.Api.Auth.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel userModel)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

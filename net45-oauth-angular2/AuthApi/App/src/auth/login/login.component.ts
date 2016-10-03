@@ -3,13 +3,17 @@ import { OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { LoginModel } from '../models/login-model'
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AlertService} from "../../app/alert/alert.service";
 
 @Component({
     selector: 'login',
     templateUrl: './login.template.html'
 })
 export class LoginComponent implements OnInit{
-    constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
+    constructor(private formBuilder: FormBuilder,
+                private authService: AuthService,
+                private alertService: AlertService
+    ) { }
 
     loginForm: FormGroup;
 
@@ -21,7 +25,9 @@ export class LoginComponent implements OnInit{
     }
 
     onSubmit(){
-        this.authService.login(this.loginForm.value)
+        this.authService.login(this.loginForm.value).then(res => {
+            this.alertService.sendAlert("Successfully logged in")
+        }, res => this.alertService.sendAlert(res))
     }
 
 }
