@@ -38,11 +38,7 @@ namespace AuthApi.Api.Auth.Controllers
             IdentityResult result = await _repo.RegisterUser(userModel);
 
             IHttpActionResult errorResult = GetErrorResult(result);
-
-            if (errorResult != null)
-            {
-                return BadRequest(ModelState);
-            }
+ 
 
             return Ok(new RegistrationResponse(true, userModel.UserName));
         }

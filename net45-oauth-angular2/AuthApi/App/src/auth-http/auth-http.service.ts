@@ -25,9 +25,11 @@ export class AuthHttpService {
                     .then(res => res.json())
                     .catch(this.handleError)
             },
-            ()=>{
+            (res)=>{
+                //this should only happen when the token has expired
                 //invalid token here
                 //TODO: let the caller know that we're gonna needa do a redirection
+                return Promise.reject(res);
             });
 
 

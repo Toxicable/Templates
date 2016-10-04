@@ -70,7 +70,7 @@ export class AuthService {
         let authModel = this.getModel();
 
         if(authModel == null){
-            Promise.reject("model dosen't exist")
+            return Promise.reject("invalid token")
         }
 
         let expires = new Date(authModel[".expires"]);
@@ -102,8 +102,10 @@ export class AuthService {
                 this.setToken(res)
                 return Promise.resolve()
 
-            }, res =>{
-                //this might be the same as above
+            }, () =>{
+                //This should only occur when the refresh token has expired so we're good to redirect here
+                //we should remove it though so we don't have to check again later
+                this.removeToken();
                 return Promise.reject("refresh token has expired")
             });
     }
@@ -127,16 +129,6 @@ export class AuthService {
                 let model = res.json() as BadTokenRequestResponse
                 return Promise.reject(model.error_description)
             });
-    }
-
-    private handleError (response: any) {
-        //TODO: Add logging here
-        console.error("Server Error: ");
-        console.error(response);
-        let responseModel = response.json() as BadRequestResponse;
-
-        //TODO: find other errors that can occur here
-        return Promise.reject(responseModel.modelState[""][0]);
     }
 
     private encodeObjectToParams(obj: any): string {

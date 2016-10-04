@@ -5,17 +5,13 @@
     <div>
         <label>User Name: </label>
         <input type="text" formControlName="userName" />
-        <div *ngIf="loginForm.controls.userName.errors && loginForm.controls.userName.touched" >
-            This field is required!
-        </div>
+        <control-messages [control]="loginForm.controls.userName"></control-messages>
     </div>
 
     <div>
         <label>Password: </label>
         <input type="text" formControlName="password" />
-        <div *ngIf="loginForm.controls.password.errors && loginForm.controls.password.touched" >
-            This field is required!
-        </div>
+        <control-messages [control]="loginForm.controls.password"></control-messages>
     </div>
 
 
