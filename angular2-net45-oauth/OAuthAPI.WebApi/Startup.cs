@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Configuration;
-using System.Linq;
-using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
@@ -13,7 +12,7 @@ using OAuthAPI.Data;
 using OAuthAPI.WebApi.Api.Identity.Managers;
 using OAuthAPI.WebApi.Api.Identity.Providers;
 using Owin;
-
+ 
 namespace OAuthAPI.WebApi
 {
     public class Startup
@@ -23,15 +22,11 @@ namespace OAuthAPI.WebApi
             HttpConfiguration httpConfig = new HttpConfiguration();
 
             ConfigureOAuthTokenGeneration(app);
-
             ConfigureOAuthTokenConsumption(app);
 
             ConfigureWebApi(httpConfig);
 
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-
             app.UseWebApi(httpConfig);
-
         }
 
         private void ConfigureOAuthTokenGeneration(IAppBuilder app)
@@ -79,8 +74,15 @@ namespace OAuthAPI.WebApi
         {
             config.MapHttpAttributeRoutes();
 
-            var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
-            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //  config.Routes.MapHttpRoute(
+            //       name: "DefaultApi",
+            //      routeTemplate: "api/{controller}/{action}",
+            //       defaults: new { id = RouteParameter.Optional }
+            //   );
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
+
         }
     }
 }

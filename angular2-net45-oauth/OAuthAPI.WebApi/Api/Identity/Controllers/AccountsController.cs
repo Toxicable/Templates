@@ -12,8 +12,8 @@ using OAuthAPI.WebApi.Api.Identity.Models.ViewModels;
 
 namespace OAuthAPI.WebApi.Api.Identity.Controllers
 {
-    [RoutePrefix("api/accounts")]
-    public class AccountsController : BaseApiController
+    [RoutePrefix("api/account")]
+    public class AccountController : BaseApiController
     {
        // [Authorize(Roles = "SuperAdmin")]
         [Route("isauthenticated")]
