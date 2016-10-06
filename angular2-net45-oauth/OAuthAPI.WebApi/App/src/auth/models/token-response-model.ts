@@ -1,0 +1,12 @@
+/**
+ * Created by Fabian on 5/10/2016.
+ */
+export interface TokenResponseModel{
+    access_token: string;
+    refresh_token: string;
+    "as:client_id": string;
+    expires_in: number;
+    token_type: string;
+    userName: string;
+    error: string
+}
