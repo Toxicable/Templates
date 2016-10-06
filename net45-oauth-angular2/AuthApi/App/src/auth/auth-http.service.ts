@@ -10,7 +10,7 @@ import {AuthService} from "../auth/auth.service";
 export class AuthHttpService {
     constructor(private http: Http, private authService: AuthService) {}
 
-    private baseUrl = "http://localhost:51621/api/";
+    private baseUrl = "api/";
 
     get(endpoint: string): Promise<any>{
 
@@ -47,7 +47,7 @@ export class AuthHttpService {
     private getHeaders(){
         let headers = new Headers({
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.authService.getToken()
+            //'Authorization': 'Bearer ' + this.authService.getToken()
         });
         return new RequestOptions({headers: headers});
     }
