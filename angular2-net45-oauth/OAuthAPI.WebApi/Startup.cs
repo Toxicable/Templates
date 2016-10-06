@@ -29,6 +29,8 @@ namespace OAuthAPI.WebApi
             app.UseWebApi(httpConfig);
         }
 
+        private const string Issuer = "http://localhost:59822/";
+
         private void ConfigureOAuthTokenGeneration(IAppBuilder app)
         {
             // Configure the db context and user manager to use a single instance per request
@@ -43,7 +45,7 @@ namespace OAuthAPI.WebApi
                 TokenEndpointPath = new PathString("/api/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = new CustomOAuthProvider(),
-                AccessTokenFormat = new CustomJwtFormat("http://localhost:59822"),
+                AccessTokenFormat = new CustomJwtFormat(Issuer),
                 RefreshTokenProvider = new RefreshTokenProvider()
             };
 
@@ -53,7 +55,7 @@ namespace OAuthAPI.WebApi
 
         private void ConfigureOAuthTokenConsumption(IAppBuilder app) {
 
-            var issuer = "http://localhost:59822";
+            var issuer = Issuer;
             string audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
             byte[] audienceSecret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["as:AudienceSecret"]);
 

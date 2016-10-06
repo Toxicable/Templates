@@ -18,7 +18,7 @@
     <AssemblyName>OAuthAPI.WebApi</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44389</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -170,12 +170,19 @@
     <Content Include="App\typings\globals\core-js\typings.json" />
     <Content Include="App\typings\globals\jasmine\typings.json" />
     <Content Include="App\typings\globals\node\typings.json" />
+    <Content Include="wwwroot\app.33affc107ed224eca928.js" />
+    <Content Include="index.html" />
+    <Content Include="wwwroot\polyfills.33affc107ed224eca928.js" />
+    <Content Include="wwwroot\vendor.33affc107ed224eca928.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="wwwroot\app.33affc107ed224eca928.js.map" />
+    <Content Include="wwwroot\polyfills.33affc107ed224eca928.js.map" />
+    <Content Include="wwwroot\vendor.33affc107ed224eca928.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">
