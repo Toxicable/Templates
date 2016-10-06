@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace AspNetIdentity.Data
+namespace OAuthAPI.Data.Identity
 {
     public class ApplicationUser : IdentityUser
     {

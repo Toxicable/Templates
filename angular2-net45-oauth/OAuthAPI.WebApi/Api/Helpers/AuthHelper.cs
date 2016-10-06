@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Web;
 
-namespace AspNetIdentity.WebApi.Api.Helpers
+namespace OAuthAPI.WebApi.Api.Helpers
 {
     public class AuthHelper
     {

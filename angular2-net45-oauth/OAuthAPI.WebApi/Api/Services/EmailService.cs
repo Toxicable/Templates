@@ -1,10 +1,7 @@
-﻿using System;
-using System.Configuration;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 
-namespace AspNetIdentity.WebApi.Api.Services
+namespace OAuthAPI.WebApi.Api.Services
 {
     public class EmailService : IIdentityMessageService
     {

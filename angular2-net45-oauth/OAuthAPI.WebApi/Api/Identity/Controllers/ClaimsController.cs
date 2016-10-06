@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Web.Http;
 
-namespace AspNetIdentity.WebApi.Api.Identity.Controllers
+namespace OAuthAPI.WebApi.Api.Identity.Controllers
 {
     [RoutePrefix("api/claims")]
     public class ClaimsController : BaseApiController

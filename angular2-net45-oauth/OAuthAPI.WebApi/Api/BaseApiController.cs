@@ -1,14 +1,14 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
-using AspNetIdentity.Data;
-using AspNetIdentity.WebApi.Api.Identity.Infrastructure;
-using AspNetIdentity.WebApi.Api.Identity.Models;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using OAuthAPI.Data.Identity;
+using OAuthAPI.WebApi.Api.Identity.Managers;
+using OAuthAPI.WebApi.Api.Identity.Models.ViewModels;
 
-namespace AspNetIdentity.WebApi.Api
+namespace OAuthAPI.WebApi.Api
 {
     public class BaseApiController : ApiController
     {

@@ -1,12 +1,7 @@
-﻿using AspNetIdentity.Data;
-using AspNetIdentity.Data.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Linq;
+using OAuthAPI.Data.Identity;
 
-namespace AspNetIdentity.WebApi.Api.Identity.Managers
+namespace OAuthAPI.WebApi.Api.Identity.Managers
 {
     public class ClientManager : BaseManager
     {

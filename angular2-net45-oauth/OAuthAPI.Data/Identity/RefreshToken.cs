@@ -1,11 +1,6 @@
-﻿using AspNetIdentity.Data.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace AspNetIdentity.Data
+namespace OAuthAPI.Data.Identity
 {
     public class RefreshToken
     {

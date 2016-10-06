@@ -1,16 +1,12 @@
-﻿using Microsoft.Owin.Security.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 using System.Threading.Tasks;
-using AspNetIdentity.Data;
-using AspNetIdentity.WebApi.Api.Helpers;
 using Microsoft.AspNet.Identity.Owin;
-using AspNetIdentity.WebApi.Api.Identity.Infrastructure;
-using AspNetIdentity.WebApi.Api.Identity.Managers;
+using Microsoft.Owin.Security.Infrastructure;
+using OAuthAPI.Data.Identity;
+using OAuthAPI.WebApi.Api.Helpers;
+using OAuthAPI.WebApi.Api.Identity.Managers;
 
-namespace AspNetIdentity.WebApi.Api.Identity.Providers
+namespace OAuthAPI.WebApi.Api.Identity.Providers
 {
     public class RefreshTokenProvider : IAuthenticationTokenProvider
     {

@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
-using AspNetIdentity.Data;
-using AspNetIdentity.WebApi.Api.Identity.Infrastructure;
-using AspNetIdentity.WebApi.Api.Identity.Models;
 using Microsoft.AspNet.Identity;
-using System.Data.Entity;
+using OAuthAPI.Data.Identity;
+using OAuthAPI.WebApi.Api.Identity.Models.BindingModels;
+using OAuthAPI.WebApi.Api.Identity.Models.ViewModels;
 
-namespace AspNetIdentity.WebApi.Api.Identity.Controllers
+namespace OAuthAPI.WebApi.Api.Identity.Controllers
 {
     [RoutePrefix("api/accounts")]
     public class AccountsController : BaseApiController

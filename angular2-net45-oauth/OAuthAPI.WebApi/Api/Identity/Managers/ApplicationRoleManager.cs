@@ -1,10 +1,10 @@
-﻿using AspNetIdentity.Data;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using OAuthAPI.Data;
 
-namespace AspNetIdentity.WebApi.Api.Identity.Infrastructure
+namespace OAuthAPI.WebApi.Api.Identity.Managers
 {
     public class ApplicationRoleManager : RoleManager<IdentityRole>
     {

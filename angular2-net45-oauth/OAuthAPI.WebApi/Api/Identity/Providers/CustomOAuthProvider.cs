@@ -1,16 +1,14 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using AspNetIdentity.Data;
-using AspNetIdentity.WebApi.Api.Identity.Infrastructure;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
-using System.Collections.Generic;
-using AspNetIdentity.WebApi.Api.Identity.Managers;
-using AspNetIdentity.Data.Identity;
-using AspNetIdentity.WebApi.Api.Helpers;
+using OAuthAPI.Data.Identity;
+using OAuthAPI.WebApi.Api.Helpers;
+using OAuthAPI.WebApi.Api.Identity.Managers;
 
-namespace AspNetIdentity.WebApi.Api.Identity.Providers
+namespace OAuthAPI.WebApi.Api.Identity.Providers
 {
     public class CustomOAuthProvider : OAuthAuthorizationServerProvider
     {

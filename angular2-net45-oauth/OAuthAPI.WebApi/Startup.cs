@@ -1,22 +1,20 @@
-﻿using Microsoft.Owin;
+﻿using System;
+using System.Configuration;
+using System.Linq;
+using System.Net.Http.Formatting;
+using System.Web.Http;
+using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler.Encoder;
 using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using OAuthAPI.Data;
+using OAuthAPI.WebApi.Api.Identity.Managers;
+using OAuthAPI.WebApi.Api.Identity.Providers;
 using Owin;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net.Http.Formatting;
-using System.Web;
-using System.Web.Http;
-using AspNetIdentity.Data;
-using AspNetIdentity.WebApi.Api.Identity.Infrastructure;
-using AspNetIdentity.WebApi.Api.Identity.Providers;
 
-namespace AspNetIdentity.WebApi
+namespace OAuthAPI.WebApi
 {
     public class Startup
     {

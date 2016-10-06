@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace AspNetIdentity.WebApi.Api.Identity.Models
+﻿namespace OAuthAPI.WebApi.Api.Identity.Models.ViewModels
 {
     public class RoleViewModel
     {

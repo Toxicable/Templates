@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
-namespace AspNetIdentity.WebApi.Api.Identity.Infrastructure
+namespace OAuthAPI.WebApi.Api.Attributes
 {
 
     public class ClaimsAuthorizationAttribute : AuthorizationFilterAttribute

@@ -1,14 +1,13 @@
 ﻿using System;
-using AspNetIdentity.Data;
-using AspNetIdentity.WebApi.Api.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using AspNetIdentity.WebApi.Api.Identity.Managers;
-using System.Threading.Tasks;
+using OAuthAPI.Data;
+using OAuthAPI.Data.Identity;
+using OAuthAPI.WebApi.Api.Services;
 
-namespace AspNetIdentity.WebApi.Api.Identity.Infrastructure
+namespace OAuthAPI.WebApi.Api.Identity.Managers
 {
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {

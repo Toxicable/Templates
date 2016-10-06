@@ -1,11 +1,8 @@
-﻿using AspNetIdentity.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
+using OAuthAPI.Data.Identity;
 
-namespace AspNetIdentity.WebApi.Api.Identity.Managers
+namespace OAuthAPI.WebApi.Api.Identity.Managers
 {
     public class RefreshTokenManager : BaseManager
     {

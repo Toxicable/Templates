@@ -1,20 +1,20 @@
-namespace AspNetIdentity.Data.Migrations
-{
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+using System;
+using System.Data.Entity.Migrations;
+using System.Linq;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using OAuthAPI.Data.Identity;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AspNetIdentity.Data.ApplicationDbContext>
+namespace OAuthAPI.Data.Migrations
+{
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(AspNetIdentity.Data.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
 

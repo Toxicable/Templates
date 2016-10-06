@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-using AspNetIdentity.WebApi.Api.Identity.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Collections.Generic;
+using OAuthAPI.WebApi.Api.Identity.Models.BindingModels;
+using OAuthAPI.WebApi.Api.Identity.Models.ViewModels;
 
-namespace AspNetIdentity.WebApi.Api.Identity.Controllers
+namespace OAuthAPI.WebApi.Api.Identity.Controllers
 {
     [Authorize(Roles="Admin")]
     [RoutePrefix("api/roles")]

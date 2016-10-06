@@ -1,15 +1,11 @@
-﻿
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.DataHandler.Encoder;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
 using System.IdentityModel.Tokens;
-using System.Linq;
-using System.Web;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataHandler.Encoder;
 using Thinktecture.IdentityModel.Tokens;
 
-namespace AspNetIdentity.WebApi.Api.Identity.Providers
+namespace OAuthAPI.WebApi.Api.Identity.Providers
 {
     public class CustomJwtFormat : ISecureDataFormat<AuthenticationTicket>
     {

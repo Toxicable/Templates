@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace AspNetIdentity.WebApi.Api.Identity.Models
+namespace OAuthAPI.WebApi.Api.Identity.Models.BindingModels
 {
     public class CreateRoleBindingModel
     {

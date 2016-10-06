@@ -1,8 +1,8 @@
-﻿using AspNetIdentity.Data.Identity;
+﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity;
+using OAuthAPI.Data.Identity;
 
-namespace AspNetIdentity.Data
+namespace OAuthAPI.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
