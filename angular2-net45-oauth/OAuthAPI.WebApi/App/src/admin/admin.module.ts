@@ -10,6 +10,7 @@ import {AuthHttp} from "../auth/auth-http.service";
 import { NgModule }          from '@angular/core';
 import {AdminComponent} from "./admin.component";
 import {UsersComponent} from "./users/users.component";
+import {SuperAdminAuthGuard} from "../auth/guards/super-admin-auth-guard.service";
 
 @NgModule({
     imports: [
@@ -22,6 +23,6 @@ import {UsersComponent} from "./users/users.component";
         RolesComponent,
         UsersComponent
     ],
-    providers: [AuthHttp],
+    providers: [AuthHttp, SuperAdminAuthGuard],
 })
 export class AdminModule { }

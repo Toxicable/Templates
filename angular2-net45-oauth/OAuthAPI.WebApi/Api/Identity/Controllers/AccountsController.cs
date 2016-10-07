@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -9,17 +11,35 @@ using Microsoft.AspNet.Identity;
 using OAuthAPI.Data.Identity;
 using OAuthAPI.WebApi.Api.Identity.Models.BindingModels;
 using OAuthAPI.WebApi.Api.Identity.Models.ViewModels;
+using SendGrid;
 
 namespace OAuthAPI.WebApi.Api.Identity.Controllers
 {
     [RoutePrefix("api/accounts")]
     public class AccountsController : BaseApiController
     {
-       // [Authorize(Roles = "SuperAdmin")]
+        // [Authorize(Roles = "SuperAdmin")]
         [Route("isauthenticated")]
         [HttpGet]
-        public IHttpActionResult IsAuthenticated()
+        public async Task<IHttpActionResult> IsAuthenticated()
         {
+            // Create the email object first, then add the properties.
+            SendGridMessage myMessage = new SendGridMessage();
+            myMessage.AddTo("fabianwiles@live.com");
+            myMessage.From = new MailAddress("fabianwiles@live.com", "John Smith");
+            myMessage.Subject = "Testing the SendGrid Library";
+            myMessage.Html = "<p><a href=\"http://www.example.com\">Hello World Link!</a></p>";
+            myMessage.Text = "Hello World!";
+
+            // true indicates that links in plain text portions of the email 
+            // should also be overwritten for link tracking purposes. 
+            myMessage.EnableClickTracking(true);
+            // Create an Web transport for sending email.
+            var transportWeb = new Web("5829f5a8-4b83-41ab-afd4-fc22bbfd5116");
+
+            // Send the email, which returns an awaitable task.
+            await transportWeb.DeliverAsync(myMessage);
+
             return Ok("true");
         }
 

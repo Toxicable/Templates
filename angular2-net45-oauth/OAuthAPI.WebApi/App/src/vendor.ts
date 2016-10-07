@@ -18,4 +18,4 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 // Other vendors for example jQuery, Lodash or Bootstrap
 // You can import js, ts, css, sass, ...
-import  'angular2-jwt';
+//import  'angular2-jwt';

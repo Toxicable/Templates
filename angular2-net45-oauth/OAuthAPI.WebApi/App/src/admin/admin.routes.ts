@@ -3,6 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {AdminComponent} from "./admin.component";
 import {RolesComponent} from "./roles/roles.component";
 import {UsersComponent} from "./users/users.component";
+import {SuperAdminAuthGuard} from "../auth/guards/super-admin-auth-guard.service";
 /**
  * Created by Fabian on 6/10/2016.
  */
@@ -11,6 +12,7 @@ const adminRoutes: Routes = [
     {
         path: 'admin',
         component: AdminComponent,
+        canActivate: [SuperAdminAuthGuard],
         children: [
             {
                 path: '',

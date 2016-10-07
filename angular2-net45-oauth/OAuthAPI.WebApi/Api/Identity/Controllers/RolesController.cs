@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
+using AutoMapper.Execution;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using OAuthAPI.WebApi.Api.Identity.Models.BindingModels;
@@ -12,6 +13,24 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
     [RoutePrefix("api/roles")]
     public class RolesController : BaseApiController
     {
+        [AllowAnonymous]
+        [Route("IsInRole")]
+        [HttpGet]
+        public async Task<IHttpActionResult> IsInRole( string role)
+        {
+            if (!User.Identity.IsAuthenticated) return BadRequest("User not authenticated");
+
+            var roleExists = await AppRoleManager.RoleExistsAsync(role);
+
+            if (!roleExists) return BadRequest("Role does not exist");
+
+            var isInRole = await AppUserManager.IsInRoleAsync(User.Identity.GetUserId(), role);
+
+            if (!isInRole) return BadRequest("User not in role");
+            
+
+            return Ok("User in role");
+        }
 
         [Route("{id:guid}", Name = "GetRoleById")]
         public async Task<IHttpActionResult> GetRole(string Id)

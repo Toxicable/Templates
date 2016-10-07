@@ -10,10 +10,12 @@ import {BadTokenRequestResponse} from "./models/bad-token-request-response";
 import {JwtHelper} from 'angular2-jwt'
 import {TokenResponseModel} from "./models/token-response-model";
 import {Profile} from "./models/profile-model";
+import {AuthHttp } from "./auth-http.service";
 
 @Injectable()
 export class AuthService {
-    constructor(private http: Http
+    constructor(private http: Http,
+           //     private authHttp: AuthHttp
     ) {}
 
     logout(){
@@ -52,15 +54,6 @@ export class AuthService {
             });
     }
 
-    isInRole(role: string){
-        //let profile = this.storeTokens();
-
-        //if(model.hasOwnProperty("role")){
-        //TODO: Implement roles server side
-        //return role === model.role
-        //  }
-        return false
-    }
 
     tryGetAccessToken():Promise<string>{
         return this.validateToken()

@@ -13,6 +13,7 @@ import {AlertComponent} from "./alert/alert.component";
 import {AlertService} from "./alert/alert.service";
 import {AuthHttp} from "../auth/auth-http.service";
 import {AdminModule} from "../admin/admin.module";
+import {SuperAdminAuthGuard} from "../auth/guards/super-admin-auth-guard.service";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {AdminModule} from "../admin/admin.module";
         NotFoundComponent,
         NavigationComponent,
         AlertComponent
+
     ],
     providers:    [ AuthService, AuthHttp, AlertService ],
     bootstrap:    [ AppComponent ]

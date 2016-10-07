@@ -10,6 +10,8 @@ import { RegisterComponent} from "./register/register.component";
 import { HttpModule} from "@angular/http";
 import { authRouting } from './auth.routing'
 import {ControlMessages} from "../app/validation/control-messages.component";
+import {AuthHttp} from "./auth-http.service";
+import {AuthGuardService} from "./auth-guard.service";
 
 @NgModule({
     imports: [
@@ -24,6 +26,6 @@ import {ControlMessages} from "../app/validation/control-messages.component";
         RegisterComponent,
         ControlMessages
     ],
-    providers: [AuthService],
+    providers: [AuthService, AuthHttp, AuthGuardService],
 })
 export class AuthModule { }

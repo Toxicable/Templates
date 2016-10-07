@@ -1,22 +1,15 @@
 /**
- * Created by Fabian on 5/10/2016.
+ * Created by Fabian on 7/10/2016.
  */
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { CanActivate } from '@angular/router';
-import { AuthService } from './auth.service';
+import { Http, Headers, RequestOptions, Response} from '@angular/http';
+import {AuthHttp} from "./auth-http.service";
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuardService {
+    constructor(private authHttp: AuthHttp){}
 
-    constructor(private auth: AuthService, private router: Router) {}
-
-    canActivate() {
-        if(this.auth.isAuthenticated()) {
-            return true;
-        } else {
-            this.router.navigate(['unauthorized']);
-            return false;
-        }
+    isInRole(role: string): Promise<Response>{
+        return this.authHttp.get('api/roles/isinrole?role=' + role);
     }
 }
