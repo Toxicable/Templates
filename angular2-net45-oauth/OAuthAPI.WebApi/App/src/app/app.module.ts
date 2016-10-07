@@ -11,7 +11,7 @@ import {NotFoundComponent} from "./not-found/not-found.component";
 import {NavigationComponent} from "./navigation/navigation.component";
 import {AlertComponent} from "./alert/alert.component";
 import {AlertService} from "./alert/alert.service";
-import {AuthHttp} from "../auth/auth-http.service";
+import {AuthHttp} from "../auth/auth-http/auth-http.service";
 import {AdminModule} from "../admin/admin.module";
 import {SuperAdminAuthGuard} from "../auth/guards/super-admin-auth-guard.service";
 

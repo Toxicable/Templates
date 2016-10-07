@@ -1,5 +1,5 @@
 /**
- * Created by Fabian on 2/10/2016.
+ * Created by Fabian on 7/10/2016.
  */
 export class AuthHttpResult{
     errors: string[];

@@ -1,9 +1,4 @@
-﻿export class RegisterModel {
-    constructor(userName: String, password: String, confirmPassword: String) {
-        this.userName = userName;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
-    }s
+﻿export interface RegisterModel {
     userName: String;
     password: String;
     confirmPassword: String;

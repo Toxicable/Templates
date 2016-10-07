@@ -2,7 +2,7 @@
  * Created by Fabian on 6/10/2016.
  */
 import {Component, OnInit} from '@angular/core';
-import {AuthHttp} from "../../auth/auth-http.service";
+import {AuthHttp} from "../../auth/auth-http/auth-http.service";
 
 @Component({
     selector: 'users',

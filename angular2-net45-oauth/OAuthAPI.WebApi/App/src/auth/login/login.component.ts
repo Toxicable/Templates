@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { LoginModel } from '../models/login'
+import { LoginModel } from '../models/login-model'
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlertService} from "../../app/alert/alert.service";
 import {ValidationService} from "../../app/validation/validation.service";

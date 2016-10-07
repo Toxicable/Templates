@@ -4,7 +4,7 @@
 import { Component } from '@angular/core'
 import {Router} from "@angular/router";
 import {AlertService} from "../alert/alert.service";
-import {AuthHttp} from "../../auth/auth-http.service";
+import {AuthHttp} from "../../auth/auth-http/auth-http.service";
 
 
 @Component({

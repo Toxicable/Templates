@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CanActivate } from '@angular/router';
 import {AlertService} from "../../app/alert/alert.service";
-import {AuthGuardService} from "../auth-guard.service";
+import {AuthGuardService} from "./auth-guard.service";
 
 @Injectable()
 export class SuperAdminAuthGuard implements CanActivate {

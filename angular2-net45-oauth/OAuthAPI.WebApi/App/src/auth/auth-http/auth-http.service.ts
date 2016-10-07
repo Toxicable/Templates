@@ -3,9 +3,9 @@
  */
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response} from '@angular/http';
-import {AuthHttpResult} from "../auth-http/models/auth-http-result";
-import {AuthService} from "./auth.service";
+import {AuthService} from "../auth.service";
 import {Observable} from "rxjs";
+import {AuthHttpResult} from "../models/auth-http-result";
 
 @Injectable()
 export class AuthHttp {

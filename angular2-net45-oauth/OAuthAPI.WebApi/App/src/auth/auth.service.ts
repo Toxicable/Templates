@@ -3,14 +3,14 @@
  */
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response} from '@angular/http';
-import { LoginModel } from './models/login';
 import { RegisterModel } from './models/register-model';
-import {BadRequestResponse} from "./models/bad-request-response";
-import {BadTokenRequestResponse} from "./models/bad-token-request-response";
+import { BadRequestResult} from "./models/bad-request-result";
+import { BadTokenRequestResult} from "./models/bad-token-request-result";
 import {JwtHelper} from 'angular2-jwt'
-import {TokenResponseModel} from "./models/token-response-model";
-import {Profile} from "./models/profile-model";
-import {AuthHttp } from "./auth-http.service";
+import {AuthHttp } from "./auth-http/auth-http.service";
+import {TokenResult} from "./models/token-result";
+import {LoginModel} from "./models/login-model";
+import {ProfileModel} from "./models/profile-model";
 
 @Injectable()
 export class AuthService {
@@ -33,7 +33,7 @@ export class AuthService {
     login(user: LoginModel): Promise<void>  {
 
         return this.getTokens(user, "password").then(res => {
-                this.storeTokens(res as TokenResponseModel);
+                this.storeTokens(res as TokenResult);
                 return Promise.resolve();
             },
             res =>{
@@ -49,7 +49,7 @@ export class AuthService {
             .toPromise()
             .then((res: Response) => Promise.resolve())
             .catch((res: Response) =>{
-                let model = res.json() as BadRequestResponse;
+                let model = res.json() as BadRequestResult;
                 return Promise.reject(model.modelState[""][0]);
             });
     }
@@ -91,9 +91,9 @@ export class AuthService {
             });
     }
 
-    private storeTokens(model: TokenResponseModel): void{
+    private storeTokens(model: TokenResult): void{
         let jwtHelper: JwtHelper = new JwtHelper();
-        let profile = jwtHelper.decodeToken(model.access_token) as Profile
+        let profile = jwtHelper.decodeToken(model.access_token) as ProfileModel
 
         localStorage.setItem("access_token", model.access_token);
         localStorage.setItem("refresh_token", model.refresh_token);
@@ -116,7 +116,7 @@ export class AuthService {
     }
 
 
-    private getTokens(data: any, grantType: string): Promise<TokenResponseModel> {
+    private getTokens(data: any, grantType: string): Promise<TokenResult> {
         //data can be any since it can either be a refresh token or login details
         //The request for tokens must be x-www-form-urlencoded IE: parameter string, it cant be json
 
@@ -130,9 +130,9 @@ export class AuthService {
 
         return this.http.post("api/token",  this.encodeObjectToParams(data), options)
             .toPromise()
-            .then((res) => res.json() as TokenResponseModel)
+            .then((res) => res.json() as TokenResult)
             .catch(res => {
-                let model = res.json() as BadTokenRequestResponse
+                let model = res.json() as BadTokenRequestResult
                 return Promise.reject(model.error_description)
             });
     }
