@@ -6,5 +6,5 @@ export interface ProfileModel{
     exp: number;
     iss: string;
     nameid: string;
-    unique_name;
+    unique_name: string;
 }

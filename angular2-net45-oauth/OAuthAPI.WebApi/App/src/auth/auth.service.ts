@@ -14,20 +14,11 @@ import {ProfileModel} from "./models/profile-model";
 
 @Injectable()
 export class AuthService {
-    constructor(private http: Http,
-           //     private authHttp: AuthHttp
+    constructor(private http: Http
     ) {}
 
     logout(){
         this.removeTokens();
-    }
-
-    isAuthenticated(): Promise<boolean>{
-        return this.validateToken()
-            .then(
-                () => true,
-                () => false
-            );
     }
 
     login(user: LoginModel): Promise<void>  {
@@ -56,32 +47,15 @@ export class AuthService {
 
 
     tryGetAccessToken():Promise<string>{
-        return this.validateToken()
-        //if it's valid we know we can grab it
-            .then(() => this.retrieveAccessToken(),
-                (res)=> Promise.reject(res))
-
-    }
-
-
-    validateToken(): Promise<void> {
-        let jwtHelper: JwtHelper = new JwtHelper();
-        let token = this.retrieveAccessToken();
-
-        if(!token){
-            return Promise.reject("Token does not exist")
-        }
-
-        if(!jwtHelper.isTokenExpired(token)) {
-            //fires if it's not empty or expired
-            return Promise.resolve()
+        if(this.isLoggedIn()){
+            return Promise.resolve(this.retrieveAccessToken());
         }
 
         return this.getTokens({ refresh_token: this.retrieveRefreshToken() }, "refresh_token")
             .then(res =>{
                 //we good to reset the token here
                 this.storeTokens(res);
-                Promise.resolve();
+                return Promise.resolve(this.retrieveAccessToken());
 
             }, () =>{
                 //This should only occur when the refresh token has expired so we're good to redirect here
@@ -89,6 +63,18 @@ export class AuthService {
                 this.removeTokens();
                 return Promise.reject("refresh token has expired")
             });
+    }
+
+
+    isLoggedIn(): boolean {
+        let jwtHelper: JwtHelper = new JwtHelper();
+        let token = this.retrieveAccessToken();
+
+        if(!token){
+            return false;
+        }
+
+        return !jwtHelper.isTokenExpired(token)
     }
 
     private storeTokens(model: TokenResult): void{
@@ -102,7 +88,7 @@ export class AuthService {
     private removeTokens(): void {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
-        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("profile");
     }
 
     private retrieveAccessToken(): string {
@@ -111,8 +97,8 @@ export class AuthService {
     private retrieveRefreshToken(): string {
         return localStorage.getItem("refresh_token");
     }
-    private retrieveProfile(){
-        return JSON.parse(localStorage.getItem("refresh_token"));
+    retrieveProfile(){
+        return JSON.parse(localStorage.getItem("profile"));
     }
 
 

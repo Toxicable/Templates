@@ -3,11 +3,15 @@
  */
 import { Component } from '@angular/core'
 import {AuthService} from "../../auth/auth.service";
+import {ProfileService} from "../../auth/profile/profile.service";
 
 @Component({
     selector: 'navigation',
-    templateUrl: './navigation.component.html'
+    templateUrl: './navigation.component.html',
+    styles: [require('./navigation.component.scss')]
 })
 export class NavigationComponent {
-    constructor(private auth: AuthService){}
+    constructor(private auth: AuthService,
+                private profile: ProfileService
+    ){}
 }

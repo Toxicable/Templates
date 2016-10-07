@@ -12,7 +12,7 @@ import {ValidationService} from "../../app/validation/validation.service";
 })
 export class LoginComponent implements OnInit{
     constructor(private formBuilder: FormBuilder,
-                private authService: AuthService,
+                private auth: AuthService,
                 private alertService: AlertService
     ) { }
 
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit{
     }
 
     onSubmit(){
-        this.authService.login(this.loginForm.value).then(res => {
+        this.auth.login(this.loginForm.value).then(res => {
             this.alertService.sendSuccess("Successfully logged in")
         }, res => this.alertService.sendError(res))
     }

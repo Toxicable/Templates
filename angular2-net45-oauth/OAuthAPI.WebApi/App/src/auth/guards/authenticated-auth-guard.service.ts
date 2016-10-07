@@ -16,7 +16,7 @@ export class AuthenticatedAuthGuard implements CanActivate {
     ) {}
 
     canActivate() {
-        if(this.auth.isAuthenticated()) {
+        if(this.auth.isLoggedIn()) {
             return true;
         } else {
             this.alertService.sendError("Unauthorized");
