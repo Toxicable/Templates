@@ -18,7 +18,7 @@ export class SuperAdminAuthGuard implements CanActivate {
         return this.authGuard.isInRole('SuperAdmin').then(
             () => true,
             () => {
-                this.alertService.sendAlert("Unauthorized");
+                this.alertService.sendError("Unauthorized");
                 this.router.navigate(['unauthorized']);
                 return false;
             }

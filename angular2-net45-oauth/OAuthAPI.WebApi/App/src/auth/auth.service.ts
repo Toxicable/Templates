@@ -3,7 +3,7 @@
  */
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response} from '@angular/http';
-import { LoginModel } from './models/login-model';
+import { LoginModel } from './models/login';
 import { RegisterModel } from './models/register-model';
 import {BadRequestResponse} from "./models/bad-request-response";
 import {BadTokenRequestResponse} from "./models/bad-token-request-response";

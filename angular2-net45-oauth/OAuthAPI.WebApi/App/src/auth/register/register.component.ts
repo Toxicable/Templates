@@ -36,11 +36,11 @@ export class RegisterComponent  implements OnInit {
         //TODO: find better way to do this :/
         this.authService.register(data)
             .then( x => {
-                    this.alertService.sendAlert("Successfully registered");
+                    this.alertService.sendSuccess("Successfully registered");
                     this.router.navigateByUrl("/auth/login");
                 },
                 x => {
-                    this.alertService.sendAlert("And error has occured: " + x);
+                    this.alertService.sendError("And error has occured: " + x);
                 }
             )
     };

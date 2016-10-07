@@ -4,6 +4,8 @@
 import {Component, OnInit, OnDestroy} from '@angular/core'
 import {AlertService} from "./alert.service";
 import {Subscription} from "rxjs";
+import {Alert} from "./models/alert.model";
+import {AlertType} from "./models/AlertTypes";
 
 @Component({
     selector: 'alert',
@@ -14,15 +16,27 @@ export class AlertComponent implements OnInit, OnDestroy{
     constructor(private alertService: AlertService){}
 
     subscription: Subscription;
-    alertText: string = "";
-
-    ngOnInit(): void {
-        this.subscription = this.alertService.alertAnnounced$.subscribe(msg =>
-            this.alertText = msg
-        )
-    }
+    alerts: Alert[]= [];
+    id: number = 1;
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
+
+    ngOnInit(): void {
+        this.subscription = this.alertService.alertAnnounced$.subscribe((alert) => {
+                alert.id = this.id;
+                this.id ++;
+
+                this.alerts.push(alert);
+                setTimeout(() =>{
+                    let index = this.alerts.findIndex( a => a.id == this.id - 1);
+                    this.alerts.splice(index, 1);
+                    this.id --;
+
+                }, 5000);
+            });
+    }
+
+
 }

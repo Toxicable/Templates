@@ -20,9 +20,9 @@ constructor(    private router: Router,
     testResult: string = "";
     testAuth(){
         this.authHttp.get("api/accounts/isauthenticated")
-            .then(x =>console.log(x),
+            .then(x =>this.alertService.sendSuccess("all goods"),
             res => {
-                this.alertService.sendAlert("Your are not logged in");
+                this.alertService.sendWarning("Your are not logged in");
                 //this.router.navigateByUrl("/auth/login")
             })
     }

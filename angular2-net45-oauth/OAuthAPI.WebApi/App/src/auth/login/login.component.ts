@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { LoginModel } from '../models/login-model'
+import { LoginModel } from '../models/login'
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlertService} from "../../app/alert/alert.service";
 import {ValidationService} from "../../app/validation/validation.service";
@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit{
 
     onSubmit(){
         this.authService.login(this.loginForm.value).then(res => {
-            this.alertService.sendAlert("Successfully logged in")
-        }, res => this.alertService.sendAlert(res))
+            this.alertService.sendSuccess("Successfully logged in")
+        }, res => this.alertService.sendError(res))
     }
 
 }

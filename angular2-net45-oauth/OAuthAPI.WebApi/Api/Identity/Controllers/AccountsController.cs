@@ -23,23 +23,6 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> IsAuthenticated()
         {
-            // Create the email object first, then add the properties.
-            SendGridMessage myMessage = new SendGridMessage();
-            myMessage.AddTo("fabianwiles@live.com");
-            myMessage.From = new MailAddress("fabianwiles@live.com", "John Smith");
-            myMessage.Subject = "Testing the SendGrid Library";
-            myMessage.Html = "<p><a href=\"http://www.example.com\">Hello World Link!</a></p>";
-            myMessage.Text = "Hello World!";
-
-            // true indicates that links in plain text portions of the email 
-            // should also be overwritten for link tracking purposes. 
-            myMessage.EnableClickTracking(true);
-            // Create an Web transport for sending email.
-            var transportWeb = new Web("5829f5a8-4b83-41ab-afd4-fc22bbfd5116");
-
-            // Send the email, which returns an awaitable task.
-            await transportWeb.DeliverAsync(myMessage);
-
             return Ok("true");
         }
 
