@@ -94,18 +94,33 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
                 return GetIdentityErrorResult(addUserResult);
             }
 
-            string code = await this.AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-
-            var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code = code }));
-
-            //await this.AppUserManager.SendEmailAsync(user.Id,
-            //                                        "Confirm your account",
-            //                                        "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
             Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
 
             return Created(locationHeader, _mapper.Map<UserViewModel>(user));
 
+        }
+
+        [HttpGet]
+        [Route("SendConfirmEmail")]
+        public async Task<IHttpActionResult> SendConfirmEmail()
+        {
+            var userId = User.Identity.GetUserId();
+            string code = await this.AppUserManager.GenerateEmailConfirmationTokenAsync(userId);
+
+            var callbackUrl = new Uri(Url. Link("ConfirmEmailRoute", new {  userId, code }));
+
+            //var othid = "sasdfs%sdfs324sdf";
+            //code = "asdfs%sdfsdf0as";
+
+
+            var url = $"{callbackUrl.Scheme}://{callbackUrl.Authority}/auth/verify?userId={userId}&code={code}";
+
+            var body = $@"Please confirm your account by clicking <a href='{url}'>here</a>";
+
+            //TODO: better emails pls
+            await AppUserManager.SendEmailAsync(userId, "Confirm your account", body);
+                                                    
+            return Ok();
         }
 
         [AllowAnonymous]
@@ -119,16 +134,15 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await this.AppUserManager.ConfirmEmailAsync(userId, code);
+            IdentityResult result = await AppUserManager.ConfirmEmailAsync(userId, code);
 
             if (result.Succeeded)
             {
                 return Ok();
             }
-            else
-            {
-                return GetIdentityErrorResult(result);
-            }
+            
+            return GetIdentityErrorResult(result);
+            
         }
 
         [Authorize]

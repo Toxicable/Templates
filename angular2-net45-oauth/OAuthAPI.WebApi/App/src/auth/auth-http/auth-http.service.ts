@@ -11,26 +11,23 @@ import {AuthHttpResult} from "../models/auth-http-result";
 export class AuthHttp {
     constructor(private http: Http, private authService: AuthService) {}
 
-    get(endpoint: string): Promise<Response>{
-
-        return this.authService.tryGetAccessToken()
-            .then( (token: string) =>{
+    get(endpoint: string): Observable<Response>{
+       return this.authService.tryGetAccessToken()
+            .mergeMap( (token: string) =>{
                     let options = this.getHeaders(token);
-                    return this.http.get( endpoint, options).toPromise();
+                    return this.http.get( endpoint, options);
+                });
 
-                },
-                res => Promise.reject("refresh_token expired")
-            )
     }
 
-    post(endpoint: any, data: any): Promise<Response> {
+    post(endpoint: any, data: any): Observable<Response> {
 
         return this.authService.tryGetAccessToken()
-            .then( (token: string) =>{
+            .mergeMap( (token: string) =>{
                     let options = this.getHeaders(token);
-                    return this.http.post( endpoint, data, options).toPromise();
-                },
-                res => Promise.reject("refresh_token expired")
+                    return this.http.post( endpoint, data, options);
+                }
+                //error => Observable.throw("refresh_token expired")
             )
 
     }

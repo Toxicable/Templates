@@ -11,7 +11,7 @@ import { HttpModule} from "@angular/http";
 import { authRouting } from './auth.routing'
 import {ControlMessages} from "../app/validation/control-messages.component";
 import {AuthHttp} from "./auth-http/auth-http.service";
-import {AuthGuardService} from "./guards/auth-guard.service";
+import {VerifyComponent} from "./verify/verify.component";
 
 @NgModule({
     imports: [
@@ -24,8 +24,9 @@ import {AuthGuardService} from "./guards/auth-guard.service";
         AuthComponent,
         LoginComponent,
         RegisterComponent,
-        ControlMessages
+        ControlMessages,
+        VerifyComponent
     ],
-    providers: [AuthService, AuthHttp, AuthGuardService],
+    providers: [AuthService, AuthHttp],
 })
 export class AuthModule { }

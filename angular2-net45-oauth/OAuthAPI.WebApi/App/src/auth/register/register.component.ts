@@ -6,6 +6,7 @@ import {ValidationService} from "../../app/validation/validation.service";
 import {AlertComponent} from "../../app/alert/alert.component";
 import {AlertService} from "../../app/alert/alert.service";
 import {Router} from "@angular/router";
+import {BadRequestResult} from "../models/bad-request-result";
 
 @Component({
     selector: 'register',
@@ -35,13 +36,11 @@ export class RegisterComponent  implements OnInit {
         let data = Object.assign({}, this.registerForm.value, this.registerForm.value.passwords);
         //TODO: find better way to do this :/
         this.authService.register(data)
-            .then( x => {
+            .subscribe( x => {
                     this.alertService.sendSuccess("Successfully registered");
                     this.router.navigateByUrl("/auth/login");
                 },
-                x => {
-                    this.alertService.sendError("And error has occured: " + x);
-                }
+                error => this.alertService.sendError(error)
             )
     };
 

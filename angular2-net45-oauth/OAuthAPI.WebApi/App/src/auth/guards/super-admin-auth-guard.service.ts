@@ -5,23 +5,24 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CanActivate } from '@angular/router';
 import {AlertService} from "../../app/alert/alert.service";
-import {AuthGuardService} from "./auth-guard.service";
+import {ProfileService} from "../profile/profile.service";
 
 @Injectable()
 export class SuperAdminAuthGuard implements CanActivate {
-    constructor(private authGuard: AuthGuardService,
-                private router: Router,
-                private alertService: AlertService
+
+    constructor(private router: Router,
+                private alertService: AlertService,
+                private profile: ProfileService
     ) {}
 
-    canActivate() {
-        return this.authGuard.isInRole('SuperAdmin').then(
-            () => true,
-            () => {
-                this.alertService.sendError("Unauthorized");
-                this.router.navigate(['unauthorized']);
-                return false;
-            }
-        );
+    canActivate(): boolean {
+
+        if(this.profile.isInRole("SuperAdmin")){
+            return true
+        }else{
+            this.alertService.sendError("Unauthorized");
+            this.router.navigate(['unauthorized']);
+            return false;
+        }
     }
 }

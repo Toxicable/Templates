@@ -7,4 +7,6 @@ export interface ProfileModel{
     iss: string;
     nameid: string;
     unique_name: string;
+    email_confirmed: boolean;
+    role: string[];
 }

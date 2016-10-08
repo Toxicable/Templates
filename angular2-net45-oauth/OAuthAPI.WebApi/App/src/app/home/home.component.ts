@@ -5,6 +5,7 @@ import { Component } from '@angular/core'
 import {Router} from "@angular/router";
 import {AlertService} from "../alert/alert.service";
 import {AuthHttp} from "../../auth/auth-http/auth-http.service";
+import {AuthService} from "../../auth/auth.service";
 
 
 @Component({
@@ -14,16 +15,25 @@ import {AuthHttp} from "../../auth/auth-http/auth-http.service";
 export class HomeComponent {
 constructor(    private router: Router,
                 private alertService: AlertService,
-                private authHttp: AuthHttp
+                private authHttp: AuthHttp,
+                private auth: AuthService
 
     ){}
-    testResult: string = "";
-    testAuth(){
+
+    testAuth() {
         this.authHttp.get("api/accounts/isauthenticated")
-            .then(x =>this.alertService.sendSuccess("all goods"),
-            res => {
-                this.alertService.sendWarning("Your are not logged in");
-                //this.router.navigateByUrl("/auth/login")
-            })
+            .subscribe(
+                x => this.alertService.sendSuccess("all goods"),
+                error => this.alertService.sendWarning("Your are not logged in")
+            )
     }
+
+    testToken(){
+        this.auth.tryGetAccessToken()
+            .subscribe(
+                res => console.log(res)
+            )
+    }
+
+
 }

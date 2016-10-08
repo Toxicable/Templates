@@ -27,7 +27,6 @@ namespace OAuthAPI.WebApi.Api.Identity.Managers
             // Configure validation logic for usernames
             appUserManager.UserValidator = new UserValidator<ApplicationUser>(appUserManager)
             {
-                AllowOnlyAlphanumericUserNames = true,
                 RequireUniqueEmail = true
             };
 

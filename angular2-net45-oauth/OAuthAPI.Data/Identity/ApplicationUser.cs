@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -13,11 +14,14 @@ namespace OAuthAPI.Data.Identity
         [Required]
         public DateTimeOffset AccountCreated { get; set; }
 
+        public ICollection<IdentityRole> ActualRoles { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
             // Add custom user claims here
-            
+            userIdentity.AddClaim(new Claim("email_confirmed", EmailConfirmed.ToString()));
+
             return userIdentity;
         }
     }

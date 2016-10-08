@@ -11,6 +11,8 @@ import {AuthHttp } from "./auth-http/auth-http.service";
 import {TokenResult} from "./models/token-result";
 import {LoginModel} from "./models/login-model";
 import {ProfileModel} from "./models/profile-model";
+import { Observable }     from 'rxjs/Observable';
+import {Subject} from "rxjs";
 
 @Injectable()
 export class AuthService {
@@ -21,50 +23,53 @@ export class AuthService {
         this.removeTokens();
     }
 
-    login(user: LoginModel): Promise<void>  {
+    login(user: LoginModel): Observable<boolean>  {
 
-        return this.getTokens(user, "password").then(res => {
-                this.storeTokens(res as TokenResult);
-                return Promise.resolve();
-            },
-            res =>{
-                return Promise.reject(res);
+        return this.getTokens(user, "password")
+            .map(res => {
+                this.storeTokens(res.json() as TokenResult);
+                return true;
+            })
+            .catch( errorResult => {
+                let errorModel = errorResult.json() as BadTokenRequestResult;
+                console.log(errorModel.error_description)
+                return Observable.throw(errorModel.error_description)
             });
     }
 
-    register(data: RegisterModel): Promise<void> {
+    register(data: RegisterModel): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post("api/accounts/create", data, options)
-            .toPromise()
-            .then((res: Response) => Promise.resolve())
-            .catch((res: Response) =>{
-                let model = res.json() as BadRequestResult;
-                return Promise.reject(model.modelState[""][0]);
+            .map(res => res)
+            .catch( errorResult => {
+                console.log(errorResult)
+                let errorModel = errorResult.json() as BadRequestResult;
+                return Observable.throw(errorModel.modelState[""][0])
             });
+
     }
 
 
-    tryGetAccessToken():Promise<string>{
+    tryGetAccessToken():Observable<string>{
         if(this.isLoggedIn()){
-            return Promise.resolve(this.retrieveAccessToken());
+            return Observable.of(this.retrieveAccessToken());
         }
 
-        return this.getTokens({ refresh_token: this.retrieveRefreshToken() }, "refresh_token")
-            .then(res =>{
-                //we good to reset the token here
-                this.storeTokens(res);
-                return Promise.resolve(this.retrieveAccessToken());
-
-            }, () =>{
+        return  this.getTokens({ refresh_token: this.retrieveRefreshToken() }, "refresh_token")
+            .mergeMap(
+                res => {
+                    //we good to reset the token here
+                    this.storeTokens(res.json() as TokenResult);
+                    return this.retrieveAccessToken();
+                }
+              //  ,
                 //This should only occur when the refresh token has expired so we're good to redirect here
                 //we should remove it though so we don't have to check again later
-                this.removeTokens();
-                return Promise.reject("refresh token has expired")
-            });
+           //     error => Observable.throw("refresh token has expired")
+            )
     }
-
 
     isLoggedIn(): boolean {
         let jwtHelper: JwtHelper = new JwtHelper();
@@ -80,7 +85,7 @@ export class AuthService {
     private storeTokens(model: TokenResult): void{
         let jwtHelper: JwtHelper = new JwtHelper();
         let profile = jwtHelper.decodeToken(model.access_token) as ProfileModel
-
+console.log(profile);
         localStorage.setItem("access_token", model.access_token);
         localStorage.setItem("refresh_token", model.refresh_token);
         localStorage.setItem("profile", JSON.stringify(profile));
@@ -97,12 +102,12 @@ export class AuthService {
     private retrieveRefreshToken(): string {
         return localStorage.getItem("refresh_token");
     }
-    retrieveProfile(){
+    retrieveProfile(): ProfileModel{
         return JSON.parse(localStorage.getItem("profile"));
     }
 
 
-    private getTokens(data: any, grantType: string): Promise<TokenResult> {
+    private getTokens(data: any, grantType: string): Observable<Response> {
         //data can be any since it can either be a refresh token or login details
         //The request for tokens must be x-www-form-urlencoded IE: parameter string, it cant be json
 
@@ -115,12 +120,7 @@ export class AuthService {
         });
 
         return this.http.post("api/token",  this.encodeObjectToParams(data), options)
-            .toPromise()
-            .then((res) => res.json() as TokenResult)
-            .catch(res => {
-                let model = res.json() as BadTokenRequestResult
-                return Promise.reject(model.error_description)
-            });
+            .catch( error => Observable.throw("refresh token has expired"))
     }
 
     private encodeObjectToParams(obj: any): string {

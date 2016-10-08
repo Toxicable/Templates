@@ -26,9 +26,11 @@ export class LoginComponent implements OnInit{
     }
 
     onSubmit(){
-        this.auth.login(this.loginForm.value).then(res => {
-            this.alertService.sendSuccess("Successfully logged in")
-        }, res => this.alertService.sendError(res))
+        this.auth.login(this.loginForm.value)
+            .subscribe(
+                res => this.alertService.sendSuccess("Successfully logged in"),
+                res => this.alertService.sendError(res)
+            )
     }
 
 }

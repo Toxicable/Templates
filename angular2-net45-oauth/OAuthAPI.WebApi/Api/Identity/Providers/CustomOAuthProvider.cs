@@ -74,7 +74,6 @@ namespace OAuthAPI.WebApi.Api.Identity.Providers
 
             context.Validated();
             return Task.FromResult<object>(null);
-            return Task.FromResult<object>(null);
         }
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
@@ -95,11 +94,6 @@ namespace OAuthAPI.WebApi.Api.Identity.Providers
                 return;
             }
 
-            if (!user.EmailConfirmed)
-            {
-                context.SetError("invalid_grant", "User did not confirm email.");
-                return;
-            }
 
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, "JWT");
 

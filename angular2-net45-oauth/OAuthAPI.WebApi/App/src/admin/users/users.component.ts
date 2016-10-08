@@ -12,6 +12,7 @@ export class UsersComponent implements OnInit{
     constructor(private authHttp: AuthHttp) { }
     ngOnInit(): void {
         this.authHttp.get('api/accounts/users')
+            .toPromise()
             .then( res => this.users = res.json() )
     }
     users : any[];
