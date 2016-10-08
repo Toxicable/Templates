@@ -14,6 +14,8 @@ import {AlertService}            from "./alert/alert.service";
 import {AuthHttp}                from "../auth/auth-http/auth-http.service";
 import {AdminModule}             from "../admin/admin.module";
 import {ProfileService}          from "../auth/profile/profile.service";
+import {LoadingBarComponent} from "./loading-bar/loading-bar.component";
+import {LoadingBarService} from "./loading-bar/loading-bar.service";
 
 
 @NgModule({
@@ -28,14 +30,15 @@ import {ProfileService}          from "../auth/profile/profile.service";
         HomeComponent,
         NotFoundComponent,
         NavigationComponent,
-        AlertComponent
-
+        AlertComponent,
+        LoadingBarComponent
     ],
     providers:    [
         AuthService,
         AuthHttp,
         AlertService,
-        ProfileService
+        ProfileService,
+        LoadingBarService
     ],
     bootstrap:    [ AppComponent ]
 })
