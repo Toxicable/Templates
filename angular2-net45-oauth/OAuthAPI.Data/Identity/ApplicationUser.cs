@@ -14,7 +14,8 @@ namespace OAuthAPI.Data.Identity
         [Required]
         public DateTimeOffset AccountCreated { get; set; }
 
-        public ICollection<IdentityRole> ActualRoles { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {

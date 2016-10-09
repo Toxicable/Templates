@@ -12,6 +12,11 @@ namespace OAuthAPI.WebApi.Api.Services
     {
         public async Task SendAsync(IdentityMessage message)
         {
+            await SendViaSmtp(message);
+        }
+
+        public async Task SendViaSendGrid(IdentityMessage message)
+        {
             // Create the email object first, then add the properties.
             SendGridMessage myMessage = new SendGridMessage();
             myMessage.AddTo(message.Destination);
@@ -30,6 +35,27 @@ namespace OAuthAPI.WebApi.Api.Services
 
             // Send the email, which returns an awaitable task.
             await transportWeb.DeliverAsync(myMessage);
+        }
+
+        public async Task SendViaSmtp(IdentityMessage message)
+        {
+            MailMessage mailMsg = new MailMessage();
+            mailMsg.To.Add(new MailAddress(message.Destination));
+            // From
+            MailAddress mailAddress = new MailAddress("fabianwiles@live.com", "OAuth Api mailer");
+            mailMsg.From = mailAddress;
+
+            //Content
+            mailMsg.Subject = message.Subject;
+            mailMsg.Body = message.Body;
+            mailMsg.IsBodyHtml = true;
+
+            //SmtpClient
+            SmtpClient smtpConnection = new SmtpClient("smtp-mail.outlook.com", 587);
+            smtpConnection.Credentials = new System.Net.NetworkCredential("fabianwiles@live.com", "luv86tox7");
+
+            smtpConnection.EnableSsl = true;
+            await smtpConnection.SendMailAsync(mailMsg);
         }
     }
 }

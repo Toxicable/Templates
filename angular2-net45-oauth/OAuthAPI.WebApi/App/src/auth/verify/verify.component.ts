@@ -7,6 +7,8 @@ import {AuthHttp} from "../auth-http/auth-http.service";
 import {AlertService} from "../../app/alert/alert.service";
 import {ActivatedRoute} from "@angular/router";
 import {Http} from "@angular/http";
+import {LoadingBarService} from "../../app/loading-bar/loading-bar.service";
+import {AuthService} from "../auth.service";
 
 @Component({
     selector: 'verify',
@@ -17,12 +19,14 @@ export class VerifyComponent implements OnInit{
                 private authHttp: AuthHttp,
                 private alert: AlertService,
                 private route: ActivatedRoute,
-                private http: Http
+                private http: Http,
+                private loadingBar: LoadingBarService,
+                private auth: AuthService
     ){}
     ngOnInit(): void {
         if(!this.profile.isEmailConfirmed()){
             let code = this.route.snapshot.queryParams['code'];
-            let id = this.route.snapshot.queryParams['id'];
+            let id = this.route.snapshot.queryParams['userId'];
             if(code && id){
                 this.confirmEmail(code, id)
             }else{
@@ -32,18 +36,28 @@ export class VerifyComponent implements OnInit{
     }
 
     confirmEmail(code: string, id: string): void{
+        code = encodeURIComponent(code);
+
         this.http.get("api/accounts/ConfirmEmail?userId=" + id + "&code=" + code)
-            .toPromise().then(
-                (res) => this.alert.sendSuccess("Your email is confirmed"),
-            (res) => this.alert.sendError("an error occured soz")
+            .subscribe(
+                (res) => {
+                    this.auth.refreshTokens().subscribe(
+                        () => this.alert.sendSuccess("Your email has been confirmed"),
+                        (res) => this.alert.sendError("an error occured soz")
+                    );
+                },
+                (res) => this.alert.sendError("an error occured soz")
         )
     }
 
     sendConfirmationEmail(): void{
+        this.loadingBar.isLoading()
+
         this.authHttp.get("api/accounts/SendConfirmEmail")
             .subscribe(
-            () => this.alert.sendSuccess("A confirmation email has been send"),
-            (error) => this.alert.sendError(error)
+                () => this.alert.sendSuccess("A confirmation email has been send"),
+                (error) => this.alert.sendError(error),
+                () => this.loadingBar.doneLoading()
         )
     }
 

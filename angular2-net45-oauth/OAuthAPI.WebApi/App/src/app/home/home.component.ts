@@ -35,5 +35,9 @@ constructor(    private router: Router,
             )
     }
 
+    refreshTokens() {
+        this.auth.refreshTokens()
+            .subscribe()
+    }
 
 }

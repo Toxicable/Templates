@@ -25,12 +25,12 @@ namespace OAuthAPI.Data.Migrations
                 UserName = "fabianwiles@live.com",
                 Email = "fabianwiles@live.com",
                 EmailConfirmed = true,
-                AccountCreated = DateTime.Now.AddYears(-3)
+                AccountCreated = DateTime.Now
             };
 
-            manager.Create(user, "123456");
+            var t = manager.Create(user, "123456");
 
-            if (roleManager.Roles.Count() == 0)
+            if (!roleManager.Roles.Any())
             {
                 roleManager.Create(new IdentityRole { Name = "SuperAdmin" });
                 roleManager.Create(new IdentityRole { Name = "Admin" });
@@ -39,7 +39,24 @@ namespace OAuthAPI.Data.Migrations
 
             var adminUser = manager.FindByName("fabianwiles@live.com");
 
-            manager.AddToRoles(adminUser.Id, new string[] { "SuperAdmin", "Admin" });
+            manager.AddToRoles(adminUser.Id, "SuperAdmin", "Admin");
+
+            if (!context.Clients.Any())
+            {
+                context.Clients.Add(new Client
+                {
+                    Active = true,
+                    AllowedOrigin = "http://localhost:44310/",
+                    Id = "AngularApp",
+                    Name = "Our Angular Application front end",
+                    RefreshTokenLifeTime = 10,
+                    Secrect = Convert.ToBase64String(Guid.NewGuid().ToByteArray()),
+                    Type = ApplicationType.JavaScript
+                });
+
+                context.SaveChanges();
+            }
+
         }
     }
 }

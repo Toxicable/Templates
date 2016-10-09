@@ -112,12 +112,11 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
             //var othid = "sasdfs%sdfs324sdf";
             //code = "asdfs%sdfsdf0as";
 
+            var urlCode = Uri.EscapeDataString(code);
+            var url = $"{callbackUrl.Scheme}://{callbackUrl.Authority}/auth/verify?userId={userId}&code={urlCode}";
 
-            var url = $"{callbackUrl.Scheme}://{callbackUrl.Authority}/auth/verify?userId={userId}&code={code}";
-
-            var body = $@"Please confirm your account by clicking <a href='{url}'>here</a>";
-
-            //TODO: better emails pls
+            var body = $"Please confirm your account by clicking <a href=\"{url}\">here</a>";
+            
             await AppUserManager.SendEmailAsync(userId, "Confirm your account", body);
                                                     
             return Ok();
@@ -128,7 +127,8 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
         [Route("ConfirmEmail", Name = "ConfirmEmailRoute")]
         public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string code = "")
         {
-            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code))
+            var escapedCode  = Uri.UnescapeDataString(code);
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(escapedCode))
             {
                 ModelState.AddModelError("", "User Id and Code are required");
                 return BadRequest(ModelState);

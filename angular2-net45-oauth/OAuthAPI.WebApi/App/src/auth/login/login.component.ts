@@ -5,6 +5,7 @@ import { LoginModel } from '../models/login-model'
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlertService} from "../../app/alert/alert.service";
 import {ValidationService} from "../../app/validation/validation.service";
+import {LoadingBarService} from "../../app/loading-bar/loading-bar.service";
 
 @Component({
     selector: 'login',
@@ -13,7 +14,8 @@ import {ValidationService} from "../../app/validation/validation.service";
 export class LoginComponent implements OnInit{
     constructor(private formBuilder: FormBuilder,
                 private auth: AuthService,
-                private alertService: AlertService
+                private alertService: AlertService,
+                private loadingBar: LoadingBarService
     ) { }
 
     loginForm: FormGroup;
@@ -26,10 +28,12 @@ export class LoginComponent implements OnInit{
     }
 
     onSubmit(){
+        this.loadingBar.isLoading();
         this.auth.login(this.loginForm.value)
             .subscribe(
                 res => this.alertService.sendSuccess("Successfully logged in"),
-                res => this.alertService.sendError(res)
+                res => this.alertService.sendError(res),
+                () => this.loadingBar.doneLoading()
             )
     }
 

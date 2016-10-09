@@ -1,10 +1,29 @@
 <h3>Users</h3>
 <div class="users">
-    <div *ngIf="users" class="users__user">
+    <div *ngIf="users" class="users__user" >
         <div *ngFor="let user of users">
-            {{user | json}}
-            {{user.userName}}
-            {{user.emailConfirmed}}
+            <div>
+                {{user.id}}
+            </div>
+            <div>
+                {{user.userName}}
+            </div>
+            <div>
+                {{user.emailConfirmed}}
+            </div>
+            <div>
+                {{user.joinDate}}
+            </div>
+            <div>
+                {{user.url}}
+            </div>
+            <div>
+                {{user.firstName}}
+            </div>
+            <div>
+                {{user.lastName}}
+            </div>
+
         </div>
     </div>
 </div>

@@ -32,7 +32,6 @@ export class AuthService {
             })
             .catch( errorResult => {
                 let errorModel = errorResult.json() as BadTokenRequestResult;
-                console.log(errorModel.error_description)
                 return Observable.throw(errorModel.error_description)
             });
     }
@@ -44,7 +43,6 @@ export class AuthService {
         return this.http.post("api/accounts/create", data, options)
             .map(res => res)
             .catch( errorResult => {
-                console.log(errorResult)
                 let errorModel = errorResult.json() as BadRequestResult;
                 return Observable.throw(errorModel.modelState[""][0])
             });
@@ -57,17 +55,12 @@ export class AuthService {
             return Observable.of(this.retrieveAccessToken());
         }
 
-        return  this.getTokens({ refresh_token: this.retrieveRefreshToken() }, "refresh_token")
+        return this.refreshTokens()
             .mergeMap(
                 res => {
-                    //we good to reset the token here
                     this.storeTokens(res.json() as TokenResult);
                     return this.retrieveAccessToken();
                 }
-              //  ,
-                //This should only occur when the refresh token has expired so we're good to redirect here
-                //we should remove it though so we don't have to check again later
-           //     error => Observable.throw("refresh token has expired")
             )
     }
 
@@ -82,10 +75,20 @@ export class AuthService {
         return !jwtHelper.isTokenExpired(token)
     }
 
+    refreshTokens(): Observable<Response>{
+        return this.getTokens({ refresh_token: this.retrieveRefreshToken() }, "refresh_token")
+            .map( res => {
+                console.log(res.json())
+                this.storeTokens(res.json() as TokenResult)
+            })
+            .catch( error => Observable.throw("refresh token has expired"))
+    }
+
     private storeTokens(model: TokenResult): void{
         let jwtHelper: JwtHelper = new JwtHelper();
         let profile = jwtHelper.decodeToken(model.access_token) as ProfileModel
-console.log(profile);
+        console.log(profile);
+
         localStorage.setItem("access_token", model.access_token);
         localStorage.setItem("refresh_token", model.refresh_token);
         localStorage.setItem("profile", JSON.stringify(profile));
@@ -106,7 +109,6 @@ console.log(profile);
         return JSON.parse(localStorage.getItem("profile"));
     }
 
-
     private getTokens(data: any, grantType: string): Observable<Response> {
         //data can be any since it can either be a refresh token or login details
         //The request for tokens must be x-www-form-urlencoded IE: parameter string, it cant be json
@@ -120,7 +122,6 @@ console.log(profile);
         });
 
         return this.http.post("api/token",  this.encodeObjectToParams(data), options)
-            .catch( error => Observable.throw("refresh token has expired"))
     }
 
     private encodeObjectToParams(obj: any): string {

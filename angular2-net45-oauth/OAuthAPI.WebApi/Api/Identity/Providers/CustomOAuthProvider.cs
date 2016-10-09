@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
@@ -101,9 +103,6 @@ namespace OAuthAPI.WebApi.Api.Identity.Providers
             {
                 {
                     "as:client_id", context.ClientId ?? string.Empty
-                },
-                {
-                    "userName", context.UserName
                 }
             });
 
@@ -123,7 +122,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Providers
             return Task.FromResult<object>(null);
         }
 
-        public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
+        public override async Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
         {
             var originalClient = context.Ticket.Properties.Dictionary["as:client_id"];
             var currentClient = context.ClientId;
@@ -131,17 +130,18 @@ namespace OAuthAPI.WebApi.Api.Identity.Providers
             if (originalClient != currentClient)
             {
                 context.SetError("invalid_clientId", "Refresh token is issued to a different clientId.");
-                return Task.FromResult<object>(null);
             }
 
+            var id = context.Ticket.Identity.GetUserId();
+
             // Change auth ticket for refresh token requests
-            var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
-            newIdentity.AddClaim(new Claim("newClaim", "newValue"));
+            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+            var user = await userManager.FindByIdAsync(id);
+
+            var newIdentity = await user.GenerateUserIdentityAsync(userManager, "JWT");
 
             var newTicket = new AuthenticationTicket(newIdentity, context.Ticket.Properties);
             context.Validated(newTicket);
-
-            return Task.FromResult<object>(null);
         }
     }
 }
