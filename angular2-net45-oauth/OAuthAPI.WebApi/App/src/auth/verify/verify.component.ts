@@ -3,12 +3,12 @@
  */
 import {Component, OnInit} from "@angular/core";
 import {ProfileService} from "../profile/profile.service";
-import {AuthHttp} from "../auth-http/auth-http.service";
 import {AlertService} from "../../app/alert/alert.service";
 import {ActivatedRoute} from "@angular/router";
 import {Http} from "@angular/http";
 import {LoadingBarService} from "../../app/loading-bar/loading-bar.service";
 import {AuthService} from "../auth.service";
+import {AuthHttp} from "angular2-jwt";
 
 @Component({
     selector: 'verify',

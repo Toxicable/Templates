@@ -11,16 +11,17 @@ import {AuthHttpResult} from "../models/auth-http-result";
 export class AuthHttp {
     constructor(private http: Http, private authService: AuthService) {}
 
-    get(endpoint: string): Observable<Response>{
+    private get(endpoint: string): Observable<Response>{
        return this.authService.tryGetAccessToken()
             .mergeMap( (token: string) =>{
+                    debugger
                     let options = this.getHeaders(token);
                     return this.http.get( endpoint, options);
                 });
 
     }
 
-    post(endpoint: any, data: any): Observable<Response> {
+    private post(endpoint: any, data: any): Observable<Response> {
 
         return this.authService.tryGetAccessToken()
             .mergeMap( (token: string) =>{

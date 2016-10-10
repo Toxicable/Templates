@@ -4,8 +4,8 @@
 import { Component } from '@angular/core'
 import {Router} from "@angular/router";
 import {AlertService} from "../alert/alert.service";
-import {AuthHttp} from "../../auth/auth-http/auth-http.service";
 import {AuthService} from "../../auth/auth.service";
+import {AuthHttp} from "angular2-jwt";
 
 
 @Component({
@@ -24,16 +24,10 @@ constructor(    private router: Router,
         this.authHttp.get("api/accounts/isauthenticated")
             .subscribe(
                 x => this.alertService.sendSuccess("all goods"),
-                error => this.alertService.sendWarning("Your are not logged in")
+                error => this.alertService.sendWarning(error)
             )
     }
 
-    testToken(){
-        this.auth.tryGetAccessToken()
-            .subscribe(
-                res => console.log(res)
-            )
-    }
 
     refreshTokens() {
         this.auth.refreshTokens()

@@ -11,11 +11,15 @@ import {NotFoundComponent}       from "./not-found/not-found.component";
 import {NavigationComponent}     from "./navigation/navigation.component";
 import {AlertComponent}          from "./alert/alert.component";
 import {AlertService}            from "./alert/alert.service";
-import {AuthHttp}                from "../auth/auth-http/auth-http.service";
 import {AdminModule}             from "../admin/admin.module";
 import {ProfileService}          from "../auth/profile/profile.service";
 import {LoadingBarComponent} from "./loading-bar/loading-bar.component";
 import {LoadingBarService} from "./loading-bar/loading-bar.service";
+import {AuthConfig, AuthHttp, provideAuth} from "angular2-jwt";
+import {Http} from "@angular/http";
+import {TokenManagementService} from "../auth/TokenManagementService";
+
+
 
 
 @NgModule({
@@ -35,10 +39,19 @@ import {LoadingBarService} from "./loading-bar/loading-bar.service";
     ],
     providers:    [
         AuthService,
-        AuthHttp,
         AlertService,
         ProfileService,
-        LoadingBarService
+        LoadingBarService,
+        TokenManagementService,
+        provideAuth({
+            headerName: "Authorization",
+            headerPrefix: "Bearer",
+            tokenName: "access_token",
+            tokenGetter: () => localStorage.getItem("access_token"),
+            globalHeaders: [{'Content-Type':'application/json'}],
+            noJwtError: true,
+            noTokenScheme: true
+        })
     ],
     bootstrap:    [ AppComponent ]
 })

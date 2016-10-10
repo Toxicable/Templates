@@ -18,7 +18,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
     [RoutePrefix("api/accounts")]
     public class AccountsController : BaseApiController
     {
-        // [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         [Route("isauthenticated")]
         [HttpGet]
         public async Task<IHttpActionResult> IsAuthenticated()
@@ -109,9 +109,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
 
             var callbackUrl = new Uri(Url. Link("ConfirmEmailRoute", new {  userId, code }));
 
-            //var othid = "sasdfs%sdfs324sdf";
-            //code = "asdfs%sdfsdf0as";
-
+            //we need to do this otherwise the + in the string gets replaced with a space
             var urlCode = Uri.EscapeDataString(code);
             var url = $"{callbackUrl.Scheme}://{callbackUrl.Authority}/auth/verify?userId={userId}&code={urlCode}";
 

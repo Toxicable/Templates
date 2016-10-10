@@ -27,11 +27,9 @@ namespace OAuthAPI.WebApi.Api.Identity.Providers
                 context.TryGetFormCredentials(out clientId, out clientSecret);
             }
 
+            //forces client to send clientId
             if (context.ClientId == null)
             {
-                //Remove the comments from the below line context.SetError, and invalidate context 
-                //if you want to force sending clientId/secrects once obtain access tokens. 
-                //context.Validated();
                 context.SetError("invalid_clientId", "ClientId should be sent.");
                 return Task.FromResult<object>(null);
             }
@@ -48,6 +46,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Providers
                 return Task.FromResult<object>(null);
             }
 
+            //handle for when the client isnt JS
             if (client.Type == ApplicationType.Native)
             {
                 if (string.IsNullOrWhiteSpace(clientSecret))
@@ -82,7 +81,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Providers
         {
 
             var allowedOrigin = "*";
-
+            //should be bale to remove this orgin stuff since we're on the same origin
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
@@ -133,8 +132,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Providers
             }
 
             var id = context.Ticket.Identity.GetUserId();
-
-            // Change auth ticket for refresh token requests
+            
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
             var user = await userManager.FindByIdAsync(id);
 
