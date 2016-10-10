@@ -1,18 +1,17 @@
 /**
  * Created by Fabian on 25/09/2016.
  */
-import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response} from '@angular/http';
-import { RegisterModel } from './models/register-model';
-import { BadRequestResult} from "./models/bad-request-result";
+import { Injectable }           from '@angular/core';
+import { Http, Headers,
+    RequestOptions, Response}   from '@angular/http';
+import { RegisterModel }        from './models/register-model';
+import { BadRequestResult}      from "./models/bad-request-result";
 import { BadTokenRequestResult} from "./models/bad-token-request-result";
-import {JwtHelper, AuthHttp} from 'angular2-jwt'
-import {TokenResult} from "./models/token-result";
-import {LoginModel} from "./models/login-model";
-import {ProfileModel} from "./models/profile-model";
-import { Observable }     from 'rxjs/Observable';
-import {Subject} from "rxjs";
-import {TokenManagementService} from "./TokenManagementService";
+import {JwtHelper, AuthHttp}    from 'angular2-jwt'
+import {TokenResult}            from "./models/token-result";
+import {LoginModel}             from "./models/login-model";
+import {ProfileModel}           from "./models/profile-model";
+import { Observable }           from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
@@ -105,7 +104,6 @@ export class AuthService {
                 console.log("we can probs redirect here");
             }
         );
-        return;
     }
 
     public scheduleRefresh(): void {

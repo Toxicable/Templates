@@ -1,5 +1,4 @@
 ﻿import {Component, ViewEncapsulation, OnInit, OnDestroy} from '@angular/core'
-import {TokenManagementService} from "../auth/TokenManagementService";
 import {AuthService} from "../auth/auth.service";
 
 @Component({

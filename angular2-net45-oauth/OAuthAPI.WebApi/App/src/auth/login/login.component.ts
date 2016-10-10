@@ -4,7 +4,7 @@ import { AuthService } from '../auth.service';
 import { LoginModel } from '../models/login-model'
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlertService} from "../../app/alert/alert.service";
-import {ValidationService} from "../../app/validation/validation.service";
+import {FormValidationService} from "../../app/form-validation/form-validation.service";
 import {LoadingBarService} from "../../app/loading-bar/loading-bar.service";
 
 @Component({
@@ -22,8 +22,8 @@ export class LoginComponent implements OnInit{
 
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
-            userName: ['', [Validators.required, ValidationService.emailValidator]],
-            password: ['', [Validators.required, ValidationService.passwordValidator]],
+            userName: ['', [Validators.required, FormValidationService.emailValidator]],
+            password: ['', [Validators.required, FormValidationService.passwordValidator]],
         });
     }
 

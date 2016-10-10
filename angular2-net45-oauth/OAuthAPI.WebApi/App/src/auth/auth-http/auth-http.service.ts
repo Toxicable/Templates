@@ -41,15 +41,5 @@ export class AuthHttp {
         return new RequestOptions({headers: headers});
     }
 
-    private handleError (response: Response) {
-        //TODO: Add logging here
-        console.log("Server Error: ");
-        console.log(response);
 
-        let res = response.json();
-        let result = new AuthHttpResult();
-        result.errors = res.modelState[""].map(x => x);
-
-        return Promise.reject("man, something went wrong here soz :/");
-    }
 }

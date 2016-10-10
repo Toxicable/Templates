@@ -2,7 +2,7 @@ import {Component, OnInit, Inject} from '@angular/core'
 import { RegisterModel } from '../models/register-model'
 import { FormGroup,    FormControl,    Validators,    FormBuilder }    from '@angular/forms';
 import {AuthService} from "../auth.service";
-import {ValidationService} from "../../app/validation/validation.service";
+import {FormValidationService} from "../../app/form-validation/form-validation.service";
 import {AlertComponent} from "../../app/alert/alert.component";
 import {AlertService} from "../../app/alert/alert.service";
 import {Router} from "@angular/router";
@@ -23,11 +23,11 @@ export class RegisterComponent  implements OnInit {
 
     ngOnInit() {
            this.registerForm = this.formBuilder.group({
-               userName: ['', [Validators.required, ValidationService.emailValidator]],
+               userName: ['', [Validators.required, FormValidationService.emailValidator]],
                passwords: this.formBuilder.group({
-                   password: ['', [Validators.required, ValidationService.passwordValidator]],
-                   confirmPassword: ['', [Validators.required, ValidationService.passwordValidator]]
-               }, {validator: ValidationService.passwordComparisonValidator})
+                   password: ['', [Validators.required, FormValidationService.passwordValidator]],
+                   confirmPassword: ['', [Validators.required, FormValidationService.passwordValidator]]
+               }, {validator: FormValidationService.passwordComparisonValidator})
          });
     }
 

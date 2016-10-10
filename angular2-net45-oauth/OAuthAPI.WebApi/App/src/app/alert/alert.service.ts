@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Subject} from "rxjs";
 import {Alert} from "./models/alert.model";
-import {AlertType} from "./models/AlertTypes";
+import {AlertType} from "./models/alert-types";
 /**
  * Created by Fabian on 1/10/2016.
  */

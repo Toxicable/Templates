@@ -9,7 +9,7 @@ import { LoginComponent } from './login/login.component'
 import { RegisterComponent} from "./register/register.component";
 import { HttpModule} from "@angular/http";
 import { authRouting } from './auth.routing'
-import {ControlMessages} from "../app/validation/control-messages.component";
+import {ControlMessages} from "../app/form-validation/control-messages.component";
 import {AuthHttp} from "./auth-http/auth-http.service";
 import {VerifyComponent} from "./verify/verify.component";
 

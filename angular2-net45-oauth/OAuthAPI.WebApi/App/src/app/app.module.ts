@@ -15,9 +15,8 @@ import {AdminModule}             from "../admin/admin.module";
 import {ProfileService}          from "../auth/profile/profile.service";
 import {LoadingBarComponent} from "./loading-bar/loading-bar.component";
 import {LoadingBarService} from "./loading-bar/loading-bar.service";
-import {AuthConfig, AuthHttp, provideAuth} from "angular2-jwt";
-import {Http} from "@angular/http";
-import {TokenManagementService} from "../auth/TokenManagementService";
+import {provideAuth} from "angular2-jwt";
+import {UnauthorizedComponent} from "./unauthorized/unauthorized.component";
 
 
 
@@ -35,14 +34,14 @@ import {TokenManagementService} from "../auth/TokenManagementService";
         NotFoundComponent,
         NavigationComponent,
         AlertComponent,
-        LoadingBarComponent
+        LoadingBarComponent,
+        UnauthorizedComponent
     ],
     providers:    [
         AuthService,
         AlertService,
         ProfileService,
         LoadingBarService,
-        TokenManagementService,
         provideAuth({
             headerName: "Authorization",
             headerPrefix: "Bearer",

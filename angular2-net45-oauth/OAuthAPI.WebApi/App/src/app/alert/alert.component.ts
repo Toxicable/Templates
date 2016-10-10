@@ -5,7 +5,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core'
 import {AlertService} from "./alert.service";
 import {Subscription} from "rxjs";
 import {Alert} from "./models/alert.model";
-import {AlertType} from "./models/AlertTypes";
+import {AlertType} from "./models/alert-types";
 
 @Component({
     selector: 'alert',
