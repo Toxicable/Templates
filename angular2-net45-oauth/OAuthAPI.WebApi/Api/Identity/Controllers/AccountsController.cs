@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security.Provider;
 using OAuthAPI.Data.Identity;
 using OAuthAPI.WebApi.Api.Identity.Models.BindingModels;
 using OAuthAPI.WebApi.Api.Identity.Models.ViewModels;
@@ -61,7 +62,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
         public async Task<IHttpActionResult> SendConfirmEmail()
         {
             var userId = User.Identity.GetUserId();
-            string code = await this.AppUserManager.GenerateEmailConfirmationTokenAsync(userId);
+            string code = await AppUserManager.GenerateEmailConfirmationTokenAsync(userId);
 
             var callbackUrl = new Uri(Url. Link("ConfirmEmailRoute", new {  userId, code }));
 
@@ -115,6 +116,52 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
 
             return Ok();
         }
-      
+
+        [HttpGet, AllowAnonymous]
+        public async Task<IHttpActionResult> SendForgotPassword(SendForgotPasswordBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await AppUserManager.FindByNameAsync(model.Email);
+
+            string code = await AppUserManager.GeneratePasswordResetTokenAsync(user.Id);
+            var callbackUrl = new Uri(Url.Link("ResetPassword", new { user.Id, code }));
+
+            //we need to do this otherwise the + in the string gets replaced with a space
+            var urlCode = Uri.EscapeDataString(code);
+            var url = $"{callbackUrl.Scheme}://{callbackUrl.Authority}/auth/ResetPassword?userId={user.Id}&code={urlCode}";
+
+            await AppUserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            return Ok();
+        }
+
+        [HttpGet, AllowAnonymous]
+        public async Task<IHttpActionResult> ResetPassword(ResetPasswordBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var user = await AppUserManager.FindByNameAsync(model.Email);
+            if (user == null)
+            {
+                return BadRequest("Account does not exist");
+            }
+            var result = await AppUserManager.ResetPasswordAsync(user.Id, model.Code, model.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+
+            return GetIdentityErrorResult(result);
+
+        }
+
+
     }
 }
