@@ -1,5 +1,4 @@
 <h1>Login</h1>
-Hell
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
     <div>
@@ -16,4 +15,5 @@ Hell
 
 
     <button type="submit" [disabled]="!loginForm.valid" >Submit</button>
+    <a  routerLink="/auth/forgot-password" >Forgot your password?</a>
 </form>

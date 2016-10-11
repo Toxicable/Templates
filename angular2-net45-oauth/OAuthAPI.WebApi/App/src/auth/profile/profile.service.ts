@@ -10,8 +10,6 @@ export class ProfileService{
         // this.profile = this.auth.retrieveProfile()
     }
 
-    //private profile: ProfileModel
-
     getUsername(): string{
         let profile = this.getProfile();
         if(profile) {
@@ -34,7 +32,8 @@ export class ProfileService{
 
         if(profile){
             let profile = this.auth.retrieveProfile();
-            console.log(profile )
+
+            if(!profile.role) return false;
             return profile.role.indexOf(role, 0) > -1;
         }
         return false

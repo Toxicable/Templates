@@ -1,4 +1,4 @@
 /**
  * Created by Fabian on 11/10/2016.
  */
-export * from './';
+export * from './unauthorized.component';

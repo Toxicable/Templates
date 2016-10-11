@@ -4,6 +4,8 @@ import { LoginComponent} from './login/login.component'
 import {RegisterComponent} from "./register/register.component";
 import {AuthComponent} from "./auth.component";
 import {VerifyComponent} from "./verify/verify.component";
+import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
+import {AuthenticatedAuthGuard} from "./guards/authenticated-auth-guard.service";
 
 const authRoutes: Routes = [
     {
@@ -23,8 +25,13 @@ const authRoutes: Routes = [
                 component: RegisterComponent
             },
             {
+                path: 'forgot-password',
+                component: ForgotPasswordComponent
+            },
+            {
                 path: 'verify',
-                component: VerifyComponent
+                component: VerifyComponent,
+         //       canActivate: AuthenticatedAuthGuard
             },
             {
                 path: 'verify/:id/:code',

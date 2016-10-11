@@ -19,7 +19,13 @@ export class SuperAdminAuthGuard implements CanActivate {
 
     canActivate(): boolean {
 
-        if(this.profile.isInRole("SuperAdmin") && this.auth.isLoggedIn){
+        if(!this.auth.isLoggedIn){
+            this.alertService.sendError("You are not logged in");
+            this.router.navigate(['auth/login']);
+            return false;
+        }
+
+        if(this.profile.isInRole("SuperAdmin") ){
             return true
         }else{
             this.alertService.sendError("Unauthorized");

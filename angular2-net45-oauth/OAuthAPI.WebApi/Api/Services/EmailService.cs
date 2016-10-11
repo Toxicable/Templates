@@ -17,6 +17,7 @@ namespace OAuthAPI.WebApi.Api.Services
 
         public async Task SendViaSendGrid(IdentityMessage message)
         {
+
             // Create the email object first, then add the properties.
             SendGridMessage myMessage = new SendGridMessage();
             myMessage.AddTo(message.Destination);

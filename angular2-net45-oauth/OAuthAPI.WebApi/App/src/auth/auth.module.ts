@@ -1,17 +1,15 @@
-﻿import { NgModule }          from '@angular/core';
-import { CommonModule }      from '@angular/common';
+﻿import { NgModule }            from '@angular/core';
+import { CommonModule }        from '@angular/common';
 import { ReactiveFormsModule } from "@angular/forms";
-
-import { AuthService }   from './auth.service';
-
-import { AuthComponent } from './auth.component';
-import { LoginComponent } from './login/login.component'
-import { RegisterComponent} from "./register/register.component";
-import { HttpModule} from "@angular/http";
-import { authRouting } from './auth.routing'
-import {ControlMessages} from "../app/form-validation/control-messages.component";
-import {AuthHttp} from "./auth-http/auth-http.service";
-import {VerifyComponent} from "./verify/verify.component";
+import { AuthService }         from './auth.service';
+import { AuthComponent }       from './auth.component';
+import { LoginComponent }      from './login'
+import { RegisterComponent}    from "./register";
+import { HttpModule}           from "@angular/http";
+import { authRouting }         from './auth.routing'
+import {ControlMessages}       from "../app/form-validation";
+import {VerifyComponent}       from "./verify";
+import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
 
 @NgModule({
     imports: [
@@ -25,8 +23,9 @@ import {VerifyComponent} from "./verify/verify.component";
         LoginComponent,
         RegisterComponent,
         ControlMessages,
-        VerifyComponent
+        VerifyComponent,
+        ForgotPasswordComponent
     ],
-    providers: [AuthService, AuthHttp],
+    providers: [AuthService],
 })
 export class AuthModule { }

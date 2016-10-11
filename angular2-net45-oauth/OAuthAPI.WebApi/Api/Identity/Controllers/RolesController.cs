@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper.Execution;
@@ -10,11 +11,52 @@ using OAuthAPI.WebApi.Api.Identity.Models.ViewModels;
 namespace OAuthAPI.WebApi.Api.Identity.Controllers
 {
     [Authorize(Roles="Admin")]
-    [RoutePrefix("api/roles")]
     public class RolesController : BaseApiController
     {
-        [AllowAnonymous]
-        [Route("IsInRole")]
+        //PUT: api/roles/Assign/id?roleToAssign=
+        [HttpPut]
+        public async Task<IHttpActionResult> AssignRole(string id, string roleToAssign)
+        {
+
+            var appUser = await AppUserManager.FindByIdAsync(id);
+
+            if (appUser == null)
+            {
+                return NotFound();
+            }
+
+            var currentRoles = await AppUserManager.GetRolesAsync(appUser.Id);
+
+            var rolesExists = AppRoleManager.Roles.Any(x => x.Name == roleToAssign);
+
+            if (!rolesExists)
+            {
+
+                ModelState.AddModelError("", $"Role: '{roleToAssign}' does not exixts in the system");
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult removeResult = await AppUserManager.RemoveFromRolesAsync(appUser.Id, currentRoles.ToArray());
+
+            if (!removeResult.Succeeded)
+            {
+                ModelState.AddModelError("", "Failed to remove user roles");
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult addResult = await AppUserManager.AddToRoleAsync(appUser.Id, roleToAssign);
+
+            if (!addResult.Succeeded)
+            {
+                ModelState.AddModelError("", "Failed to add user roles");
+                return BadRequest(ModelState);
+            }
+
+            return Ok();
+
+        }
+
+        //PUT: api/roles/
         [HttpGet]
         public async Task<IHttpActionResult> IsInRole( string role)
         {
@@ -32,7 +74,8 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
             return Ok("User in role");
         }
 
-        [Route("{id:guid}", Name = "GetRoleById")]
+        //PUT: api/roles/
+        [HttpGet]
         public async Task<IHttpActionResult> GetRole(string Id)
         {
             var role = await AppRoleManager.FindByIdAsync(Id);
@@ -46,7 +89,8 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
 
         }
 
-        [Route("", Name = "GetAllRoles")]
+        //PUT: api/roles/
+        [HttpGet]
         public IHttpActionResult GetAllRoles()
         {
             var roles = this.AppRoleManager.Roles;
@@ -54,7 +98,8 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
             return Ok(roles);
         }
 
-        [Route("create")]
+        //PUT: api/roles/
+        [HttpPost]
         public async Task<IHttpActionResult> Create(CreateRoleBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -77,7 +122,8 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
 
         }
 
-        [Route("{id:guid}")]
+        //PUT: api/roles/
+        [HttpDelete]
         public async Task<IHttpActionResult> DeleteRole(string Id)
         {
 
