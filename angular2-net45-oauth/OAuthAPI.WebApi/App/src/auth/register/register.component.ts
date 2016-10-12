@@ -1,10 +1,10 @@
 import {Component, OnInit, Inject} from '@angular/core'
 import { RegisterModel } from '../models/register-model'
 import { FormGroup,    FormControl,    Validators,    FormBuilder }    from '@angular/forms';
-import {AuthService} from "../auth.service";
-import {FormValidationService} from "../../app/form-validation/form-validation.service";
-import {AlertComponent} from "../../app/alert/alert.component";
-import {AlertService} from "../../app/alert/alert.service";
+import {AuthService} from "../../core/auth/auth.service";
+import {FormValidationService} from "../../core/common/form-validation.service";
+import {AlertComponent} from "../../shared/alert/alert.component";
+import {AlertService} from "../../core/common/alert.service";
 import {Router} from "@angular/router";
 import {BadRequestResult} from "../models/bad-request-result";
 

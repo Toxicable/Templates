@@ -1,11 +1,9 @@
 {
   "version": "1.0.0",
   "name": "auth-api",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.dev.js --hot --inline --progress --port 44310",
-
-
     "test": "karma start",
     "build": "rimraf ../wwwroot && webpack --config config/webpack.prod.js  --progress --profile --bail",
     "postinstall": "typings install",

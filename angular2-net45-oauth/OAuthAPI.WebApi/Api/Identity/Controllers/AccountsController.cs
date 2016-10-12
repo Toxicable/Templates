@@ -51,10 +51,10 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
                 return GetIdentityErrorResult(addUserResult);
             }
 
-            Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
+            //Uri locationHeader = new Uri(Url.Link("GetUser", new { Id = user.Id }));
 
-            return Created(locationHeader, _mapper.Map<UserViewModel>(user));
-
+            //return Created(locationHeader, _mapper.Map<UserViewModel>(user));
+            return Ok();
         }
 
         //GET: api/accounts/SendConfirmEmail
@@ -64,11 +64,11 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
             var userId = User.Identity.GetUserId();
             string code = await AppUserManager.GenerateEmailConfirmationTokenAsync(userId);
 
-            var callbackUrl = new Uri(Url. Link("ConfirmEmailRoute", new {  userId, code }));
+           // var callbackUrl = new Uri(Url. Link("ConfirmEmail", new {  userId, code }));
 
             //we need to do this otherwise the + in the string gets replaced with a space
             var urlCode = Uri.EscapeDataString(code);
-            var url = $"{callbackUrl.Scheme}://{callbackUrl.Authority}/auth/verify?userId={userId}&code={urlCode}";
+            var url = $"{Request.RequestUri.Scheme}://{Request.RequestUri.Authority}/auth/verify?userId={userId}&code={urlCode}";
 
             var body = $"Please confirm your account by clicking <a href=\"{url}\">here</a>";
             

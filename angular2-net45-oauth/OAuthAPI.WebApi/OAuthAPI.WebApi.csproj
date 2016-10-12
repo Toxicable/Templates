@@ -190,8 +190,10 @@
     <Content Include="index.html" />
     <Content Include="wwwroot\polyfills.33affc107ed224eca928.js" />
     <Content Include="wwwroot\vendor.33affc107ed224eca928.js" />
+    <Content Include="OAuthAPI.Entities.xproj" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>

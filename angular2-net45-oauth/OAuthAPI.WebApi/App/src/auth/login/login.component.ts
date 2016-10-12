@@ -1,11 +1,11 @@
 import { Component } from '@angular/core'
 import { OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../core/auth/auth.service';
 import { LoginModel } from '../models/login-model'
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AlertService} from "../../app/alert/alert.service";
-import {FormValidationService} from "../../app/form-validation/form-validation.service";
-import {LoadingBarService} from "../../app/loading-bar/loading-bar.service";
+import {AlertService} from "../../core/common/alert.service";
+import {FormValidationService} from "../../core/common/form-validation.service";
+import {LoadingBarService} from "../../core/common/loading-bar.service";
 
 @Component({
     selector: 'login',

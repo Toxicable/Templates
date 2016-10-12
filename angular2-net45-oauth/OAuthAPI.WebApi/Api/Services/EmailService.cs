@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using SendGrid;
+using System.Configuration;
 
 namespace OAuthAPI.WebApi.Api.Services
 {
@@ -20,7 +21,7 @@ namespace OAuthAPI.WebApi.Api.Services
             MailMessage mailMsg = new MailMessage();
             mailMsg.To.Add(new MailAddress(message.Destination));
             // From
-            MailAddress mailAddress = new MailAddress("fabianwiles@live.com", "OAuth Api mailer");
+            MailAddress mailAddress = new MailAddress(ConfigurationManager.AppSettings["email:username"], "OAuth Api mailer");
             mailMsg.From = mailAddress;
 
             //Content
@@ -30,7 +31,8 @@ namespace OAuthAPI.WebApi.Api.Services
 
             //SmtpClient
             SmtpClient smtpConnection = new SmtpClient("smtp-mail.outlook.com", 587);
-            smtpConnection.Credentials = new System.Net.NetworkCredential("fabianwiles@live.com", "luv86tox7");
+            smtpConnection.Credentials = new NetworkCredential(
+                ConfigurationManager.AppSettings["email:username"], ConfigurationManager.AppSettings["email:password"]);
 
             smtpConnection.EnableSsl = true;
             await smtpConnection.SendMailAsync(mailMsg);

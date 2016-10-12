@@ -3,8 +3,8 @@
  */
 import { Component } from '@angular/core'
 import {Router} from "@angular/router";
-import {AlertService} from "../alert/alert.service";
-import {AuthService} from "../../auth/auth.service";
+import {AlertService} from "../../core/common/alert.service";
+import {AuthService} from "../../core/auth/auth.service";
 import {AuthHttp} from "angular2-jwt";
 
 

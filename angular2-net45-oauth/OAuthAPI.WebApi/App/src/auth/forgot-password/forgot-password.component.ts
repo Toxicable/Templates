@@ -3,10 +3,10 @@
  */
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../auth.service";
-import {FormValidationService} from "../../app/form-validation/form-validation.service";
-import {LoadingBarService} from "../../app/loading-bar/loading-bar.service";
-import {AlertService} from "../../app/alert/alert.service";
+import {AuthService} from "../../core/auth/auth.service";
+import {FormValidationService} from "../../core/common/form-validation.service";
+import {LoadingBarService} from "../../core/common/loading-bar.service";
+import {AlertService} from "../../core/common/alert.service";
 
 @Component({
     selector: 'forgot-password',
