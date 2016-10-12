@@ -2,8 +2,11 @@ var webpack              = require('webpack');
 var HtmlWebpackPlugin    = require('html-webpack-plugin');
 var ExtractTextPlugin    = require('extract-text-webpack-plugin');
 var helpers              = require('./helpers');
-var precss       = require('precss');
-var autoprefixer = require('autoprefixer');
+var precss               = require('precss');
+var autoprefixer         = require('autoprefixer');
+var prod                 = process.env.ENV === 'production'
+
+console.log(prod);
 
 module.exports = {
     entry: {
@@ -20,7 +23,8 @@ module.exports = {
         loaders: [
             {
                 test: /\.ts$/,
-                loaders: ['awesome-typescript-loader', 'angular2-template-loader'],
+                loaders: ['awesome-typescript-loader', 'angular2-template-loader']
+                    .concat(prod ? [] : '@angularclass/hmr-loader'),
                 exclude: /node_modules/
             },
             {
