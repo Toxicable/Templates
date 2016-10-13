@@ -24,6 +24,11 @@ export class VerifyComponent implements OnInit{
                 private auth: AuthService
     ){}
     ngOnInit(): void {
+        if(!this.auth.isLoggedIn){
+            this.alert.sendWarning("You are not logged in");
+            return;
+        }
+
         if(!this.profile.isEmailConfirmed()){
             let code = this.route.snapshot.queryParams['code'];
             let id = this.route.snapshot.queryParams['userId'];
@@ -38,7 +43,7 @@ export class VerifyComponent implements OnInit{
     confirmEmail(code: string, id: string): void{
         code = encodeURIComponent(code);
 
-        this.http.get("api/accounts/ConfirmEmail?userId=" + id + "&code=" + code)
+        this.http.get("api/account/ConfirmEmail?userId=" + id + "&code=" + code)
             .subscribe(
                 (res) => {
                     this.auth.refreshTokens().subscribe(
@@ -53,7 +58,7 @@ export class VerifyComponent implements OnInit{
     sendConfirmationEmail(): void{
         this.loadingBar.isLoading()
 
-        this.authHttp.get("api/accounts/SendConfirmEmail")
+        this.authHttp.get("api/account/SendConfirmEmail")
             .subscribe(
                 () => this.alert.sendSuccess("A confirmation email has been send"),
                 (error) => this.alert.sendError(error),

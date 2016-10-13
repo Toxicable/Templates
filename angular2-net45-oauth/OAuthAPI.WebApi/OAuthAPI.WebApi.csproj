@@ -211,7 +211,7 @@
     <Compile Include="Api\BaseApiController.cs" />
     <Compile Include="Api\BaseManager.cs" />
     <Compile Include="Api\Helpers\AuthHelper.cs" />
-    <Compile Include="Api\Identity\Controllers\AccountsController.cs" />
+    <Compile Include="Api\Identity\Controllers\AccountController.cs" />
     <Compile Include="Api\Identity\Controllers\ClaimsController.cs" />
     <Compile Include="Api\Identity\Controllers\ManageController.cs" />
     <Compile Include="Api\Identity\Controllers\RolesController.cs" />

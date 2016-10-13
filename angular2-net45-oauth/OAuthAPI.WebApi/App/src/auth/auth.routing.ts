@@ -6,6 +6,7 @@ import {AuthComponent} from "./auth.component";
 import {VerifyComponent} from "./verify/verify.component";
 import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
 import {AuthenticatedAuthGuard} from "./guards/authenticated-auth-guard.service";
+import {ResetPasswordComponent} from "./forgot-password/reset-password.component";
 
 const authRoutes: Routes = [
     {
@@ -29,9 +30,12 @@ const authRoutes: Routes = [
                 component: ForgotPasswordComponent
             },
             {
+                path: 'reset-password',
+                component: ResetPasswordComponent
+            },
+            {
                 path: 'verify',
-                component: VerifyComponent,
-         //       canActivate: AuthenticatedAuthGuard
+                component: VerifyComponent
             },
             {
                 path: 'verify/:id/:code',

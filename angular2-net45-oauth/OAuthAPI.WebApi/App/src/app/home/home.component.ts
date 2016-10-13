@@ -21,7 +21,7 @@ constructor(    private router: Router,
     ){}
 
     testAuth() {
-        this.authHttp.get("api/accounts/isauthenticated")
+        this.authHttp.get("api/account/isauthenticated")
             .subscribe(
                 x => this.alertService.sendSuccess("all goods"),
                 error => this.alertService.sendWarning(error)

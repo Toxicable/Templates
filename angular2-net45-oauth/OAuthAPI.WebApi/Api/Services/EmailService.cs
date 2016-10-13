@@ -21,6 +21,7 @@ namespace OAuthAPI.WebApi.Api.Services
             MailMessage mailMsg = new MailMessage();
             mailMsg.To.Add(new MailAddress(message.Destination));
             // From
+            var t = ConfigurationManager.AppSettings["email:username"];
             MailAddress mailAddress = new MailAddress(ConfigurationManager.AppSettings["email:username"], "OAuth Api mailer");
             mailMsg.From = mailAddress;
 

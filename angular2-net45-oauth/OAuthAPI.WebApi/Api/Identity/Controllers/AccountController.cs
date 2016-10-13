@@ -17,16 +17,16 @@ using SendGrid;
 namespace OAuthAPI.WebApi.Api.Identity.Controllers
 {
     [Authorize]
-    public class AccountsController : BaseApiController
+    public class AccountController : BaseApiController
     {
-        //GET: api/accounts/IsAuthenticated
+        //GET: api/account/IsAuthenticated
         [HttpGet]
         public async Task<IHttpActionResult> IsAuthenticated()
         {
             return Ok("true");
         }
 
-        //GET: api/accounts/CreateUser
+        //GET: api/account/CreateUser
         [HttpPost, AllowAnonymous]
         public async Task<IHttpActionResult> Create(CreateUserBindingModel createUserModel)
         {
@@ -57,7 +57,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
             return Ok();
         }
 
-        //GET: api/accounts/SendConfirmEmail
+        //GET: api/account/SendConfirmEmail
         [HttpGet]
         public async Task<IHttpActionResult> SendConfirmEmail()
         {
@@ -77,7 +77,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
             return Ok();
         }
 
-        //GET: api/accounts/ConfirmEmail
+        //GET: api/account/ConfirmEmail
         [HttpGet, AllowAnonymous]
         public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string code = "")
         {
@@ -98,7 +98,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
             return GetIdentityErrorResult(result);
             
         }
-        //POST: api/accounts/ChangePassword
+        //POST: api/account/ChangePassword
         [HttpPost]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
@@ -117,7 +117,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
             return Ok();
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpPost, AllowAnonymous]
         public async Task<IHttpActionResult> SendForgotPassword(SendForgotPasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -125,16 +125,14 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = await AppUserManager.FindByNameAsync(model.Email);
-
+            var user = await AppUserManager.FindByNameAsync(model.UserName);
             string code = await AppUserManager.GeneratePasswordResetTokenAsync(user.Id);
-            var callbackUrl = new Uri(Url.Link("ResetPassword", new { user.Id, code }));
 
             //we need to do this otherwise the + in the string gets replaced with a space
             var urlCode = Uri.EscapeDataString(code);
-            var url = $"{callbackUrl.Scheme}://{callbackUrl.Authority}/auth/ResetPassword?userId={user.Id}&code={urlCode}";
+            var url = $"{Request.RequestUri.Scheme}://{Request.RequestUri.Authority}/auth/reset-password?userId={user.Id}&code={urlCode}";
 
-            await AppUserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            await AppUserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + url + "\">here</a>");
 
             return Ok();
         }

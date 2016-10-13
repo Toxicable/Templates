@@ -58,7 +58,7 @@ export class AuthService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post("api/accounts/create", data, options)
+        return this.http.post("api/account/create", data, options)
             .map(res => res)
             .catch( errorResult => {
                 let errorModel = errorResult.json() as BadRequestResult;

@@ -9,6 +9,7 @@ import { authRouting }         from './auth.routing'
 import {VerifyComponent}       from "./verify";
 import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
 import {SharedModule} from "../shared/shared.module";
+import {ResetPasswordComponent} from "./forgot-password/reset-password.component";
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import {SharedModule} from "../shared/shared.module";
         LoginComponent,
         RegisterComponent,
         VerifyComponent,
-        ForgotPasswordComponent
+        ForgotPasswordComponent,
+        ResetPasswordComponent
     ],
 })
 export class AuthModule { }

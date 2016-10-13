@@ -10,9 +10,9 @@ import {Subscription} from "rxjs";
     template: `
 <div *ngIf="isLoading" class="load-bar">
   <div class="bar"></div>
+    <div class="bar"></div>
   <div class="bar"></div>
-  <div class="bar"></div>
-</div>`,
+  </div>`,
     styleUrls: ['loading-bar.component.scss']
 })
 export class LoadingBarComponent implements OnInit, OnDestroy {

@@ -9,6 +9,6 @@ namespace OAuthAPI.WebApi.Api.Identity.Models.BindingModels
     public class SendForgotPasswordBindingModel
     {
         [Required]
-        public string Email { get; set; }
+        public string UserName { get; set; }
     }
 }
