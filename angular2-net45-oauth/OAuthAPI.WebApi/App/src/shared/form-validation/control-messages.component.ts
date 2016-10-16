@@ -9,7 +9,7 @@ import { FormValidationService } from '../../core/common/form-validation.service
     selector: 'control-messages',
     template: `<div *ngIf="errorMessage !== null">{{errorMessage}}</div>`
 })
-export class ControlMessages {
+export class ControlMessagesComponent {
     @Input() control: FormControl;
     constructor() { }
 

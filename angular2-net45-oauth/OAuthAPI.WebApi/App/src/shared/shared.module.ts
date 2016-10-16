@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import { CommonModule }        from '@angular/common';
 import {LoadingBarComponent} from "./loading-bar";
 import {AlertComponent} from "./alert/alert.component";
-import {ControlMessages} from "./form-validation";
+import {ControlMessagesComponent} from "./form-validation";
 import {AlertService} from "../core/common/alert.service";
 import {LoadingBarService} from "./loading-bar";
 
@@ -14,12 +14,12 @@ import {LoadingBarService} from "./loading-bar";
     declarations: [
         LoadingBarComponent,
         AlertComponent,
-        ControlMessages
+        ControlMessagesComponent
     ],
     exports: [
         LoadingBarComponent,
         AlertComponent,
-        ControlMessages,
+        ControlMessagesComponent,
         CommonModule
     ]
 })
