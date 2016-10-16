@@ -137,19 +137,21 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
             return Ok();
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpPost, AllowAnonymous]
         public async Task<IHttpActionResult> ResetPassword(ResetPasswordBindingModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var user = await AppUserManager.FindByNameAsync(model.Email);
+            var user = await AppUserManager.FindByIdAsync(model.UserId);
             if (user == null)
             {
-                return BadRequest("Account does not exist");
+                ModelState.AddModelError("", "Account does not exist");
+                return BadRequest(ModelState);
             }
-            var result = await AppUserManager.ResetPasswordAsync(user.Id, model.Code, model.NewPassword);
+
+            var result = await AppUserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
 
             if (result.Succeeded)
             {

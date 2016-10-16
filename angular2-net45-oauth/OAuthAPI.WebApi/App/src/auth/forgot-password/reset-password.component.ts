@@ -36,19 +36,18 @@ export class ResetPasswordComponent implements OnInit {
             this.alert.sendError("Missing UserID and reset code")
         }
 
-            this.resetPasswordForm = this.formBuilder.group({
-                oldPassword: ['', [Validators.required, FormValidationService.passwordValidator]],
-                passwords: this.formBuilder.group({
-                    password: ['', [Validators.required, FormValidationService.passwordValidator]],
-                    confirmPassword: ['', [Validators.required, FormValidationService.passwordValidator]]
-                }, {validator: FormValidationService.passwordComparisonValidator})
-            });
-        }
+        this.resetPasswordForm = this.formBuilder.group({
+                password: ['', [Validators.required, FormValidationService.passwordValidator]],
+                confirmPassword: ['', [Validators.required, FormValidationService.passwordValidator]]
+            }, {validator: FormValidationService.passwordComparisonValidator}
+        );
+    }
 
 
-    submit(){
+    onSubmit(){
         this.loadingBar.isLoading();
-        this.http.post("api/account/resetpassword", this.resetPasswordForm.value)
+        let data = Object.assign({}, this.resetPasswordForm.value, {userId: this.id, code: this.code});
+        this.http.post("api/account/resetpassword", data )
             .subscribe(
                 () => {
                     this.alert.sendSuccess("Successfully reset password");

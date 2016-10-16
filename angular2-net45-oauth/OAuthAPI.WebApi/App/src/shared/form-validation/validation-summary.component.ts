@@ -4,7 +4,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'control-messages',
+    selector: 'validation-summary',
     template: `
 <div>
     <div *ngFor="let error of errorMessages">

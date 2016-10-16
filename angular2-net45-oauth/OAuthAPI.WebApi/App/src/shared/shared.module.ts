@@ -5,6 +5,7 @@ import {AlertComponent} from "./alert/alert.component";
 import {ControlMessagesComponent} from "./form-validation";
 import {AlertService} from "../core/common/alert.service";
 import {LoadingBarService} from "./loading-bar";
+import {ValidationSummaryComponent} from "./form-validation/validation-summary.component";
 
 
 @NgModule({
@@ -14,13 +15,15 @@ import {LoadingBarService} from "./loading-bar";
     declarations: [
         LoadingBarComponent,
         AlertComponent,
-        ControlMessagesComponent
+        ControlMessagesComponent,
+        ValidationSummaryComponent
     ],
     exports: [
         LoadingBarComponent,
         AlertComponent,
         ControlMessagesComponent,
-        CommonModule
+        CommonModule,
+        ValidationSummaryComponent
     ]
 })
 export class SharedModule {}
