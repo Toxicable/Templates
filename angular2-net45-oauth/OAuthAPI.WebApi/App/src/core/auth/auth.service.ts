@@ -56,10 +56,7 @@ export class AuthService {
 
         return this.http.post("api/account/create", data, options)
             .map(res => res)
-            .catch( errorResult => {
-                let errorModel = errorResult.json() as BadRequestResult;
-                return Observable.throw(errorModel.modelState[""][0])
-            });
+            .catch( HttpExceptions.handleError );
 
     }
 

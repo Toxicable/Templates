@@ -22,9 +22,10 @@ export class HttpExceptions{
     public static handleTokenBadRequest(res: Response) {
         //bad request
         let badRequest = res.json() as BadTokenRequest;
-        let errors = badRequest.error_description
+        let error = badRequest.error_description
 
-        return Observable.throw([errors])
+        //need to put it in an array since that's what's expected everywhere to kee pit consistant
+        return Observable.throw([error])
     }
 
     private static handleBadRequest(res: Response) {

@@ -16,7 +16,7 @@ export class RegisterComponent  implements OnInit {
                 private router: Router
     ) {   }
     registerForm: FormGroup;
-
+    errors: string[];
 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
@@ -37,7 +37,7 @@ export class RegisterComponent  implements OnInit {
                     this.alertService.sendSuccess("Successfully registered");
                     this.router.navigateByUrl("/auth/login");
                 },
-                error => this.alertService.sendError(error)
+                errors => this.errors = errors
             )
     };
 

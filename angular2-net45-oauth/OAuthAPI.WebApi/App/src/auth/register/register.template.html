@@ -2,6 +2,8 @@
 
 <form [formGroup]="registerForm" novalidate (ngSubmit)="onSubmit()">
 
+    <validation-summary [errorMessages]="errors"></validation-summary>
+
     <div>
         <label>User name (Email) </label>
         <input type="text" formControlName="userName" />
