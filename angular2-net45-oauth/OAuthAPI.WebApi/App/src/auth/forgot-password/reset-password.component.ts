@@ -47,12 +47,15 @@ export class ResetPasswordComponent implements OnInit {
 
 
     submit(){
+        this.loadingBar.isLoading();
         this.http.post("api/account/resetpassword", this.resetPasswordForm.value)
             .subscribe(
                 () => {
                     this.alert.sendSuccess("Successfully reset password");
                     this.router.navigate(['auth/login']);
-                }
+                },
+                error => this.alert.sendError(error),
+                () => this.loadingBar.doneLoading()
             )
     }
 
