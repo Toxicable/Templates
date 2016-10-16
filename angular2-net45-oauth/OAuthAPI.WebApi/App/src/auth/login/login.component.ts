@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit{
     ) { }
 
     loginForm: FormGroup;
+    errors: string[];
 
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
@@ -30,10 +31,11 @@ export class LoginComponent implements OnInit{
     onSubmit(){
         this.loadingBar.isLoading();
         this.auth.login(this.loginForm.value)
+            .finally( () => this.loadingBar.doneLoading())
             .subscribe(
                 res => this.alertService.sendSuccess("Successfully logged in"),
-                res => this.alertService.sendError(res),
-                () => this.loadingBar.doneLoading()
+                error => this.errors = error
+
             )
     }
 

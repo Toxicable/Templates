@@ -1,19 +1,39 @@
 import {Response} from "@angular/http";
-import {AuthHttpResult} from "../../auth/models/auth-http-result";
+import {Observable} from "rxjs";
+import {BadRequest, BadTokenRequest} from "./models";
 /**
  * Created by Fabian on 11/10/2016.
  */
 export class HttpExceptions{
 
-    private handleError (response: Response) {
-        //TODO: Add logging here
-        console.log("Server Error: ");
-        console.log(response);
+    private catchErrorCodes(errorResponse){
 
-        let res = response.json();
-        let result = new AuthHttpResult();
-        result.errors = res.modelState[""].map(x => x);
-
-        return Promise.reject("man, something went wrong here soz :/");
     }
+
+    public static handleError (res: Response) {
+        //TODO: add logging here
+
+        switch (res.status){
+            case 400:
+                return HttpExceptions.handleBadRequest(res)
+        }
+    }
+
+    public static handleTokenBadRequest(res: Response) {
+        //bad request
+        let badRequest = res.json() as BadTokenRequest;
+        let errors = badRequest.error_description
+
+        return Observable.throw([errors])
+    }
+
+    private static handleBadRequest(res: Response) {
+        //bad request
+        let badRequest = res.json() as BadRequest;
+        let errors = badRequest.modelState[""].map(x => x);
+
+        return Observable.throw(errors)
+    }
+
+
 }

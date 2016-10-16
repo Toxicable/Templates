@@ -5,13 +5,12 @@ import { Injectable }           from '@angular/core';
 import { Http, Headers,
     RequestOptions, Response}   from '@angular/http';
 import { RegisterModel }        from '../../auth/models/register-model';
-import { BadRequestResult}      from "../../auth/models/bad-request-result";
-import { BadTokenRequestResult} from "../../auth/models/bad-token-request-result";
 import {JwtHelper, AuthHttp}    from 'angular2-jwt'
 import {TokenResult}            from "../../auth/models/token-result";
 import {LoginModel}             from "../../auth/models/login-model";
 import {ProfileModel}           from "../../auth/models/profile-model";
 import { Observable }           from 'rxjs/Observable';
+import {HttpExceptions} from "../../shared/http-exceptions/http-exceptions";
 
 @Injectable()
 export class AuthService {
@@ -48,10 +47,7 @@ export class AuthService {
                 this.scheduleRefresh();
                 return true;
             })
-            .catch( errorResult => {
-                let errorModel = errorResult.json() as BadTokenRequestResult;
-                return Observable.throw(errorModel.error_description)
-            });
+            .catch( HttpExceptions.handleTokenBadRequest)
     }
 
     public register(data: RegisterModel): Observable<Response> {
