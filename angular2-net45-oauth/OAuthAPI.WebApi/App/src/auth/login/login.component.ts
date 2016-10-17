@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit{
 
     onSubmit(){
         this.loadingBar.isLoading();
+        this.errors = null;
         this.auth.login(this.loginForm.value)
             .finally( () => this.loadingBar.doneLoading())
             .subscribe(
