@@ -6,8 +6,6 @@ var precss               = require('precss');
 var autoprefixer         = require('autoprefixer');
 var prod                 = process.env.ENV === 'production'
 
-console.log(prod);
-
 module.exports = {
     entry: {
         'polyfills': './src/polyfills.ts',
