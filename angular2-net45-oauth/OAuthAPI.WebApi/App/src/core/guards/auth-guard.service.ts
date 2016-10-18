@@ -1,15 +1,14 @@
 /**
- * Created by Fabian on 5/10/2016.
+ * Created by Fabian on 18/10/2016.
  */
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { CanActivate } from '@angular/router';
 import {AlertService} from "../common/alert.service";
-import {ProfileService} from "./profile.service";
-import {AuthService} from "./auth.service";
+import {ProfileService} from "../auth/profile.service";
+import {AuthService} from "../auth/auth.service";
 
 @Injectable()
-export class SuperAdminAuthGuard implements CanActivate {
+export class AuthGuard {
 
     constructor(private router: Router,
                 private alertService: AlertService,
@@ -17,22 +16,26 @@ export class SuperAdminAuthGuard implements CanActivate {
                 private auth: AuthService
     ) {}
 
-
-
-    canActivate(): boolean {
-
+    isLoggedIn(): boolean{
         if(!this.auth.isLoggedIn){
             this.alertService.sendError("You are not logged in");
             this.router.navigate(['auth/login']);
             return false;
         }
+        return true;
+    }
 
-        if(this.profile.isInRole("SuperAdmin") ){
-            return true
-        }else{
+    isInRole(role: string): boolean{
+
+        if(!this.isLoggedIn()){
+            return false;
+        }
+
+        if(!this.profile.isInRole(role) ){
             this.alertService.sendError("Unauthorized");
             this.router.navigate(['unauthorized']);
             return false;
         }
+        return true;
     }
 }
