@@ -3,11 +3,11 @@
  */
 import {Injectable, OnInit} from '@angular/core';
 import {AuthService} from "./auth.service";
-import {ProfileModel} from "../../auth/models/profile-model";
+import {ProfileModel} from "../../+auth/models/profile-model";
 @Injectable()
 export class ProfileService{
     constructor(private auth: AuthService){
-        // this.profile = this.auth.retrieveProfile()
+        // this.profile = this.+auth.retrieveProfile()
     }
 
     getUsername(): string{

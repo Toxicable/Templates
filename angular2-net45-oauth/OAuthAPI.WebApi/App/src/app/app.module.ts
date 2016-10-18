@@ -5,25 +5,20 @@ import {NgModule, ApplicationRef}                             from '@angular/cor
 import {BrowserModule}                          from "@angular/platform-browser";
 import {AppComponent}                           from "./app.component";
 import {routing}                                from "./app.routing";
-import {AuthModule, AuthService}                from "../auth";
 import {HomeComponent}                          from "./home";
 import {NotFoundComponent}                      from "./not-found";
 import {NavigationComponent}                    from "./navigation";
-import {AdminModule}                            from "../+admin";
 import {UnauthorizedComponent}                  from "./unauthorized";
 import {ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../shared/shared.module";
 import {CoreModule} from "../core/core.module";
 import {createNewHosts, createInputTransfer, removeNgStyles} from "@angularclass/hmr";
-
-
+import {AuthService} from "../core/auth/auth.service";
 
 
 @NgModule({
     imports:      [
         BrowserModule ,
-        AuthModule,
-       // AdminModule,
         ReactiveFormsModule,
         SharedModule,
         CoreModule,
@@ -40,11 +35,16 @@ import {createNewHosts, createInputTransfer, removeNgStyles} from "@angularclass
     bootstrap:    [ AppComponent ]
 })
 export class AppModule {
-    constructor(public appRef: ApplicationRef) {}
+    constructor(public appRef: ApplicationRef,
+                private auth: AuthService
+    ) {}
+
     hmrOnInit(store) {
+        //refresh tokens
+        this.auth.startupTokenRefresh();
+
+        //HMR
         if (!store || !store.state) return;
-        console.log('HMR store', store);
-        console.log('store.state.data:', store.state.data)
         // inject AppStore here and update it
         // this.AppStore.update(store.state)
         if ('restoreInputValues' in store) {
@@ -56,6 +56,10 @@ export class AppModule {
         delete store.restoreInputValues;
     }
     hmrOnDestroy(store) {
+        //refresh tokens
+        this.auth.unsubscribeRefresh();
+
+        //HMR
         var cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
         // recreate elements
         store.disposeOldHosts = createNewHosts(cmpLocation)

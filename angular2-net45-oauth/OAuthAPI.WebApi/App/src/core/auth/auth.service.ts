@@ -4,11 +4,11 @@
 import { Injectable }           from '@angular/core';
 import { Http, Headers,
     RequestOptions, Response}   from '@angular/http';
-import { RegisterModel }        from '../../auth/models/register-model';
+import { RegisterModel }        from '../../+auth/models/register-model';
 import {JwtHelper, AuthHttp}    from 'angular2-jwt'
-import {TokenResult}            from "../../auth/models/token-result";
-import {LoginModel}             from "../../auth/models/login-model";
-import {ProfileModel}           from "../../auth/models/profile-model";
+import {TokenResult}            from "../../+auth/models/token-result";
+import {LoginModel}             from "../../+auth/models/login-model";
+import {ProfileModel}           from "../../+auth/models/profile-model";
 import { Observable }           from 'rxjs/Observable';
 import {HttpExceptions} from "../../shared/http-exceptions/http-exceptions";
 
@@ -87,7 +87,7 @@ export class AuthService {
 
     public startupTokenRefresh() {
        // if (!this.isLoggedIn) {
-       //     console.log("user not auth on startup")
+       //     console.log("user not +auth on startup")
        // }
 
         this.refreshTokens().subscribe(

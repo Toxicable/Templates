@@ -20,6 +20,11 @@ const appRoutes: Routes = [
     {
         path:'admin',
         loadChildren: '../+admin/admin.module#AdminModule'
+        //TODO: add can load guard and other features
+    },
+    {
+        path:'auth',
+        loadChildren: '../+auth/auth.module#AuthModule'
     },
     {
         path: 'unauthorized',

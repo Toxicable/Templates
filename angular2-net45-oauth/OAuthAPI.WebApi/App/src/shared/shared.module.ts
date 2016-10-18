@@ -3,14 +3,16 @@ import { CommonModule }        from '@angular/common';
 import {LoadingBarComponent} from "./loading-bar";
 import {AlertComponent} from "./alert/alert.component";
 import {ControlMessagesComponent} from "./form-validation";
-import {AlertService} from "../core/common/alert.service";
-import {LoadingBarService} from "./loading-bar";
 import {ValidationSummaryComponent} from "./form-validation/validation-summary.component";
+import {HttpModule} from "@angular/http";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
     imports: [
-        CommonModule
+        ReactiveFormsModule,
+        CommonModule,
+        HttpModule
     ],
     declarations: [
         LoadingBarComponent,
@@ -19,6 +21,8 @@ import {ValidationSummaryComponent} from "./form-validation/validation-summary.c
         ValidationSummaryComponent
     ],
     exports: [
+        ReactiveFormsModule,
+        HttpModule,
         LoadingBarComponent,
         AlertComponent,
         ControlMessagesComponent,
