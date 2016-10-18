@@ -7,8 +7,8 @@ import {AlertService} from "./common/alert.service";
 import {AuthService} from "./auth/auth.service";
 import {ProfileService} from "./auth/profile.service";
 import {provideAuth} from "angular2-jwt";
-import {SuperAdminAuthGuard} from "./auth/super-admin-auth-guard.service";
- import {AuthenticatedAuthGuard} from "./auth/authenticated-auth-guard.service";
+import {SuperAdminAuthGuard} from "./guards/super-admin-auth-guard.service";
+ import {AuthenticatedAuthGuard} from "./guards/authenticated-auth-guard.service";
 /**
  * Created by Fabian on 12/10/2016.
  */

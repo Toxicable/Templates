@@ -9,7 +9,7 @@ import {RolesComponent} from "./roles/roles.component";
 import { NgModule }          from '@angular/core';
 import {AdminComponent} from "./admin.component";
 import {UsersComponent} from "./users/users.component";
-import {SuperAdminAuthGuard} from "../core/auth/super-admin-auth-guard.service";
+import {SuperAdminAuthGuard} from "../core/guards/super-admin-auth-guard.service";
 
 @NgModule({
     imports: [

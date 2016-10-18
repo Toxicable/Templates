@@ -1,7 +1,7 @@
 <h3>Users</h3>
 <div class="users">
-    <div *ngIf="users" class="users__user" >
-        <div *ngFor="let user of users">
+    <div *ngIf="users" >
+        <div *ngFor="let user of users" class="users__user" >
             <div>
                 {{user.id}}
             </div>
@@ -23,7 +23,14 @@
             <div>
                 {{user.lastName}}
             </div>
-
+            <div *ngIf="user.roles">
+                Roles:
+                <div *ngFor="let role of user.roles">
+                    {{role}}
+                    <button>Remove</button>
+                </div>
+                <button>Add</button>
+            </div>
         </div>
     </div>
 </div>

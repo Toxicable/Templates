@@ -18,9 +18,22 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetUsers()
         {
-            var users = await AppUserManager.Users.Include(u => u.Roles).ToListAsync();
+            var users = AppUserManager.Users.Include(u => u.Roles);
+            var roles = AppRoleManager.Roles;
+            var userInViewModel = users.Select(u => _mapper.Map<UserViewModel>(u));
+            
+            foreach (var user in userInViewModel)
+            {
+                user.Roles = roles.Where(r => (users.Single(
+                        u => u.Id == user.Id).Roles.Select(a => a.RoleId).Contains(r.Id)
+                   ))
+                   .Select( j => j.Name)
+                   .ToList();
+                    
+            }
 
-            return Ok(users.Select(u => _mapper.Map<UserViewModel>(u)));
+            var usersResults = await userInViewModel.ToListAsync();
+            return Ok(usersResults);
         }
 
         //GET: api/users/GetUser/id
