@@ -18,6 +18,10 @@ const appRoutes: Routes = [
         component: HomeComponent
     },
     {
+        path:'admin',
+        loadChildren: '../+admin/admin.module#AdminModule'
+    },
+    {
         path: 'unauthorized',
         component: UnauthorizedComponent
     },

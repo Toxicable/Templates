@@ -9,7 +9,7 @@ import {AuthModule, AuthService}                from "../auth";
 import {HomeComponent}                          from "./home";
 import {NotFoundComponent}                      from "./not-found";
 import {NavigationComponent}                    from "./navigation";
-import {AdminModule}                            from "../admin";
+import {AdminModule}                            from "../+admin";
 import {UnauthorizedComponent}                  from "./unauthorized";
 import {ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../shared/shared.module";
@@ -23,7 +23,7 @@ import {createNewHosts, createInputTransfer, removeNgStyles} from "@angularclass
     imports:      [
         BrowserModule ,
         AuthModule,
-        AdminModule,
+       // AdminModule,
         ReactiveFormsModule,
         SharedModule,
         CoreModule,

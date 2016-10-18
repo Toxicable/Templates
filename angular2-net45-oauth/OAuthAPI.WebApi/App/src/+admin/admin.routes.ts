@@ -10,7 +10,7 @@ import {SuperAdminAuthGuard} from "../core/guards/super-admin-auth-guard.service
 
 const adminRoutes: Routes = [
     {
-        path: 'admin',
+        path: '',
         component: AdminComponent,
         canActivate: [SuperAdminAuthGuard],
         children: [
