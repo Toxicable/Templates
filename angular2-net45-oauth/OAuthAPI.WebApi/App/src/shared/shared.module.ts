@@ -6,6 +6,7 @@ import {HttpModule} from "@angular/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ControlMessagesComponent} from "./form-validation/control-messages.component";
 import {LoadingBarComponent} from "./loading-bar/loading-bar.component";
+import {FileUploadComponent} from "./file-upload/file-upload.component";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {LoadingBarComponent} from "./loading-bar/loading-bar.component";
         LoadingBarComponent,
         AlertComponent,
         ControlMessagesComponent,
-        ValidationSummaryComponent
+        ValidationSummaryComponent,
+        FileUploadComponent
     ],
     exports: [
         ReactiveFormsModule,
@@ -27,7 +29,8 @@ import {LoadingBarComponent} from "./loading-bar/loading-bar.component";
         AlertComponent,
         ControlMessagesComponent,
         CommonModule,
-        ValidationSummaryComponent
+        ValidationSummaryComponent,
+        FileUploadComponent
     ]
 })
 export class SharedModule {}

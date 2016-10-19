@@ -3,7 +3,7 @@
  */
 import {Injectable, OnInit} from '@angular/core';
 import {AuthService} from "./auth.service";
-import {ProfileModel} from "../../+auth/models/profile-model";
+import {ProfileModel} from "../models/profile-model";
 import {TokenStorageService} from "./token-storage.service";
 @Injectable()
 export class ProfileService{

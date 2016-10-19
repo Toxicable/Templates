@@ -8,7 +8,7 @@ import { RegisterModel }        from '../../+auth/models/register-model';
 import {JwtHelper, AuthHttp}    from 'angular2-jwt'
 import {TokenResult}            from "../../+auth/models/token-result";
 import {LoginModel}             from "../../+auth/models/login-model";
-import {ProfileModel}           from "../../+auth/models/profile-model";
+import {ProfileModel}           from "../models/profile-model";
 import { Observable }           from 'rxjs/Observable';
 import {HttpExceptions} from "../../shared/http-exceptions/http-exceptions";
 import {TokenStorageService} from "./token-storage.service";

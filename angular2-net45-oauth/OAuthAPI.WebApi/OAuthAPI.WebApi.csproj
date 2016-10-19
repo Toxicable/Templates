@@ -215,6 +215,7 @@
     <Compile Include="Api\Identity\Controllers\ClaimsController.cs" />
     <Compile Include="Api\Identity\Controllers\ManageController.cs" />
     <Compile Include="Api\Identity\Controllers\RolesController.cs" />
+    <Compile Include="Api\Identity\Controllers\TestController.cs" />
     <Compile Include="Api\Identity\Controllers\UsersController.cs" />
     <Compile Include="Api\Identity\Managers\ApplicationRoleManager.cs" />
     <Compile Include="Api\Identity\Managers\ApplicationUserManager.cs" />

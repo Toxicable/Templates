@@ -4,7 +4,7 @@
 import { Injectable }           from '@angular/core';
 import {JwtHelper}    from 'angular2-jwt'
 import {TokenResult}            from "../../+auth/models/token-result";
-import {ProfileModel}           from "../../+auth/models/profile-model";
+import {ProfileModel}           from "../models/profile-model";
 
 @Injectable()
 export class TokenStorageService {
