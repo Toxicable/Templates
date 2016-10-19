@@ -60,41 +60,22 @@ export class AuthService {
 
     }
 
-
-    //should be unused
-    public tryGetAccessToken():Observable<string>{
-        if(this.isLoggedIn){
-            return Observable.of(this.retrieveAccessToken());
-        }
-
-        return this.refreshTokens()
-            .mergeMap(
-                res => {
-                    debugger
-                    this.storeTokens(res.json() as TokenResult);
-                    return this.retrieveAccessToken();
-                }
-            )
-    }
-
     public refreshTokens(): Observable<Response>{
         return this.getTokens({ refresh_token: this.retrieveRefreshToken() }, "refresh_token")
             .map( res => {
                 this.storeTokens(res.json() as TokenResult)
             })
-            .catch( error => Observable.throw("refresh token has expired"))
+            .catch( error => {
+                return Observable.throw("refresh token has expired");
+            })
     }
 
     public startupTokenRefresh() {
-       // if (!this.isLoggedIn) {
-       //     console.log("user not +auth on startup")
-       // }
 
         this.refreshTokens().subscribe(
             () => this.scheduleRefresh(),
             (error) => {
-                console.log(error);
-                console.log("we can probs redirect here");
+                console.warn(error);
             }
         );
     }
@@ -115,6 +96,21 @@ export class AuthService {
             this.refreshTokens()
                 .subscribe()
         });
+    }
+
+    private getTokens(data: any, grantType: string): Observable<Response> {
+        //data can be any since it can either be a refresh token or login details
+        //The request for tokens must be x-www-form-urlencoded IE: parameter string, it cant be json
+
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'});
+        let options = new RequestOptions({ headers: headers });
+
+        Object.assign(data, {
+            grant_type: grantType,
+            client_id: "AngularApp"
+        });
+
+        return this.http.post("api/token",  this.encodeObjectToParams(data), options)
     }
 
     private storeTokens(model: TokenResult): void{
@@ -139,21 +135,6 @@ export class AuthService {
     }
     retrieveProfile(): ProfileModel{
         return JSON.parse(localStorage.getItem("profile"));
-    }
-
-    private getTokens(data: any, grantType: string): Observable<Response> {
-        //data can be any since it can either be a refresh token or login details
-        //The request for tokens must be x-www-form-urlencoded IE: parameter string, it cant be json
-
-        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'});
-        let options = new RequestOptions({ headers: headers });
-
-        Object.assign(data, {
-            grant_type: grantType,
-            client_id: "AngularApp"
-        });
-
-        return this.http.post("api/token",  this.encodeObjectToParams(data), options)
     }
 
     private encodeObjectToParams(obj: any): string {

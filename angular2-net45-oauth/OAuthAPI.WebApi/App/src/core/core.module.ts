@@ -9,10 +9,8 @@ import {ProfileService} from "./auth/profile.service";
 import {provideAuth} from "angular2-jwt";
 import {SuperAdminAuthGuard} from "./guards/super-admin-auth-guard.service";
  import {AuthenticatedAuthGuard} from "./guards/authenticated-auth-guard.service";
- import {Http} from "@angular/http";
-/**
- * Created by Fabian on 12/10/2016.
- */
+
+
 
 
 @NgModule({
