@@ -4,11 +4,11 @@
 import {Injectable, OnInit} from '@angular/core';
 import {AuthService} from "./auth.service";
 import {ProfileModel} from "../../+auth/models/profile-model";
+import {TokenStorageService} from "./token-storage.service";
 @Injectable()
 export class ProfileService{
-    constructor(private auth: AuthService){
-        // this.profile = this.+auth.retrieveProfile()
-    }
+    constructor(private storage: TokenStorageService
+    ){ }
 
     getUsername(): string{
         let profile = this.getProfile();
@@ -31,7 +31,7 @@ export class ProfileService{
         let profile = this.getProfile();
 
         if(profile){
-            let profile = this.auth.retrieveProfile();
+            let profile = this.storage.retrieveProfile();
 
             if(!profile.role) return false;
             return profile.role.indexOf(role, 0) > -1;
@@ -40,8 +40,6 @@ export class ProfileService{
     }
 
     getProfile(){
-        return this.auth.retrieveProfile();
+        return this.storage.retrieveProfile();
     }
-
-
 }

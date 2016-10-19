@@ -11,18 +11,20 @@ import {LoginModel}             from "../../+auth/models/login-model";
 import {ProfileModel}           from "../../+auth/models/profile-model";
 import { Observable }           from 'rxjs/Observable';
 import {HttpExceptions} from "../../shared/http-exceptions/http-exceptions";
+import {TokenStorageService} from "./token-storage.service";
 
 @Injectable()
 export class AuthService {
     constructor(private http: Http,
                 private authHttp: AuthHttp,
+                private storage: TokenStorageService
     ) {}
 
     refreshSubscription: any;
     jwtHelper: JwtHelper = new JwtHelper();
 
     get isLoggedIn(): boolean {
-        let token = this.retrieveAccessToken();
+        let token = this.storage.retrieveAccessToken();
 
         if(!token) return false;
 
@@ -30,7 +32,7 @@ export class AuthService {
     }
 
     public logout(){
-        this.removeTokens();
+        this.storage.removeTokens();
         this.unsubscribeRefresh();
     }
 
@@ -43,7 +45,7 @@ export class AuthService {
     public login(user: LoginModel): Observable<boolean>  {
         return this.getTokens(user, "password")
             .map(res => {
-                this.storeTokens(res.json() as TokenResult);
+                this.storage.storeTokens(res.json() as TokenResult);
                 this.scheduleRefresh();
                 return true;
             })
@@ -61,9 +63,9 @@ export class AuthService {
     }
 
     public refreshTokens(): Observable<Response>{
-        return this.getTokens({ refresh_token: this.retrieveRefreshToken() }, "refresh_token")
+        return this.getTokens({ refresh_token: this.storage.retrieveRefreshToken() }, "refresh_token")
             .map( res => {
-                this.storeTokens(res.json() as TokenResult)
+                this.storage.storeTokens(res.json() as TokenResult)
             })
             .catch( error => {
                 return Observable.throw("refresh token has expired");
@@ -111,30 +113,7 @@ export class AuthService {
         });
 
         return this.http.post("api/token",  this.encodeObjectToParams(data), options)
-    }
-
-    private storeTokens(model: TokenResult): void{
-        let profile = this.jwtHelper.decodeToken(model.access_token) as ProfileModel
-
-        localStorage.setItem(".issued", model[".issued"])
-        localStorage.setItem("access_token", model.access_token);
-        localStorage.setItem("refresh_token", model.refresh_token);
-        localStorage.setItem("profile", JSON.stringify(profile));
-    }
-    private removeTokens(): void {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
-        localStorage.removeItem("profile");
-    }
-
-    private retrieveAccessToken(): string {
-        return localStorage.getItem("access_token");
-    }
-    private retrieveRefreshToken(): string {
-        return localStorage.getItem("refresh_token");
-    }
-    retrieveProfile(): ProfileModel{
-        return JSON.parse(localStorage.getItem("profile"));
+            .catch( error => HttpExceptions.handleError(error))
     }
 
     private encodeObjectToParams(obj: any): string {

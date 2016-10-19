@@ -15,10 +15,17 @@ export class HttpExceptions{
 
         switch (res.status){
             case 400:
-                return HttpExceptions.handleBadRequest(res)
+                return HttpExceptions.handleBadRequest(res);
+            case 500:
+                return HttpExceptions.handleInternalServerError(res);
         }
     }
 
+    public static handleInternalServerError(res: Response){
+        console.log(res);
+
+        return Observable.throw(res);
+    }
     public static handleTokenBadRequest(res: Response) {
         //bad request
         let badRequest = res.json() as BadTokenRequest;
@@ -31,7 +38,7 @@ export class HttpExceptions{
     private static handleBadRequest(res: Response) {
         //bad request
         let badRequest = res.json() as BadRequest;
-        let errors = badRequest.modelState[""].map(x => x);
+        let errors = badRequest.modelState[""];//.map(x => x);
 
         return Observable.throw(errors)
     }
