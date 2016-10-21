@@ -26,8 +26,8 @@
             <div *ngIf="user.roles">
                 Roles:
                 <div *ngFor="let role of user.roles">
-                    {{role}}
-                    <button>Remove</button>
+                    {{role.name}}
+                    <button (click)="removeFromRole(user.id, role.id)">Remove</button>
                 </div>
                 <button>Add</button>
             </div>

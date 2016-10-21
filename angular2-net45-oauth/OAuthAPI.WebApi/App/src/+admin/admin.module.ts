@@ -9,6 +9,8 @@ import {AdminComponent} from "./admin.component";
 import {UsersComponent} from "./users/users.component";
 import {SuperAdminAuthGuard} from "../core/guards/super-admin-auth-guard.service";
 import {SharedModule} from "../shared/shared.module";
+import {RoleService} from "./roles.service";
+import {UserService} from "./user.service";
 
 @NgModule({
     imports: [
@@ -20,6 +22,10 @@ import {SharedModule} from "../shared/shared.module";
         RolesComponent,
         UsersComponent
     ],
-    providers: [ SuperAdminAuthGuard ],
+    providers: [
+        SuperAdminAuthGuard,
+        UserService,
+        RoleService
+    ],
 })
 export class AdminModule { }
