@@ -2,3 +2,10 @@ body{
   font-family: Arial;
   margin:0!important;
 }
+
+.flex-grid {
+  display: flex;
+}
+.col {
+  flex: 1;
+}
