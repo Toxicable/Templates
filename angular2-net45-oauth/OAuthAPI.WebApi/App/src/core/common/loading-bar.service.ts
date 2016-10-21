@@ -12,11 +12,11 @@ export class LoadingBarService{
 
     loadingStatus$ = this.loadingStatus.asObservable();
 
-    isLoading(){
+    load(){
         this.updateStatus(true);
     }
 
-    doneLoading(){
+    done(){
         this.updateStatus(false);
     }
 

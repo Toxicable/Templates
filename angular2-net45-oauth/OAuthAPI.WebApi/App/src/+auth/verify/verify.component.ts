@@ -56,13 +56,13 @@ export class VerifyComponent implements OnInit{
     }
 
     sendConfirmationEmail(): void{
-        this.loadingBar.isLoading()
+        this.loadingBar.load()
 
         this.authHttp.get("api/account/SendConfirmEmail")
             .subscribe(
                 () => this.alert.sendSuccess("A confirmation email has been send"),
                 (error) => this.alert.sendError(error),
-                () => this.loadingBar.doneLoading()
+                () => this.loadingBar.done()
         )
     }
 

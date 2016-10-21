@@ -30,12 +30,12 @@ export class ForgotPasswordComponent implements OnInit{
     }
 
     onSubmit(){
-        this.loadingBar.isLoading();
+        this.loadingBar.load();
         this.authHttp.post("api/account/SendForgotPassword", this.forgotPasswordForm.value)
             .subscribe(
                 res => this.alert.sendSuccess("A message has been send to your email"),
                 error => this.alert.sendError(error),
-                () => this.loadingBar.doneLoading()
+                () => this.loadingBar.done()
 
         )
     }

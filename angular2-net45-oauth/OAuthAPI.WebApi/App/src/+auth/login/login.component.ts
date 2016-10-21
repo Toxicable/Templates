@@ -29,10 +29,10 @@ export class LoginComponent implements OnInit{
     }
 
     onSubmit(){
-        this.loadingBar.isLoading();
+        this.loadingBar.load();
         this.errors = null;
         this.auth.login(this.loginForm.value)
-            .finally( () => this.loadingBar.doneLoading())
+            .finally( () => this.loadingBar.done())
             .subscribe(
                 res => this.alertService.sendSuccess("Successfully logged in"),
                 error => this.errors = error
