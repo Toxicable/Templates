@@ -45,7 +45,7 @@ export class ResetPasswordComponent implements OnInit {
 
 
     onSubmit(){
-        this.loadingBar.isLoading();
+        this.loadingBar.load();
         let data = Object.assign({}, this.resetPasswordForm.value, {userId: this.id, code: this.code});
         this.http.post("api/account/resetpassword", data )
             .subscribe(
@@ -54,7 +54,7 @@ export class ResetPasswordComponent implements OnInit {
                     this.router.navigate(['+auth/login']);
                 },
                 error => this.alert.sendError(error),
-                () => this.loadingBar.doneLoading()
+                () => this.loadingBar.done()
             )
     }
 

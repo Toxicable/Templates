@@ -25,6 +25,7 @@ export class LoadingBarComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
+
     ngOnInit(): void {
         this.subscription = this.loadingBarService.loadingStatus$.subscribe((newStatus) => {
             this.isLoading = newStatus;

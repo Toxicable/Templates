@@ -6,12 +6,12 @@ import {FormGroup, FormControl} from "@angular/forms";
 export class FormValidationService {
     static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
         let config = {
-            'required': 'Required',
-            'invalidCreditCard': 'Is invalid credit card number',
-            'invalidEmailAddress': 'Invalid email address',
-            'invalidPassword': 'Invalid password. Password must be at least 6 characters long, and contain a number.',
-            'minlength': `Minimum length ${validatorValue.requiredLength}`,
-            'invalidCompare': 'Passwords must match'
+            'required'                : 'Required',
+            'invalidCreditCard'       : 'Is invalid credit card number',
+            'invalidEmailAddress'     : 'Invalid email address',
+            'invalidPassword'         : 'Invalid password. Password must be at least 6 characters long, and contain a number.',
+            'minlength'               : `Minimum length ${validatorValue.requiredLength}`,
+            'invalidCompare'          : 'Passwords must match'
         };
 
         return config[validatorName];
@@ -38,7 +38,6 @@ export class FormValidationService {
     }
 
     static emailValidator(control) {
-        // RFC 2822 compliant regex
         if (control.value.match(/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/)) {
             return null;
         } else {
