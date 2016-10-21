@@ -56,6 +56,37 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
 
         }
 
+        public async Task<IHttpActionResult> RemoveFromRole(string userId, string roleId)
+        {
+            var appUser = await AppUserManager.FindByIdAsync(userId);
+
+            if(appUser == null)
+            {
+                ModelState.AddModelError("", "User does not exist");
+                return BadRequest(ModelState);
+            }
+
+            var role = await AppRoleManager.FindByIdAsync(roleId);
+
+            if(role == null)
+            {
+
+                ModelState.AddModelError("", "Role does not exist");
+                return BadRequest(ModelState);
+            }
+
+            var result = await AppUserManager.RemoveFromRoleAsync(userId, role.Name);
+
+            if (!result.Succeeded)
+            {
+                GetIdentityErrorResult(result);
+                return BadRequest(ModelState);
+            }
+
+            return Ok();
+            
+        }
+
         //PUT: api/roles/
         [HttpGet]
         public async Task<IHttpActionResult> IsInRole( string role)

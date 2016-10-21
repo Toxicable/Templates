@@ -26,6 +26,8 @@ namespace OAuthAPI.WebApi.Api
             {
                 x.CreateMap<ApplicationUser, UserViewModel>();
                 x.CreateMap<IdentityRole, RoleViewModel>();
+                x.CreateMap<IdentityUserRole, RoleViewModel>();
+
             });
 
             _mapper = config.CreateMapper();

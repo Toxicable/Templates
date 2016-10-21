@@ -14,7 +14,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Models.ViewModels
         public string Email { get; set; }
         public bool EmailConfirmed { get; set; }
         public DateTimeOffset AccountCreated { get; set; }
-        public IList<string> Roles { get; set; }
+        public IList<RoleViewModel> Roles { get; set; }
         public IList<Claim> Claims { get; set; }
 
     }
