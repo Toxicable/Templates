@@ -85,6 +85,8 @@ namespace OAuthAPI.WebApi
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
 
+            config.EnableSystemDiagnosticsTracing();
+
         }
     }
 }
