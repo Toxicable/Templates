@@ -18,8 +18,9 @@ export class RoleService{
     removeFromRole(userId: string, roleId: string): Observable<any>{
         this.loader.load();
         return this.authHttp.post('/api/roles/removeFromRole', {userId, roleId})
+            .finally(() =>this.loader.done())
             .catch( error => HttpExceptions.handleError(error))
-            .finally(this.loader.done());
+
     }
 
 }

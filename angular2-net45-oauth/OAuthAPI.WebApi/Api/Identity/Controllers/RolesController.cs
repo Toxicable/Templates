@@ -56,6 +56,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
 
         }
 
+        [HttpPost]
         public async Task<IHttpActionResult> RemoveFromRole(string userId, string roleId)
         {
             var appUser = await AppUserManager.FindByIdAsync(userId);

@@ -18,6 +18,8 @@ export class HttpExceptions{
                 return HttpExceptions.handleBadRequest(res);
             case 500:
                 return HttpExceptions.handleInternalServerError(res);
+            default:
+                Observable.throw(["an Unhandled error occured"])
         }
     }
 

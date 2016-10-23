@@ -10,6 +10,7 @@ import {provideAuth} from "angular2-jwt";
 import {SuperAdminAuthGuard} from "./guards/super-admin-auth-guard.service";
  import {AuthenticatedAuthGuard} from "./guards/authenticated-auth-guard.service";
  import {TokenStorageService} from "./auth/token-storage.service";
+ import {Title} from "@angular/platform-browser";
 
 
 
@@ -23,11 +24,11 @@ import {SuperAdminAuthGuard} from "./guards/super-admin-auth-guard.service";
         SuperAdminAuthGuard,
         AuthenticatedAuthGuard,
         TokenStorageService,
+        Title,
         provideAuth({
             headerName: "Authorization",
             headerPrefix: "Bearer",
             tokenName: "access_token",
-            //tokenGetter: () => localStorage.getItem("access_token"),
             globalHeaders: [{'Content-Type':'application/json'}],
             noJwtError: true,
             noTokenScheme: true
