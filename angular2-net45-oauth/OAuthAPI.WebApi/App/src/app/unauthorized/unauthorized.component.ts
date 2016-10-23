@@ -4,7 +4,7 @@
 import {Component, ViewEncapsulation, OnInit, OnDestroy} from '@angular/core'
 
 @Component({
-    selector: 'my-app',
+    selector: 'unauthorized',
     templateUrl: 'unauthorized.component.html'
 })
 export class UnauthorizedComponent {

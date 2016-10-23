@@ -10,14 +10,15 @@ import {TokenResult}            from "../../+auth/models/token-result";
 import {LoginModel}             from "../../+auth/models/login-model";
 import {ProfileModel}           from "../models/profile-model";
 import { Observable }           from 'rxjs/Observable';
-import {HttpExceptions} from "../../shared/http-exceptions/http-exceptions";
+import {HttpExceptions} from "../http-exceptions/http-exceptions";
 import {TokenStorageService} from "./token-storage.service";
 
 @Injectable()
 export class AuthService {
     constructor(private http: Http,
                 private authHttp: AuthHttp,
-                private storage: TokenStorageService
+                private storage: TokenStorageService,
+                private httpExceptions: HttpExceptions
     ) {}
 
     refreshSubscription: any;
@@ -49,7 +50,7 @@ export class AuthService {
                 this.scheduleRefresh();
                 return true;
             })
-            .catch( HttpExceptions.handleTokenBadRequest)
+            .catch( this.httpExceptions.handleTokenBadRequest)
     }
 
     public register(data: RegisterModel): Observable<Response> {
@@ -58,7 +59,7 @@ export class AuthService {
 
         return this.http.post("api/account/create", data, options)
             .map(res => res)
-            .catch( HttpExceptions.handleError );
+            .catch( this.httpExceptions.handleError );
 
     }
 
@@ -113,7 +114,7 @@ export class AuthService {
         });
 
         return this.http.post("api/token",  this.encodeObjectToParams(data), options)
-            .catch( error => HttpExceptions.handleError(error))
+            .catch( error => this.httpExceptions.handleError(error))
     }
 
     private encodeObjectToParams(obj: any): string {

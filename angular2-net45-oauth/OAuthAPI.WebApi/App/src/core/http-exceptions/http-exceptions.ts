@@ -1,34 +1,38 @@
 import {Response} from "@angular/http";
 import {Observable} from "rxjs";
-import {BadRequest, BadTokenRequest} from "./models";
+import {Injectable} from "@angular/core";
+import {BadTokenRequest} from "./models/bad-token-request";
+import {BadRequest} from "./models/bad-request";
 /**
  * Created by Fabian on 11/10/2016.
  */
+
+@Injectable()
 export class HttpExceptions{
 
-    private catchErrorCodes(errorResponse){
+    // private catchErrorCodes(errorResponse){
+    //
+    // }
 
-    }
-
-    public static handleError (res: Response) {
+    public handleError (res: Response) {
         //TODO: add logging here
 
         switch (res.status){
             case 400:
-                return HttpExceptions.handleBadRequest(res);
+                return this.handleBadRequest(res);
             case 500:
-                return HttpExceptions.handleInternalServerError(res);
+                return this.handleInternalServerError(res);
             default:
                 Observable.throw(["an Unhandled error occured"])
         }
     }
 
-    public static handleInternalServerError(res: Response){
+    public handleInternalServerError(res: Response){
         console.log(res);
 
         return Observable.throw(res);
     }
-    public static handleTokenBadRequest(res: Response) {
+    public handleTokenBadRequest(res: Response) {
         //bad request
         let badRequest = res.json() as BadTokenRequest;
         let error = badRequest.error_description
@@ -37,7 +41,7 @@ export class HttpExceptions{
         return Observable.throw([error])
     }
 
-    private static handleBadRequest(res: Response) {
+    private handleBadRequest(res: Response) {
         //bad request
         let badRequest = res.json() as BadRequest;
         let errors = badRequest.modelState[""];//.map(x => x);

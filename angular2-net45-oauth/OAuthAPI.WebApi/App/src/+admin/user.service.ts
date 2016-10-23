@@ -3,7 +3,7 @@
  */
 import {Injectable} from "@angular/core";
 import {AuthHttp} from "angular2-jwt";
-import {HttpExceptions} from "../shared/http-exceptions/http-exceptions";
+import {HttpExceptions} from "../core/http-exceptions/http-exceptions";
 
 @Injectable()
 export class UserService{

@@ -3,7 +3,7 @@
  */
 import {Injectable} from "@angular/core";
 import {AuthHttp} from "angular2-jwt";
-import {HttpExceptions} from "../shared/http-exceptions/http-exceptions";
+import {HttpExceptions} from "../core/http-exceptions/http-exceptions";
 import {LoadingBarComponent} from "../shared/loading-bar/loading-bar.component";
 import {LoadingBarService} from "../core/common/loading-bar.service";
 import { Observable }           from 'rxjs/Observable';

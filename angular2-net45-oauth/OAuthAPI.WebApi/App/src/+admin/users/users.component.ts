@@ -10,7 +10,7 @@ import {RoleService} from "../roles.service";
 @Component({
     selector: 'users',
     templateUrl: './users.component.html',
-    styles: [require('./users.component.scss')]
+    styles: ["./src/app/+admin/users/users.component.scss"]
 })
 export class UsersComponent implements OnInit{
     constructor(private userService: UserService,
