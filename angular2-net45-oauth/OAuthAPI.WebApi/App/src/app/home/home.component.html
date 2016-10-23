@@ -3,4 +3,4 @@
 {{testResult}}
 <button (click)="refreshTokens()">Refresh Tokens</button>
 
-<file-upload #fu (change)="fu.upload()"></file-upload>
+<file-upload [multiple]="true"></file-upload>

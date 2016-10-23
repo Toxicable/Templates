@@ -1,25 +1,32 @@
 /**
  * Created by Fabian on 19/10/2016.
  */
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { Http } from '@angular/http';
-
 @Component({
     selector: 'file-upload',
-    template: '<input type="file">'
+    template: '<input type="file" [attr.multiple]="multiple ? true : null" (change)="upload()" >'
 })
 export class FileUploadComponent {
-    constructor(private http: Http, private el: ElementRef) {}
+    constructor(private http: Http,
+                private el: ElementRef
+    ) {}
+
+    @Input() multiple: boolean = false;
 
     upload() {
         let inputEl = this.el.nativeElement.firstElementChild;
-        if (inputEl.files.length > 0) { // a file was selected
-            let file:FileList = inputEl.files[0];
-            this.http
-                .post('/api/test/fileupload', file)
-                .subscribe();
-            // do whatever you do...
-            // subscribe to observable to listen for response
+        if (inputEl.files.length == 0) return;
+
+        let files :FileList = inputEl.files;
+        const formData = new FormData();
+        for(var i = 0; i < files.length; i++){
+            formData.append(files[i].name, files[i]);
         }
+
+        this.http
+            .post('/api/test/fileupload', formData)
+            .subscribe();
+
     }
 }

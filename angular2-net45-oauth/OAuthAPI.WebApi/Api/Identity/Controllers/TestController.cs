@@ -18,35 +18,26 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> FileUpload()
         {
-            Configuration.Services.GetTraceWriter().Info(Request, "", "");
+            string root = HttpContext.Current.Server.MapPath("~/App_Data");
+            var provider = new MultipartFormDataStreamProvider(root);
+            try
+            {
+                // Read the form data.
+                await Request.Content.ReadAsMultipartAsync(provider);
 
-            var httpRequest = HttpContext.Current.Request;
-
-            var imageStream = await Request.Content.ReadAsStreamAsync();
-            //File.WriteAllBytes(@"C:\Users\Fabian\Pictures\imageuploadtest.jpeg", image);
+                // This illustrates how to get the file names.
+                foreach (MultipartFileData file in provider.FileData)
+                {
+                    Trace.WriteLine(file.Headers.ContentDisposition.FileName);
+                    Trace.WriteLine("Server file path: " + file.LocalFileName);
+                }
                 return Request.CreateResponse(HttpStatusCode.OK);
-            // Check if the request contains multipart/form-data.
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
 
-            //string root = HttpContext.Current.Server.MapPath("~/App_Data");
-            //var provider = new MultipartFormDataStreamProvider(root);
-
-            //try
-            //{
-            //    // Read the form data.
-            //    await Request.Content.ReadAsMultipartAsync(provider);
-
-            //    // This illustrates how to get the file names.
-            //    foreach (MultipartFileData file in provider.FileData)
-            //    {
-            //        Trace.WriteLine(file.Headers.ContentDisposition.FileName);
-            //        Trace.WriteLine("Server file path: " + file.LocalFileName);
-            //    }
-            //    return Request.CreateResponse(HttpStatusCode.OK);
-            //}
-            //catch (System.Exception e)
-            //{
-            //    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
-            //}
         }
 
     }
