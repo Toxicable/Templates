@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit{
             .finally( () => this.loadingBar.done())
             .subscribe(
                 res => this.alertService.sendSuccess("Successfully logged in"),
-                error => this.errors = error
+                error => console.log(error)
 
             )
     }

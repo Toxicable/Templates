@@ -20,6 +20,7 @@ import {SuperAdminAuthGuard} from "./guards/super-admin-auth-guard.service";
          headerName: "Authorization",
          headerPrefix: "Bearer",
          tokenName: "access_token",
+         tokenGetter: (() => localStorage.getItem("access_token")),
          globalHeaders: [{'Content-Type':'application/json'}],
          noJwtError: true,
          noTokenScheme: true
@@ -50,6 +51,7 @@ import {SuperAdminAuthGuard} from "./guards/super-admin-auth-guard.service";
         //     headerName: "Authorization",
         //     headerPrefix: "Bearer",
         //     tokenName: "access_token",
+        //     tokenGetter: (() => localStorage.getItem("access_token")),
         //     globalHeaders: [{'Content-Type':'application/json'}],
         //     noJwtError: true,
         //     noTokenScheme: true

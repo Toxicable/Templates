@@ -22,7 +22,6 @@ const appRoutes: Routes = [
         path:'admin',
         loadChildren: '../+admin/admin.module#AdminModule',
         canLoad: [SuperAdminAuthGuard]
-        //TODO: add can load guard and other features
     },
     {
         path:'auth',

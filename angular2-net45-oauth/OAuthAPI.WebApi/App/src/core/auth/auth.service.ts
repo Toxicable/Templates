@@ -65,37 +65,30 @@ export class AuthService {
 
     public refreshTokens(): Observable<Response>{
         return this.getTokens({ refresh_token: this.storage.retrieveRefreshToken() }, "refresh_token")
-            .map( res => {
-                this.storage.storeTokens(res.json() as TokenResult)
-            })
-            .catch( error => {
-                return Observable.throw("refresh token has expired");
-            })
+            .map( res => this.storage.storeTokens(res.json() as TokenResult))
+            .catch( error => Observable.throw("refresh token has expired"))
+        //pretty sure the only way this can fail is with a expired token
     }
 
     public startupTokenRefresh() {
 
         this.refreshTokens().subscribe(
             () => this.scheduleRefresh(),
-            (error) => {
-                console.warn(error);
-            }
+            (error) => console.warn(error)
         );
     }
 
     public scheduleRefresh(): void {
         let source = this.authHttp.tokenStream.flatMap(
             streamToken => {
-                let token = this.jwtHelper.decodeToken(streamToken) as ProfileModel;
-                let iat = new Date(localStorage.getItem('.issued')).getTime()/1000;
-                let refreshTokenThreshold = 10; //seconds
-                let delay = ((token.exp - iat) - refreshTokenThreshold) * 1000;
-
-                return Observable.interval(delay);
+                    let token = this.jwtHelper.decodeToken(streamToken) as ProfileModel;
+                    let iat = new Date(localStorage.getItem('.issued')).getTime()/1000;
+                    let refreshTokenThreshold = 10; //seconds
+                    let delay = ((token.exp - iat) - refreshTokenThreshold) * 1000;
+                    return Observable.interval(delay);//ms I think
             });
 
         this.refreshSubscription = source.subscribe(() => {
-            //when the timer ires hit this one
             this.refreshTokens()
                 .subscribe()
         });

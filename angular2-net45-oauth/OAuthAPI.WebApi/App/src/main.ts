@@ -7,7 +7,7 @@ import { AppModule } from './app/app.module';
 import {bootloader} from "@angularclass/hmr";
 
 export function main() {
-    return platformBrowserDynamic().bootstrapModule(AppModule,);
+    return platformBrowserDynamic().bootstrapModule(AppModule);
 }
 
 if (process.env.ENV === 'production') {

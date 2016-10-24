@@ -38,10 +38,6 @@ export class AppModule {
     constructor(public appRef: ApplicationRef ) {}
 
     hmrOnInit(store: any) {
-        //refresh tokens
-        //this.auth.startupTokenRefresh();
-
-        //HMR
         if (!store || !store.state) return;
         // inject AppStore here and update it
         // this.AppStore.update(store.state)
@@ -54,10 +50,6 @@ export class AppModule {
         delete store.restoreInputValues;
     }
     hmrOnDestroy(store: any) {
-        //refresh tokens
-        //this.auth.unsubscribeRefresh();
-
-        //HMR
         var cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
         // recreate elements
         store.disposeOldHosts = createNewHosts(cmpLocation)
