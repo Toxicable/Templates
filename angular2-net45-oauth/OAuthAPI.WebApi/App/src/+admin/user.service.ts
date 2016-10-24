@@ -7,14 +7,14 @@ import {HttpExceptions} from "../core/http-exceptions/http-exceptions";
 
 @Injectable()
 export class UserService{
-    constructor(private authHttp: AuthHttp
-
+    constructor(private authHttp: AuthHttp,
+                private httpExceptions: HttpExceptions
 
     ){}
 
     getUsers(){
         return this.authHttp.get('/api/users/getUsers')
-            .catch( error => HttpExceptions.handleError(error))
+            .catch( error => this.httpExceptions.handleError(error))
     }
 
 }

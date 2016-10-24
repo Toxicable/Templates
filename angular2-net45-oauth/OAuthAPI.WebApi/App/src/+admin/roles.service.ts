@@ -11,15 +11,15 @@ import { Observable }           from 'rxjs/Observable';
 @Injectable()
 export class RoleService{
     constructor(private authHttp: AuthHttp,
-                private loader: LoadingBarService
-
+                private loader: LoadingBarService,
+                private httpExceptions: HttpExceptions
     ){}
 
     removeFromRole(userId: string, roleId: string): Observable<any>{
         this.loader.load();
         return this.authHttp.post('/api/roles/removeFromRole', {userId, roleId})
             .finally(() =>this.loader.done())
-            .catch( error => HttpExceptions.handleError(error))
+            .catch( error => this.httpExceptions.handleError(error))
 
     }
 
