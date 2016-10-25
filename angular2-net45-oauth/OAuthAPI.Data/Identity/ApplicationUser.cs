@@ -24,6 +24,9 @@ namespace OAuthAPI.Data.Identity
             // Add custom user claims here
             userIdentity.AddClaim(new Claim("email_confirmed", EmailConfirmed.ToString()));
 
+            userIdentity.AddClaim(new Claim("first_name", FirstName));
+            userIdentity.AddClaim(new Claim("last_name", LastName));
+
             return userIdentity;
         }
     }

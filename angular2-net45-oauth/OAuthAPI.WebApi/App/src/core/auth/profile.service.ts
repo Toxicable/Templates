@@ -10,6 +10,17 @@ export class ProfileService{
     constructor(private storage: TokenStorageService
     ){ }
 
+    get firstName(): string {
+        let profile = this.getProfile();
+        if(profile)
+            if(profile.first_name)
+                return profile.first_name;
+
+        return null;
+
+    }
+
+
     getUsername(): string{
         let profile = this.getProfile();
         if(profile) {

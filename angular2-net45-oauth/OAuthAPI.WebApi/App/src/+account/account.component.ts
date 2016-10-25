@@ -13,6 +13,6 @@ export class AccountComponent implements OnInit {
 
     ngOnInit() { }
 
-    
+
 
 }
