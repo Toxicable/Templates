@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {ControlMessagesComponent} from "./form-validation/control-messages.component";
 import {LoadingBarComponent} from "./loading-bar/loading-bar.component";
 import {FileUploadComponent} from "./file-upload/file-upload.component";
+import {DefaultValuePipe} from "./pipes/default-value/default-value.pipe";
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {FileUploadComponent} from "./file-upload/file-upload.component";
         HttpModule
     ],
     declarations: [
+        DefaultValuePipe,
         LoadingBarComponent,
         AlertComponent,
         ControlMessagesComponent,
@@ -23,6 +25,7 @@ import {FileUploadComponent} from "./file-upload/file-upload.component";
         FileUploadComponent
     ],
     exports: [
+        DefaultValuePipe,
         ReactiveFormsModule,
         HttpModule,
         LoadingBarComponent,
