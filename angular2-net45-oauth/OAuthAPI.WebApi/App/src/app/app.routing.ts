@@ -3,11 +3,11 @@
  */
 
 import { ModuleWithProviders }  from '@angular/core';
-import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
-import {HomeComponent} from "./home/home.component";
-import {NotFoundComponent} from "./not-found/not-found.component";
-import {UnauthorizedComponent} from "./unauthorized/unauthorized.component";
-import {SuperAdminAuthGuard} from "../core/guards/super-admin-auth-guard.service";
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { HomeComponent } from "./home/home.component";
+import { NotFoundComponent } from "./not-found/not-found.component";
+import { UnauthorizedComponent } from "./unauthorized/unauthorized.component";
+import { SuperAdminAuthGuard } from "../core/guards/super-admin-auth-guard.service";
 
 const appRoutes: Routes = [
     {
@@ -35,10 +35,7 @@ const appRoutes: Routes = [
         path: 'unauthorized',
         component: UnauthorizedComponent
     },
-    {
-        path: '**',
-        component: NotFoundComponent
-    }
+
 
 ];
 
