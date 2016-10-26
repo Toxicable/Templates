@@ -13,26 +13,8 @@ import {SuperAdminAuthGuard} from "./guards/super-admin-auth-guard.service";
  import {Title} from "@angular/platform-browser";
  import {Http, RequestOptions} from "@angular/http";
  import {HttpExceptions} from "./http-exceptions/http-exceptions";
-
-
- export function authFactory(http: Http, options: RequestOptions) {
-     return new AuthHttp(new AuthConfig({
-         headerName: "Authorization",
-         headerPrefix: "Bearer",
-         tokenName: "access_token",
-         tokenGetter: (() => localStorage.getItem("access_token")),
-         globalHeaders: [{'Content-Type':'application/json'}],
-         noJwtError: true,
-         noTokenScheme: true
-     }), http, options);
- };
-
- // Include this in your ngModule providers
- export const authProvider = {
-     provide: AuthHttp,
-     deps: [Http, RequestOptions],
-     useFactory: authFactory
- };
+ import {StorageBackend, LocalStorageBackend, Storage} from "./storage";
+ import {authProvider} from "./auth-factory";
 
 
 @NgModule({
@@ -46,6 +28,7 @@ import {SuperAdminAuthGuard} from "./guards/super-admin-auth-guard.service";
         TokenStorageService,
         Title,
         HttpExceptions,
+        { provide: Storage, useClass: LocalStorageBackend },
         authProvider
         // provideAuth({
         //     headerName: "Authorization",
