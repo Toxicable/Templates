@@ -8,7 +8,8 @@ import {ProfileService} from "../../core/auth/profile.service";
 @Component({
     selector: 'navigation',
     templateUrl: './navigation.component.html',
-    styles: ['./src/app/navigation/navigation.component.scss']
+    styleUrls: ['./navigation.component.scss']
+
 })
 export class NavigationComponent {
     constructor(private auth: AuthService,
