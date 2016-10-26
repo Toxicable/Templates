@@ -12,7 +12,7 @@ using OAuthAPI.WebApi.Api.Identity.Managers;
 
 namespace OAuthAPI.WebApi.Api.Identity.Providers
 {
-    public class CustomOAuthProvider : OAuthAuthorizationServerProvider
+    public class OAuthProvider : OAuthAuthorizationServerProvider
     {
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
