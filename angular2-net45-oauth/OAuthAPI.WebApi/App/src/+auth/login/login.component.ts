@@ -29,15 +29,15 @@ export class LoginComponent implements OnInit{
     }
 
     onSubmit(){
-        this.loadingBar.load();
+        //this.loadingBar.load();
         this.errors = null;
-        this.auth.login(this.loginForm.value)
-            .finally( () => this.loadingBar.done())
-            .subscribe(
-                res => this.alertService.sendSuccess("Successfully logged in"),
-                error => console.log(error)
 
-            )
+        this.loadingBar.doWithLoader(
+            this.auth.login(this.loginForm.value)
+        ).subscribe(
+            res => this.alertService.sendSuccess("Successfully logged in"),
+            error => console.log(error)
+        )
     }
 
 }
