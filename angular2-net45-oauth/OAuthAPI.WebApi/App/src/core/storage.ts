@@ -1,7 +1,7 @@
-import {Observable} from "rxjs";
 /**
  * Created by Fabian on 26/10/2016.
  */
+import {Observable} from "rxjs";
 
 export class Storage {
     constructor(private storageBackend:StorageBackend){}
@@ -19,13 +19,13 @@ export class Storage {
 
 export class LocalStorageBackend implements StorageBackend {
     setItem(key, value) {
-        return Observable.of(localStorage.setItem(key, value))
+        return Observable.of( localStorage.setItem(key, value))
     }
     getItem(key){
-        return Observable.of(localStorage.getItem(key))
+        return Observable.of( localStorage.getItem(key))
     }
     removeItem(key){
-        return Observable.of(localStorage.removeItem(key))
+        return Observable.of( localStorage.removeItem(key))
     }
 }
 export abstract class StorageBackend {
