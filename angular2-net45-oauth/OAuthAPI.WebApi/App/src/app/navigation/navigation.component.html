@@ -10,7 +10,7 @@
     </div>
 
     <div class="right">
-        <div *ngIf="auth.isLoggedIn" >Welcome {{profile.getUsername()}}</div>
+        <div *ngIf="auth.isLoggedIn" >Welcome {{profile.getUsername | async}}</div>
         <a routerLink="/" *ngIf="auth.isLoggedIn" (click)="auth.logout()" >Logout</a>
     </div>
 </nav>

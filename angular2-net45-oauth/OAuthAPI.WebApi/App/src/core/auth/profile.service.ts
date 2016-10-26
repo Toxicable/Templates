@@ -5,60 +5,54 @@ import {Injectable, OnInit} from '@angular/core';
 import {AuthService} from "./auth.service";
 import {ProfileModel} from "../models/profile-model";
 import {TokenStorageService} from "./token-storage.service";
+import {Observable} from "rxjs";
 @Injectable()
 export class ProfileService{
-    constructor(private storage: TokenStorageService
-    ){ }
-
-    get firstName(): string {
-        let profile = this.getProfile();
-        if(profile)
-            if(profile.first_name)
-                return profile.first_name;
-
-        return null;
-    }
-    get lastName(): string {
-        let profile = this.getProfile();
-        if(profile)
-            if(profile.last_name)
-                return profile.first_name;
-
-        return null;
+    constructor(storage: TokenStorageService
+    ){
+        this.profile$ = storage.retrieveProfile();
     }
 
+    profile$: Observable<ProfileModel>;
 
-
-    getUsername(): string{
-        let profile = this.getProfile();
-        if(profile) {
-            return profile.unique_name;
-        }
-        return "";
+    get firstName(): Observable<string> {
+        return this.profile$.map(profile => {debugger;
+            //console.log(profile);
+            return profile.first_name});
     }
 
-    isEmailConfirmed(): boolean{
-        let profile = this.getProfile();
-        if(profile){
-            let verifiedString= profile.email_confirmed
-            return verifiedString.toString() == "True";
-        }
-        return false;
+    get lastName(): Observable<string> {
+        return this.profile$.map(profile => profile.last_name);
     }
 
-    isInRole(role: string): boolean{
-        let profile = this.getProfile();
+    get getUsername(): Observable<string>{
+        return this.profile$.map(profile => profile.unique_name);
+        // let profile = this.getProfile();
+        // if(profile) {
+        //     return profile.unique_name;
+        // }
+        // return "";
+    }
 
-        if(profile){
-            let profile = this.storage.retrieveProfile();
+    isEmailConfirmed(): Observable<boolean>{
+        //TODO: fix this sill serilization bug
+        return this.profile$.map(profile => profile.email_confirmed.toString() == "True");
+
+        // let profile = this.getProfile();
+        // if(profile){
+        //     let verifiedString= profile.email_confirmed
+        //     return verifiedString.toString() == "True";
+        // }
+        // return false;
+    }
+
+    isInRole(role: string): Observable<boolean>{
+        return this.profile$.map(profile => {
 
             if(!profile.role) return false;
             return profile.role.indexOf(role, 0) > -1;
-        }
-        return false
+
+        });
     }
 
-    getProfile(){
-        return this.storage.retrieveProfile();
-    }
 }

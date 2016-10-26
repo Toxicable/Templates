@@ -18,18 +18,16 @@ export class AuthService {
     constructor(private http: Http,
                 private authHttp: AuthHttp,
                 private storage: TokenStorageService,
-                private httpExceptions: HttpExceptions
+                private httpExceptions: HttpExceptions,
     ) {}
 
     refreshSubscription: any;
     jwtHelper: JwtHelper = new JwtHelper();
 
-    get isLoggedIn(): boolean {
-        let token = this.storage.retrieveAccessToken();
+    get isLoggedIn(): Observable<boolean> {
 
-        if(!token) return false;
-
-        return !this.jwtHelper.isTokenExpired(token)
+        return this.storage.retrieveAccessToken()
+            .map(token => !this.jwtHelper.isTokenExpired(token));
     }
 
     public logout(){

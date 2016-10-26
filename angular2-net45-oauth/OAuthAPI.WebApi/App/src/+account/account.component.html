@@ -1,9 +1,9 @@
 <div>
     <div class="form-label">First Name: </div>
-    <div class="form-value">{{profile.firstName | defaultValue: "first name specified"}}</div>
+    <div class="form-value">{{profile.firstName | async | defaultValue: "first name specified"}}</div>
 
     <div class="form-label">Last Name: </div>
-    <div class="form-value">{{profile.lastName | defaultValue: "last name specified"}}</div>
+    <div class="form-value">{{profile.lastName | async | defaultValue: "last name specified"}}</div>
 
 
 </div>
