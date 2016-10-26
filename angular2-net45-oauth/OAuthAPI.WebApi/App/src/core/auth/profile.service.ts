@@ -17,8 +17,16 @@ export class ProfileService{
                 return profile.first_name;
 
         return null;
-
     }
+    get lastName(): string {
+        let profile = this.getProfile();
+        if(profile)
+            if(profile.last_name)
+                return profile.first_name;
+
+        return null;
+    }
+
 
 
     getUsername(): string{
