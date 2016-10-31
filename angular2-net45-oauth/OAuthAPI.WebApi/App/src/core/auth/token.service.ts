@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {Response, Headers, RequestOptions, Http} from '@angular/http';
 import {LoadingBarService} from '../services/loading-bar.service';
 import {HttpExceptionService} from '../services/http-exceptions.service';
-import {AppState} from '../../app/store/app-store';
+import {AppState} from '../../app/app-store';
 import {Store} from '@ngrx/store';
 import {ProfileModel} from '../models/profile-model';
 import {JwtHelper, tokenNotExpired} from 'angular2-jwt';

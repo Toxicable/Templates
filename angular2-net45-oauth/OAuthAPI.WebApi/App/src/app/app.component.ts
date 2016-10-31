@@ -1,7 +1,7 @@
 ﻿import {Component, ViewEncapsulation, OnInit, OnDestroy} from '@angular/core'
 import {AuthService} from "../core/auth/auth.service";
 import {Store} from '@ngrx/store';
-import {AppState} from './store/app-store';
+import {AppState} from './app-store';
 
 @Component({
     selector: 'my-app',

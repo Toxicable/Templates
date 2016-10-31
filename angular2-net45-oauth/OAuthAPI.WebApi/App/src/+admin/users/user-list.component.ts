@@ -4,7 +4,7 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {UserService} from './user.service';
 import {RoleService} from '../roles.service';
-import {AppState} from '../../app/store/app-store';
+import {AppState} from '../../app/app-store';
 import {Store} from '@ngrx/store';
 import {User} from '../models/user';
 import {Observable} from 'rxjs/Observable';

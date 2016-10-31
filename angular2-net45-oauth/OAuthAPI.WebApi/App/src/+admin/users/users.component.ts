@@ -3,7 +3,7 @@ import {LoadingBarService} from "../../core/services/loading-bar.service";
 import {UserService} from "./user.service";
 import {RoleService} from "../roles.service";
 import {Store} from '@ngrx/store';
-import {AppState} from '../../app/store/app-store';
+import {AppState} from '../../app/app-store';
 import {User} from '../models/user';
 
 @Component({

@@ -11,7 +11,7 @@ import {NotFoundComponent}                                    from "./not-found/
 import {NavigationComponent}                                  from "./navigation/navigation.component";
 import {UnauthorizedComponent}                                from "./unauthorized/unauthorized.component";
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {providedStore} from './store/app-store';
+import {providedStore} from './app-store';
 
 
 @NgModule({

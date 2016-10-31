@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {AuthApiService} from "../../core/services/auth-api.service";
-import {AppState} from '../../app/store/app-store';
+import {AppState} from '../../app/app-store';
 import {Store} from '@ngrx/store';
 
 @Injectable()

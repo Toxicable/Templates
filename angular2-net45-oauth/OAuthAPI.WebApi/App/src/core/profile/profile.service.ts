@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { TokenStorageService } from "../auth/token-storage.service";
 import { Observable } from "rxjs";
-import {AppState} from '../../app/store/app-store';
+import {AppState} from '../../app/app-store';
 import {Store} from '@ngrx/store';
 import {ProfileModel} from '../models/profile-model';
 import { Storage } from '../storage'
