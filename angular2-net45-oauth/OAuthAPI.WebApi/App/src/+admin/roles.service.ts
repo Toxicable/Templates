@@ -8,6 +8,8 @@ export class RoleService{
                 private api: AuthApiService
     ){}
 
+
+
     removeFromRole(userId: string, roleId: string): Observable<any>{
         return this.api.post('/api/roles/removeFromRole', {userId, roleId})
     }

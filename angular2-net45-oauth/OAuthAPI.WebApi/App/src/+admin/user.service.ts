@@ -6,8 +6,10 @@ export class UserService{
     constructor(private api: AuthApiService
     ){}
 
+    path: string = '/users';
+
     getUsers(){
-        return this.api.get('/api/users/getUsers');
+        return this.api.get(this.path + '/getUsers');
     }
 
 }

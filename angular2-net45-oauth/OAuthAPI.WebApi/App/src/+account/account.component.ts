@@ -10,7 +10,7 @@ import {FormValidationService} from "../core/services/form-validation.service";
 export class AccountComponent implements OnInit {
     constructor(private profile: ProfileService,
                 private formBuilder: FormBuilder,
-                private validatior: FormValidationService
+                private formValidator: FormValidationService
     ) { }
 
     resetPasswordForm: FormGroup;
@@ -18,11 +18,11 @@ export class AccountComponent implements OnInit {
 
     ngOnInit() {
         this.resetPasswordForm = this.formBuilder.group({
-            oldPassword: ['', [Validators.required, this.validatior.passwordValidator]],
+            oldPassword: ['', [Validators.required, this.formValidator.passwordValidator]],
             passwords: this.formBuilder.group({
-                password: ['', [Validators.required, this.validatior.passwordValidator]],
-                confirmPassword: ['', [Validators.required, this.validatior.passwordValidator]]
-            }, {validator: this.validatior.passwordComparisonValidator})
+                password: ['', [Validators.required, this.formValidator.passwordValidator]],
+                confirmPassword: ['', [Validators.required, this.formValidator.passwordValidator]]
+            }, {validator: this.formValidator.passwordComparisonValidator})
         });
     }
 

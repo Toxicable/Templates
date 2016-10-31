@@ -13,9 +13,10 @@ export class ProfileService{
     profile$: Observable<ProfileModel>;
 
     get firstName(): Observable<string> {
-        return this.profile$.map(profile => {
-            //console.log(profile);
-            return profile.first_name});
+        return this.profile$
+            .map(profile => {
+                return profile.first_name
+            });
     }
 
     get lastName(): Observable<string> {
@@ -23,10 +24,11 @@ export class ProfileService{
     }
 
     get getUsername(): Observable<string>{
-        return this.profile$.map(profile => {
-            if(profile) {
-                return profile.unique_name;
-            }
+        return this.profile$
+            .map(profile => {
+                if(profile) {
+                    return profile.unique_name;
+                }
         });
         // return "";
     }
