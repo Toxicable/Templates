@@ -12,7 +12,6 @@ export class AuthGuard {
                 private profile: ProfileService,
                 private auth: AuthService
     ) {}
-    protected role: string;
 
     isLoggedIn(): boolean{
         if(!this.auth.isLoggedIn){
@@ -23,13 +22,13 @@ export class AuthGuard {
         return true;
     }
 
-    isInRole(): boolean{
+    isInRole(role: string): boolean{
 
         if(!this.isLoggedIn()){
             return false;
         }
 
-        if(!this.profile.isInRole(this.role) ){
+        if(!this.profile.isInRole(role) ){
             this.alertService.sendError("Unauthorized");
             this.router.navigate(['unauthorized']);
             return false;

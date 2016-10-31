@@ -12,6 +12,7 @@ import {TokenStorageService} from "./services/token-storage.service";
 import {HttpExceptionService} from "./services/http-exceptions.service";
 import {AuthApiService} from "./services/auth-api.service";
 import {FormValidationService} from "./services/form-validation.service";
+import {AuthGuard} from './guards/auth-guard.service';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {FormValidationService} from "./services/form-validation.service";
         AuthApiService,
         HttpExceptionService,
         FormValidationService,
+        AuthGuard,
         { provide: Storage, useClass: LocalStorageBackend },
         authProvider
     ]
