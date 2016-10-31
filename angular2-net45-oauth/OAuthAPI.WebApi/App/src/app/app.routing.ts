@@ -31,6 +31,10 @@ const appRoutes: Routes = [
         path: 'unauthorized',
         component: UnauthorizedComponent
     },
+    {
+        path: '**',
+        component: NotFoundComponent
+    }
 
 
 ];
