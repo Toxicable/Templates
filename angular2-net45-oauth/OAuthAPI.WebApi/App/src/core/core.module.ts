@@ -2,7 +2,7 @@ import {NgModule, Optional, SkipSelf} from "@angular/core";
 import {SuperAdminAuthGuard} from "./guards/super-admin-auth-guard.service";
 import {AuthenticatedAuthGuard} from "./guards/authenticated-auth-guard.service";
 import {Title} from "@angular/platform-browser";
-import {StorageBackend, LocalStorageBackend, Storage} from "./storage";
+import {LocalStorageBackend, Storage} from "./storage";
 import {authProvider} from "./auth-factory";
 import {LoadingBarService} from "./services/loading-bar.service";
 import {AlertService} from "./services/alert.service";

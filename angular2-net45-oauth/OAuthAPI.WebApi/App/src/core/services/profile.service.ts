@@ -1,8 +1,7 @@
-import {Injectable, OnInit} from '@angular/core';
-import {AuthService} from "./auth.service";
-import {ProfileModel} from "../models/profile-model";
-import {TokenStorageService} from "./token-storage.service";
-import {Observable} from "rxjs";
+import { Injectable, OnInit } from '@angular/core';
+import { TokenStorageService } from "./token-storage.service";
+import { Observable } from "rxjs";
+import { ProfileModel } from '../models/profile-model';
 
 @Injectable()
 export class ProfileService{

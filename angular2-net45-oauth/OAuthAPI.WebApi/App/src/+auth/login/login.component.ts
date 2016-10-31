@@ -1,11 +1,11 @@
 import { Component } from '@angular/core'
 import { OnInit } from '@angular/core';
-import { AuthService } from '../../core/auth/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 import { LoginModel } from '../models/login-model'
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AlertService} from "../../core/common/alert.service";
-import {FormValidationService} from "../../core/common/form-validation.service";
-import {LoadingBarService} from "../../core/common/loading-bar.service";
+import {AlertService} from "../../core/services/alert.service";
+import {FormValidationService} from "../../core/services/form-validation.service";
+import {LoadingBarService} from "../../core/services/loading-bar.service";
 
 @Component({
     selector: 'login',
@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit{
     constructor(private formBuilder: FormBuilder,
                 private auth: AuthService,
                 private alertService: AlertService,
-                private loadingBar: LoadingBarService
+                private loadingBar: LoadingBarService,
+                private formValidator: FormValidationService
     ) { }
 
     loginForm: FormGroup;
@@ -23,8 +24,8 @@ export class LoginComponent implements OnInit{
 
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
-            userName: ['', [Validators.required, FormValidationService.emailValidator]],
-            password: ['', [Validators.required, FormValidationService.passwordValidator]],
+            userName: ['', [Validators.required, this.formValidator.emailValidator]],
+            password: ['', [Validators.required, this.formValidator.passwordValidator]],
         });
     }
 
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit{
         //this.loadingBar.load();
         this.errors = null;
 
+        console.log(this.loginForm)
         this.loadingBar.doWithLoader(
             this.auth.login(this.loginForm.value)
         ).subscribe(
