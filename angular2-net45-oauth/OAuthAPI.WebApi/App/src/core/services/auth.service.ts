@@ -1,21 +1,23 @@
 import { Injectable }           from '@angular/core';
 import { Http, Headers,
-    RequestOptions, Response}   from '@angular/http';
+    RequestOptions, Response }   from '@angular/http';
 import { RegisterModel }        from '../../+auth/models/register-model';
-import {JwtHelper, AuthHttp}    from 'angular2-jwt'
-import {TokenResult}            from "../../+auth/models/token-result";
-import {LoginModel}             from "../../+auth/models/login-model";
-import {ProfileModel}           from "../models/profile-model";
+import { JwtHelper, AuthHttp }    from 'angular2-jwt'
+import { TokenResult }            from "../../+auth/models/token-result";
+import { LoginModel }             from "../../+auth/models/login-model";
+import { ProfileModel }           from "../models/profile-model";
 import { Observable }           from 'rxjs/Observable';
-import {TokenStorageService}    from "./token-storage.service";
-import {HttpExceptionService}   from "./http-exceptions.service";
+import { TokenStorageService }    from "./token-storage.service";
+import { HttpExceptionService }   from "./http-exceptions.service";
+import { LoadingBarService } from './loading-bar.service';
 
 @Injectable()
 export class AuthService {
     constructor(private http: Http,
                 private authHttp: AuthHttp,
                 private storage: TokenStorageService,
-                private httpExceptions: HttpExceptionService
+                private httpExceptions: HttpExceptionService,
+                private loadingBar: LoadingBarService
     ) {}
 
     refreshSubscription: any;
@@ -52,9 +54,11 @@ export class AuthService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post("api/account/create", data, options)
-            .map(res => res)
-            .catch( this.httpExceptions.handleError );
+        return this.loadingBar.doWithLoader(
+            this.http.post("api/account/create", data, options)
+                .map(res => res)
+                .catch( this.httpExceptions.handleError )
+        );
 
     }
 
@@ -101,8 +105,10 @@ export class AuthService {
             client_id: "AngularApp"
         });
 
-        return this.http.post("api/token",  this.encodeObjectToParams(data), options)
-            .catch( error => this.httpExceptions.handleError(error))
+        return this.loadingBar.doWithLoader(
+            this.http.post("api/token",  this.encodeObjectToParams(data), options)
+                .catch( error => this.httpExceptions.handleError(error))
+        );
     }
 
     private encodeObjectToParams(obj: any): string {
