@@ -1,33 +1,30 @@
-import {Component, OnInit, OnDestroy} from '@angular/core'
+import {Component, OnInit, OnDestroy, ChangeDetectionStrategy} from '@angular/core'
 import {LoadingBarService} from "../../core/services/loading-bar.service";
-import {Subscription} from "rxjs";
+import { Observable} from "rxjs/Observable";
+import {AppState} from '../../app/app-store';
+import {Store} from '@ngrx/store';
 
 @Component({
     selector: 'loading-bar',
     template: `
-<div *ngIf="isLoading" class="load-bar">
+<div *ngIf="loading$ | async" class="load-bar">
   <div class="bar"></div>
     <div class="bar"></div>
   <div class="bar"></div>
   </div>`,
-    styleUrls: ['loading-bar.component.scss']
+    styleUrls: ['loading-bar.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoadingBarComponent implements OnInit, OnDestroy {
-    constructor(private loadingBarService: LoadingBarService) { }
+export class LoadingBarComponent implements OnInit {
+    constructor(private loadingBar: LoadingBarService,
+                private store: Store<AppState>
 
-    subscription: Subscription;
-    isLoading: boolean = false;
+    ) { }
 
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-    }
-
+    loading$ : Observable<boolean>;
 
     ngOnInit(): void {
-        this.subscription = this.loadingBarService.loadingStatus$.subscribe((newStatus) => {
-            this.isLoading = newStatus;
-
-        });
+        this.loading$ = this.store.select( state => state.loading);
     }
 }
 

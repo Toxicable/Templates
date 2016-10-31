@@ -8,13 +8,15 @@ import {profileReducers} from '../core/profile/profile.reducers';
 import {loggedInReducer} from '../core/auth/loggedIn.reducers';
 import {alertsReducer} from '../shared/alert/alert.reducer';
 import {Alert} from '../core/models/alert.model';
+import {loadingBarReducer} from '../shared/loading-bar/loading-bar.reducer';
 
 export interface AppState{
     users: User[],
     tokens: Tokens,
     profile: ProfileModel,
     loggedIn: boolean,
-    alerts: Alert[]
+    alerts: Alert[],
+    loading: boolean
 }
 
 export const providedStore = StoreModule
@@ -23,5 +25,6 @@ export const providedStore = StoreModule
         tokens: tokensReducer,
         profile: profileReducers,
         loggedIn: loggedInReducer,
-        alerts: alertsReducer
+        alerts: alertsReducer,
+        loading: loadingBarReducer
     });

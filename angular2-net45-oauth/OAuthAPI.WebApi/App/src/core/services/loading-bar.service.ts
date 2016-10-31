@@ -1,21 +1,18 @@
 import { Injectable } from "@angular/core";
-import { Subject, Observable } from "rxjs";
+import { Observable } from "rxjs";
+import {AppState} from '../../app/app-store';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 export class LoadingBarService{
-    // Observable string sources
-
-    private loadingStatus = new Subject<boolean>();
-    // Observable string streams
-
-    loadingStatus$ = this.loadingStatus.asObservable();
+    constructor(private store: Store<AppState>) {}
 
     load(){
-        this.updateStatus(true);
+        this.store.dispatch({type: "START_LOADING"})
     }
 
     done(){
-        this.updateStatus(false);
+        this.store.dispatch({type: "DONE_LOADING"})
     }
 
     doWithLoader<T>(task: Observable<T>): Observable<T>{
@@ -24,9 +21,5 @@ export class LoadingBarService{
             .do(() => this.load())
             .flatMap(() => task)
             .finally( () => this.done());
-    }
-
-    private updateStatus(newStatus: boolean){
-        this.loadingStatus.next(newStatus);
     }
 }
