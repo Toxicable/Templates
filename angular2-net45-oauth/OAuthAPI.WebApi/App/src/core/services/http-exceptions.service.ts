@@ -12,10 +12,6 @@ export class HttpExceptionService{
         const error = new Error(res.statusText);
         error['response'] = res;
 
-        console.log(error);
-        throw error;
-        //TODO: better error handling
-
         switch (res.status){
             case 400:
                 return this.handleBadRequest(res);

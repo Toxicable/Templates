@@ -4,6 +4,7 @@ import {AdminComponent} from "./admin.component";
 import {RolesComponent} from "./roles/roles.component";
 import {UsersComponent} from "./users/users.component";
 import {SuperAdminAuthGuard} from "../core/guards/super-admin-auth-guard.service";
+import {UserListComponent} from './users/user-list.component';
 /**
  * Created by Fabian on 6/10/2016.
  */
@@ -24,7 +25,7 @@ const adminRoutes: Routes = [
             },
             {
                 path: 'users',
-                component: UsersComponent
+                component: UserListComponent
             }
         ]
     }

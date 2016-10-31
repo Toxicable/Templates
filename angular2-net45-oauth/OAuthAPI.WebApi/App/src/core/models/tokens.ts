@@ -1,7 +1,4 @@
-/**
- * Created by Fabian on 5/10/2016.
- */
-export interface TokenResult{
+export interface Tokens{
     access_token: string;
     refresh_token: string;
     "as:client_id": string;

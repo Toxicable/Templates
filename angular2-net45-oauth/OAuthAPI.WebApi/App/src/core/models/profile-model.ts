@@ -8,7 +8,7 @@ export interface ProfileModel{
     nameid: string;
     unique_name: string;
     email_confirmed: boolean;
-    role: string[];
+    roles: string[];
     first_name: string;
-    last_name: string
+    last_name: string;
 }

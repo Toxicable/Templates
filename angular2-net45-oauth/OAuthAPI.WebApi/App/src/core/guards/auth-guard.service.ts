@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {AlertService} from "../services/alert.service";
-import {ProfileService} from "../services/profile.service";
-import {AuthService} from "../services/auth.service";
+import {ProfileService} from "../profile/profile.service";
+import {AuthService} from "../auth/auth.service";
 
 @Injectable()
 export class AuthGuard {

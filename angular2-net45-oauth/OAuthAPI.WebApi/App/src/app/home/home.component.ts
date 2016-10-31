@@ -4,7 +4,7 @@
 import { Component } from '@angular/core'
 import {Router} from "@angular/router";
 import {AlertService} from "../../core/services/alert.service";
-import {AuthService} from "../../core/services/auth.service";
+import {AuthService} from "../../core/auth/auth.service";
 import {AuthHttp} from "angular2-jwt";
 import {Observable} from "rxjs/Observable";
 

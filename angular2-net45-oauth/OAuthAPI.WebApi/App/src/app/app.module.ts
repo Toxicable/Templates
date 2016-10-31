@@ -10,6 +10,8 @@ import {HomeComponent}                                        from "./home/home.
 import {NotFoundComponent}                                    from "./not-found/not-found.component";
 import {NavigationComponent}                                  from "./navigation/navigation.component";
 import {UnauthorizedComponent}                                from "./unauthorized/unauthorized.component";
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {providedStore} from './store/app-store';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import {UnauthorizedComponent}                                from "./unauthoriz
         ReactiveFormsModule,
         SharedModule,
         CoreModule,
-        routing
+        routing,
+        providedStore,
+        StoreDevtoolsModule.instrumentOnlyWithExtension()
     ],
     declarations: [
         AppComponent,

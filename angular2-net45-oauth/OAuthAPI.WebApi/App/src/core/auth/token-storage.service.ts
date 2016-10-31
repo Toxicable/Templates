@@ -1,6 +1,6 @@
 import { Injectable }           from '@angular/core';
 import {JwtHelper}    from 'angular2-jwt'
-import {TokenResult}            from "../../+auth/models/token-result";
+import {Tokens}            from "../models/tokens";
 import {ProfileModel}           from "../models/profile-model";
 import {Storage} from "../storage";
 import {Observable} from "rxjs/Observable";
@@ -9,15 +9,9 @@ import {Observable} from "rxjs/Observable";
 export class TokenStorageService {
     constructor(private storage: Storage){}
 
-    jwtHelper: JwtHelper = new JwtHelper();
 
-    storeTokens(model: TokenResult): void{
-        let profile = this.jwtHelper.decodeToken(model.access_token) as ProfileModel
+    storeTokens(model: Tokens): void{
 
-        this.storage.setItem(".issued", model[".issued"]);
-        this.storage.setItem("access_token", model["access_token"]);
-        this.storage.setItem("refresh_token", model["refresh_token"]);
-        this.storage.setItem("profile", JSON.stringify(profile));
     }
     removeTokens(): void {
         this.storage.removeItem("access_token");

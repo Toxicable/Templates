@@ -2,12 +2,12 @@
  * Created by Fabian on 7/10/2016.
  */
 import {Component, OnInit} from "@angular/core";
-import {ProfileService} from "../../core/services/profile.service";
+import {ProfileService} from "../../core/profile/profile.service";
 import {AlertService} from "../../core/services/alert.service";
 import {ActivatedRoute} from "@angular/router";
 import {Http} from "@angular/http";
 import {LoadingBarService} from "../../core/services/loading-bar.service";
-import {AuthService} from "../../core/services/auth.service";
+import {AuthService} from "../../core/auth/auth.service";
 import {AuthHttp} from "angular2-jwt";
 
 @Component({

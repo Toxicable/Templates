@@ -11,9 +11,9 @@
 
     <div class="right">
 
-        <div *ngIf="auth.isLoggedIn" >
-            Welcome {{profile?.getUsername | async}}
+        <div *ngIf="loggedIn$ | async" >
+            Welcome {{username$ | async}}
+            <a routerLink="/" (click)="auth.logout()">Logout</a>
         </div>
-        <a routerLink="/" *ngIf="auth.isLoggedIn" (click)="auth.logout()" >Logout</a>
     </div>
 </nav>

@@ -1,6 +1,11 @@
-import { Component } from '@angular/core'
-import {AuthService} from "../../core/services/auth.service";
-import {ProfileService} from "../../core/services/profile.service";
+import {Component, OnInit} from '@angular/core'
+import {AuthService} from "../../core/auth/auth.service";
+import {ProfileService} from "../../core/profile/profile.service";
+import {AppState} from '../store/app-store';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {ProfileModel} from '../../core/models/profile-model';
+import {Tokens} from '../../core/models/tokens';
 
 @Component({
     selector: 'navigation',
@@ -8,8 +13,16 @@ import {ProfileService} from "../../core/services/profile.service";
     styleUrls: ['./navigation.component.scss']
 
 })
-export class NavigationComponent {
-    constructor(private auth: AuthService,
-                private profile: ProfileService
-    ){}
+export class NavigationComponent implements OnInit{
+
+    constructor(private profile: ProfileService,
+                private store: Store<AppState>
+    ){ }
+    username$: Observable<string>;
+    loggedIn$: Observable<boolean>
+
+    ngOnInit(): void {
+        this.username$ = this.store.select( state => state.profile.unique_name);
+        this.loggedIn$ = this.store.select( state => state.loggedIn);
+    }
 }

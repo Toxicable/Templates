@@ -1,5 +1,7 @@
 ﻿import {Component, ViewEncapsulation, OnInit, OnDestroy} from '@angular/core'
-import {AuthService} from "../core/services/auth.service";
+import {AuthService} from "../core/auth/auth.service";
+import {Store} from '@ngrx/store';
+import {AppState} from './store/app-store';
 
 @Component({
     selector: 'my-app',
@@ -14,7 +16,9 @@ import {AuthService} from "../core/services/auth.service";
 })
 export class AppComponent implements OnInit, OnDestroy{
 
-    constructor(private auth: AuthService ){}
+    constructor(private auth: AuthService,
+                private store: Store<AppState>
+    ){    }
 
     ngOnInit(): void {
         this.auth.startupTokenRefresh();
