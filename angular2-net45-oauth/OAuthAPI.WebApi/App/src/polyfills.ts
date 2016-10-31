@@ -1,6 +1,3 @@
-/**
- * Created by Fabian on 24/09/2016.
- */
 import 'core-js/es6';
 import 'core-js/es7/reflect';
 //import 'reflect-metadata';

@@ -6,6 +6,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlertService} from "../../core/services/alert.service";
 import {FormValidationService} from "../../core/services/form-validation.service";
 import {LoadingBarService} from "../../core/services/loading-bar.service";
+import {AppState} from '../../app/app-store';
+import {Store} from '@ngrx/store';
 
 @Component({
     selector: 'login',
@@ -16,7 +18,8 @@ export class LoginComponent implements OnInit{
                 private auth: AuthService,
                 private alertService: AlertService,
                 private loadingBar: LoadingBarService,
-                private formValidator: FormValidationService
+                private formValidator: FormValidationService,
+                private store: Store<AppState>
     ) { }
 
     loginForm: FormGroup;
@@ -30,10 +33,8 @@ export class LoginComponent implements OnInit{
     }
 
     onSubmit(){
-        //this.loadingBar.load();
         this.errors = null;
 
-        console.log(this.loginForm)
         this.loadingBar.doWithLoader(
             this.auth.login(this.loginForm.value)
         ).subscribe(
