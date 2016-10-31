@@ -1,7 +1,3 @@
-/**
- * Created by Fabian on 26/09/2016.
- */
-
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from "./home/home.component";

@@ -1,9 +1,6 @@
-/**
- * Created by Fabian on 30/09/2016.
- */
 import { Component } from '@angular/core'
-import {AuthService} from "../../core/auth/auth.service";
-import {ProfileService} from "../../core/auth/profile.service";
+import {AuthService} from "../../core/services/auth.service";
+import {ProfileService} from "../../core/services/profile.service";
 
 @Component({
     selector: 'navigation',

@@ -1,11 +1,9 @@
-/**
- * Created by Fabian on 7/10/2016.
- */
 import {Injectable, OnInit} from '@angular/core';
 import {AuthService} from "./auth.service";
 import {ProfileModel} from "../models/profile-model";
 import {TokenStorageService} from "./token-storage.service";
 import {Observable} from "rxjs";
+
 @Injectable()
 export class ProfileService{
     constructor(storage: TokenStorageService
@@ -16,7 +14,7 @@ export class ProfileService{
     profile$: Observable<ProfileModel>;
 
     get firstName(): Observable<string> {
-        return this.profile$.map(profile => {debugger;
+        return this.profile$.map(profile => {
             //console.log(profile);
             return profile.first_name});
     }
@@ -26,11 +24,11 @@ export class ProfileService{
     }
 
     get getUsername(): Observable<string>{
-        return this.profile$.map(profile => profile.unique_name);
-        // let profile = this.getProfile();
-        // if(profile) {
-        //     return profile.unique_name;
-        // }
+        return this.profile$.map(profile => {
+            if(profile) {
+                return profile.unique_name;
+            }
+        });
         // return "";
     }
 

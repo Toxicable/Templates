@@ -12,7 +12,10 @@ using OAuthAPI.Data;
 using OAuthAPI.WebApi.Api.Identity.Managers;
 using OAuthAPI.WebApi.Api.Identity.Providers;
 using Owin;
- 
+using Microsoft.Owin.Security.Google;
+using Microsoft.Owin.Security.Facebook;
+using Microsoft.AspNet.Identity;
+
 namespace OAuthAPI.WebApi
 {
     public class Startup
@@ -21,6 +24,8 @@ namespace OAuthAPI.WebApi
         {
             HttpConfiguration httpConfig = new HttpConfiguration();
 
+
+            ConfigureExternalLogin(app);
             ConfigureOAuthTokenGeneration(app);
             ConfigureOAuthTokenConsumption(app);
 
@@ -30,6 +35,32 @@ namespace OAuthAPI.WebApi
         }
 
         private const string Issuer = "http://localhost:59822/";
+
+        public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
+        public static GoogleOAuth2AuthenticationOptions googleAuthOptions { get; private set; }
+        public static FacebookAuthenticationOptions facebookAuthOptions { get; private set; }
+
+        private void ConfigureExternalLogin(IAppBuilder app)
+        {
+            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+
+            googleAuthOptions = new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "137170270322-3ik6cl5m55i4ft3ff6t7l9tm2f1abkvh.apps.googleusercontent.com",
+                ClientSecret = "doD3vfJda8FArt9Apva9Plxu",
+                Provider = new GoogleAuthProvider()
+            };
+            app.UseGoogleAuthentication(googleAuthOptions);
+
+            //Configure Facebook External Login
+            facebookAuthOptions = new FacebookAuthenticationOptions()
+            {
+                AppId = "1841204649444154",
+                AppSecret = "626707abbeb4edb292536723729ff3d3",
+                Provider = new FacebookAuthProvider()
+            };
+            app.UseFacebookAuthentication(facebookAuthOptions);
+        }
 
         private void ConfigureOAuthTokenGeneration(IAppBuilder app)
         {
@@ -44,7 +75,7 @@ namespace OAuthAPI.WebApi
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/api/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = new CustomOAuthProvider(),
+                Provider = new OAuthProvider(),
                 AccessTokenFormat = new CustomJwtFormat(Issuer),
                 RefreshTokenProvider = new RefreshTokenProvider()
             };

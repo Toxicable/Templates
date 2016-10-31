@@ -1,11 +1,8 @@
-/**
- * Created by Fabian on 1/10/2016.
- */
 import {Component, OnInit, OnDestroy} from '@angular/core'
-import {AlertService} from "../../core/common/alert.service";
+import {AlertService} from "../../core/services/alert.service";
 import {Subscription} from "rxjs";
-import {Alert} from "./models/alert.model";
-import {AlertType} from "./models/alert-types";
+import {Alert} from "../../core/models/alert.model";
+import {AlertType} from "../../core/models/alert-types";
 
 @Component({
     selector: 'alert',

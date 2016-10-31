@@ -1,16 +1,13 @@
-/**
- * Created by Fabian on 6/10/2016.
- */
 import {Component, OnInit} from '@angular/core';
-import {LoadingBarService} from "../../core/common/loading-bar.service";
-import {AuthHttp} from "angular2-jwt";
+import {LoadingBarService} from "../../core/services/loading-bar.service";
 import {UserService} from "../user.service";
 import {RoleService} from "../roles.service";
 
 @Component({
     selector: 'users',
     templateUrl: './users.component.html',
-    styles: ["./src/app/+admin/users/users.component.scss"]
+    styleUrls:
+        ["./users.component.scss"]
 })
 export class UsersComponent implements OnInit{
     constructor(private userService: UserService,
@@ -27,7 +24,7 @@ export class UsersComponent implements OnInit{
         this.loadingBar.load();
         this.userService.getUsers()
             .subscribe(
-                res => this.users = res.json(),
+                res => this.users = res as any[],
                 error => console.log(error),
                 () => this.loadingBar.done()
             )
@@ -36,8 +33,6 @@ export class UsersComponent implements OnInit{
     removeFromRole(userId: string, roleId: string){
         this.roleService.removeFromRole(userId, roleId)
             .subscribe(
-                //() => ,
-
             )
     }
 }

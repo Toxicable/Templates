@@ -1,13 +1,10 @@
-/**
- * Created by Fabian on 5/10/2016.
- */
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CanActivate } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
-import {AlertService} from "../common/alert.service";
+import { AuthService } from '../services/auth.service';
+import {AlertService} from "../services/alert.service";
 import {AuthGuard} from "./auth-guard.service";
-import {ProfileService} from "../auth/profile.service";
+import {ProfileService} from "../services/profile.service";
 
 @Injectable()
 export class AdminAuthGuard extends AuthGuard implements CanActivate {
@@ -21,6 +18,6 @@ export class AdminAuthGuard extends AuthGuard implements CanActivate {
     }
 
     canActivate(): boolean {
-        return this.isInRole("Admin");
+        return this.isInRole();
     }
 }

@@ -1,12 +1,9 @@
-/**
- * Created by Fabian on 11/10/2016.
- */
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../core/auth/auth.service";
-import {FormValidationService} from "../../core/common/form-validation.service";
-import {LoadingBarService} from "../../core/common/loading-bar.service";
-import {AlertService} from "../../core/common/alert.service";
+import {AuthService} from "../../core/services/auth.service";
+import {FormValidationService} from "../../core/services/form-validation.service";
+import {LoadingBarService} from "../../core/services/loading-bar.service";
+import {AlertService} from "../../core/services/alert.service";
 import {AuthHttp} from "angular2-jwt";
 
 @Component({
@@ -18,14 +15,15 @@ export class ForgotPasswordComponent implements OnInit{
                 private auth: AuthService,
                 private alert: AlertService,
                 private loadingBar: LoadingBarService,
-                private authHttp: AuthHttp
+                private authHttp: AuthHttp,
+                private formValidator: FormValidationService
     ) { }
 
     forgotPasswordForm: FormGroup;
 
     ngOnInit(): void {
         this.forgotPasswordForm = this.formBuilder.group({
-            userName: ['', [Validators.required, FormValidationService.emailValidator]],
+            userName: ['', [Validators.required, this.formValidator.emailValidator]],
         });
     }
 

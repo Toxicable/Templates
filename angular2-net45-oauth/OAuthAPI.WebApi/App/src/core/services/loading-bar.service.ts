@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Subject, Observable } from "rxjs";
-/**
- * Created by Fabian on 8/10/2016.
- */
+
 @Injectable()
 export class LoadingBarService{
     // Observable string sources

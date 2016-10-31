@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core'
 import { FormGroup, Validators,    FormBuilder }    from '@angular/forms';
-import {AuthService} from "../../core/auth/auth.service";
-import {FormValidationService} from "../../core/common/form-validation.service";
-import {AlertService} from "../../core/common/alert.service";
+import {AuthService} from "../../core/services/auth.service";
+import {FormValidationService} from "../../core/services/form-validation.service";
+import {AlertService} from "../../core/services/alert.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -13,18 +13,19 @@ export class RegisterComponent  implements OnInit {
     constructor(private formBuilder: FormBuilder,
                 private authService: AuthService,
                 private alertService: AlertService,
-                private router: Router
+                private router: Router,
+                private validator: FormValidationService
     ) {   }
     registerForm: FormGroup;
     errors: string[];
 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
-            userName: ['', [Validators.required, FormValidationService.emailValidator]],
+            userName: ['', [Validators.required, this.validator.emailValidator]],
             passwords: this.formBuilder.group({
-                password: ['', [Validators.required, FormValidationService.passwordValidator]],
-                confirmPassword: ['', [Validators.required, FormValidationService.passwordValidator]]
-            }, {validator: FormValidationService.passwordComparisonValidator})
+                password: ['', [Validators.required, this.validator.passwordValidator]],
+                confirmPassword: ['', [Validators.required, this.validator.passwordValidator]]
+            }, {validator: this.validator.passwordComparisonValidator})
         });
     }
 

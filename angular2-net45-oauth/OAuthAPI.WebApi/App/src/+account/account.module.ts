@@ -1,6 +1,3 @@
-/**
- * Created by Fabian on 25/10/2016.
- */
 import {NgModule} from "@angular/core";
 import {accountRouting} from "./account.routes";
 import {SharedModule} from "../shared/shared.module";

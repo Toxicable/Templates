@@ -1,7 +1,3 @@
-/**
- * Created by Fabian on 6/10/2016.
- */
-
 import {adminRouting} from "./admin.routes";
 import {RolesComponent} from "./roles/roles.component";
 import { NgModule }          from '@angular/core';

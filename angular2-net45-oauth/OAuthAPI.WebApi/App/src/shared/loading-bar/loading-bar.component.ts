@@ -1,8 +1,5 @@
-/**
- * Created by Fabian on 8/10/2016.
- */
 import {Component, OnInit, OnDestroy} from '@angular/core'
-import {LoadingBarService} from "../../core/common/loading-bar.service";
+import {LoadingBarService} from "../../core/services/loading-bar.service";
 import {Subscription} from "rxjs";
 
 @Component({

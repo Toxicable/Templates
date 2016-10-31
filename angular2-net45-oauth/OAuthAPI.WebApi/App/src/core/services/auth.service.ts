@@ -1,6 +1,3 @@
-/**
- * Created by Fabian on 25/09/2016.
- */
 import { Injectable }           from '@angular/core';
 import { Http, Headers,
     RequestOptions, Response}   from '@angular/http';
@@ -10,15 +7,15 @@ import {TokenResult}            from "../../+auth/models/token-result";
 import {LoginModel}             from "../../+auth/models/login-model";
 import {ProfileModel}           from "../models/profile-model";
 import { Observable }           from 'rxjs/Observable';
-import {HttpExceptions} from "../http-exceptions/http-exceptions";
-import {TokenStorageService} from "./token-storage.service";
+import {TokenStorageService}    from "./token-storage.service";
+import {HttpExceptionService}   from "./http-exceptions.service";
 
 @Injectable()
 export class AuthService {
     constructor(private http: Http,
                 private authHttp: AuthHttp,
                 private storage: TokenStorageService,
-                private httpExceptions: HttpExceptions,
+                private httpExceptions: HttpExceptionService
     ) {}
 
     refreshSubscription: any;

@@ -1,7 +1,3 @@
-///<reference path="not-found/not-found.component.ts"/>
-/**
- * Created by Fabian on 24/09/2016.
- */
 import {NgModule, ApplicationRef}                             from '@angular/core';
 import {BrowserModule}                                        from "@angular/platform-browser";
 import {AppComponent}                                         from "./app.component";

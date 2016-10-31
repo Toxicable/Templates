@@ -1,11 +1,8 @@
-/**
- * Created by Fabian on 18/10/2016.
- */
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {AlertService} from "../common/alert.service";
-import {ProfileService} from "../auth/profile.service";
-import {AuthService} from "../auth/auth.service";
+import {AlertService} from "../services/alert.service";
+import {ProfileService} from "../services/profile.service";
+import {AuthService} from "../services/auth.service";
 
 @Injectable()
 export class AuthGuard {

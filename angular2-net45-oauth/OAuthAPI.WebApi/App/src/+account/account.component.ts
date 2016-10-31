@@ -1,10 +1,7 @@
-/**
- * Created by Fabian on 25/10/2016.
- */
 import { Component, OnInit } from '@angular/core';
-import {ProfileService} from "../core/auth/profile.service";
+import {ProfileService} from "../core/services/profile.service";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {FormValidationService} from "../core/common/form-validation.service";
+import {FormValidationService} from "../core/services/form-validation.service";
 
 @Component({
     selector: 'account',
@@ -13,6 +10,7 @@ import {FormValidationService} from "../core/common/form-validation.service";
 export class AccountComponent implements OnInit {
     constructor(private profile: ProfileService,
                 private formBuilder: FormBuilder,
+                private validatior: FormValidationService
     ) { }
 
     resetPasswordForm: FormGroup;
@@ -20,11 +18,11 @@ export class AccountComponent implements OnInit {
 
     ngOnInit() {
         this.resetPasswordForm = this.formBuilder.group({
-            oldPassword: ['', [Validators.required, FormValidationService.passwordValidator]],
+            oldPassword: ['', [Validators.required, this.validatior.passwordValidator]],
             passwords: this.formBuilder.group({
-                password: ['', [Validators.required, FormValidationService.passwordValidator]],
-                confirmPassword: ['', [Validators.required, FormValidationService.passwordValidator]]
-            }, {validator: FormValidationService.passwordComparisonValidator})
+                password: ['', [Validators.required, this.validatior.passwordValidator]],
+                confirmPassword: ['', [Validators.required, this.validatior.passwordValidator]]
+            }, {validator: this.validatior.passwordComparisonValidator})
         });
     }
 

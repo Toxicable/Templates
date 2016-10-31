@@ -1,7 +1,3 @@
-/**
- * Created by Fabian on 25/10/2016.
- */
-
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: 'defaultValue'})

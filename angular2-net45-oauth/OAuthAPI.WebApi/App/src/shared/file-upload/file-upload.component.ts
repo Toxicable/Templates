@@ -1,8 +1,6 @@
-/**
- * Created by Fabian on 19/10/2016.
- */
 import { Component, ElementRef, Input } from '@angular/core';
 import { Http } from '@angular/http';
+
 @Component({
     selector: 'file-upload',
     template: '<input type="file" [attr.multiple]="multiple ? true : null" (change)="upload()" >'

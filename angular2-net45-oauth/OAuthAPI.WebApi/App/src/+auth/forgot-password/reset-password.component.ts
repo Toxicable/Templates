@@ -1,13 +1,10 @@
-/**
- * Created by Fabian on 13/10/2016.
- */
 import { Component, OnInit } from '@angular/core';
-import {LoadingBarService} from "../../core/common/loading-bar.service";
+import {LoadingBarService} from "../../core/services/loading-bar.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AlertService} from "../../core/common/alert.service";
+import {AlertService} from "../../core/services/alert.service";
 import {Http} from "@angular/http";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {FormValidationService} from "../../core/common/form-validation.service";
+import {FormValidationService} from "../../core/services/form-validation.service";
 
 @Component({
     selector: 'reset-password',
@@ -19,12 +16,14 @@ export class ResetPasswordComponent implements OnInit {
                 private router: Router,
                 private http: Http,
                 private loadingBar: LoadingBarService,
-                private formBuilder: FormBuilder
+                private formBuilder: FormBuilder,
+                private formValidator: FormValidationService
     ){}
 
     private id: string;
     private code: string;
     resetPasswordForm: FormGroup;
+
     ngOnInit() {
 
         let code = this.route.snapshot.queryParams['code'];
@@ -37,9 +36,9 @@ export class ResetPasswordComponent implements OnInit {
         }
 
         this.resetPasswordForm = this.formBuilder.group({
-                password: ['', [Validators.required, FormValidationService.passwordValidator]],
-                confirmPassword: ['', [Validators.required, FormValidationService.passwordValidator]]
-            }, {validator: FormValidationService.passwordComparisonValidator}
+                password: ['', [Validators.required, this.formValidator.passwordValidator]],
+                confirmPassword: ['', [Validators.required, this.formValidator.passwordValidator]]
+            }, {validator: this.formValidator.passwordComparisonValidator}
         );
     }
 

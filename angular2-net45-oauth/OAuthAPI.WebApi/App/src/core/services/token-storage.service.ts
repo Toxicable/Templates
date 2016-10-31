@@ -1,6 +1,3 @@
-/**
- * Created by Fabian on 19/10/2016.
- */
 import { Injectable }           from '@angular/core';
 import {JwtHelper}    from 'angular2-jwt'
 import {TokenResult}            from "../../+auth/models/token-result";
@@ -38,8 +35,7 @@ export class TokenStorageService {
         return this.storage.getItem("profile")
             .map(profile => {
 
-                let t  = JSON.parse(profile) as ProfileModel
-                return t;
+                return JSON.parse(profile) as ProfileModel;
             })
 
     }
