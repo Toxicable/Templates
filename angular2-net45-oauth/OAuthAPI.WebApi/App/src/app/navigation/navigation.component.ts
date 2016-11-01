@@ -3,6 +3,7 @@ import {ProfileService} from "../../core/profile/profile.service";
 import {AppState} from '../app-store';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
+import {AccountService} from '../../core/auth/account.service';
 
 @Component({
     selector: 'navigation',
@@ -13,6 +14,7 @@ import {Observable} from 'rxjs';
 export class NavigationComponent implements OnInit{
 
     constructor(private profile: ProfileService,
+                private account: AccountService,
                 private store: Store<AppState>
     ){ }
     username$: Observable<string>;

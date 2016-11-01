@@ -17,31 +17,35 @@ export class AuthGuard {
 
     isLoggedIn(): Observable<boolean>{
         return this.store.select(state => state.loggedIn)
-            .subscribe(
-                isLoggedIn => {
-                    if(!isLoggedIn){
+            .map( isLoggedIn => {
+                    if (!isLoggedIn) {
                         this.alertService.sendError("You are not logged in");
                         this.router.navigate(['auth/login']);
                         return false;
                     }
                     return true;
-                }
-            )
-
-
+                });
     }
 
-    isInRole(role: string): boolean{
+    isInRole(role: string): Observable<boolean>{
 
-        if(!this.isLoggedIn()){
-            return false;
-        }
+        return this.isLoggedIn()
+            .flatMap( isLoggedIn =>{
 
-        if(!this.profile.isInRole(role) ){
-            this.alertService.sendError("Unauthorized");
-            this.router.navigate(['unauthorized']);
-            return false;
-        }
-        return true;
+                if(!isLoggedIn){
+                    return Observable.of(false);
+                }
+
+                return this.profile.isInRole(role)
+                    .map( isInRole => {
+                        if(!isInRole){
+                            this.alertService.sendError("Unauthorized");
+                            this.router.navigate(['unauthorized']);
+                            return false;
+                        }
+                        return true;
+                    })
+
+            })
     }
 }

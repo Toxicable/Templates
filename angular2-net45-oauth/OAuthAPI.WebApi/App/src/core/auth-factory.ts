@@ -9,7 +9,11 @@ export function authFactory(http: Http, options: RequestOptions) {
         headerName: "Authorization",
         headerPrefix: "Bearer",
         tokenName: "access_token",
-        tokenGetter: (() => localStorage.getItem("access_token")),
+        tokenGetter: (() => {
+            let tokens = JSON.parse(localStorage.getItem("tokens"))
+            if(tokens)
+                return tokens.access_token
+        }),
         globalHeaders: [{'Content-Type':'application/json', Accept: 'application/json'}],
         noJwtError: true,
         noTokenScheme: true

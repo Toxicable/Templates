@@ -11,6 +11,7 @@ import {LoginModel} from '../../+auth/models/login-model';
 import {Storage} from "../storage";
 import {Tokens} from '../models/tokens';
 import {ProfileService} from '../profile/profile.service';
+import {AlertService} from '../services/alert.service';
 
 @Injectable()
 export class TokenService {
@@ -19,8 +20,8 @@ export class TokenService {
                 private http: Http,
                 private httpExceptions: HttpExceptionService,
                 private profile: ProfileService,
-                private authHttp: AuthHttp,
-                private store: Store<AppState>
+                private store: Store<AppState>,
+                private alert: AlertService
     ) { }
 
     refreshSubscription$: Subscription;
@@ -47,22 +48,21 @@ export class TokenService {
             client_id: "AngularApp"
         });
 
-        return this.loadingBar.doWithLoader(
-            this.http.post("api/token", this.encodeObjectToParams(data) , options)
-                .catch( error => this.httpExceptions.handleError(error))
+        //return this.loadingBar.doWithLoader(
+         return this.http.post("api/token", this.encodeObjectToParams(data) , options)
                 .map( res => res.json())
-                .do( tokens => this.store.dispatch({type: "GET_TOKENS", payload: tokens}))
-                .do( () => this.store.dispatch({type: "UPDATE_LOGIN_STATUS", payload: true}))
+                .do( tokens => {
+                    this.store.dispatch({type: "GET_TOKENS", payload: tokens});
+                    this.store.dispatch({type: "UPDATE_LOGIN_STATUS", payload: true});
+                })
                 .map( (tokens: Tokens) => {
                     let profile = this.jwtHelper.decodeToken(tokens.access_token) as ProfileModel
                     this.profile.storeProfile(profile);
 
-                    this.storage.setItem(".issued", tokens[".issued"]);
-                    this.storage.setItem("access_token", tokens["access_token"]);
-                    this.storage.setItem("refresh_token", tokens["refresh_token"]);
-                    this.storage.setItem("profile", JSON.stringify(profile));
+                    this.storage.setItem("tokens", JSON.stringify(tokens));
                 })
-        );
+                .catch( error => this.httpExceptions.handleError(error))
+       // )
     }
 
     deleteTokens(){
@@ -81,42 +81,44 @@ export class TokenService {
     }
 
     refreshTokens(): Observable<Response>{
-        return this.storage.getItem("refresh_token")
+        return this.store.select( state => state.tokens.refresh_token)
+            .take(1)
             .flatMap( refreshToken => {
                 return this.getTokens(
                     { refresh_token: refreshToken } as RefreshGrant, "refresh_token")
-                    .catch( error => Observable.throw("refresh tokens has expired"));
+                    .catch( error => this.alert.sendError("Your session has expired"));
                 //pretty sure the only way this can fail is with a expired tokens
             })
     }
 
     startupTokenRefresh() {
-        this.storage.getItem("access_token")
-            .subscribe(
-                token => {
+        this.storage.getItem("tokens")
+            .subscribe( tokens => {
+                if(tokens) {
+                    let tokensModel = JSON.parse(tokens) as Tokens;
+                    this.store.dispatch({type: "GET_TOKENS", payload: tokensModel});
 
-                    if(tokenNotExpired(token)) {
-                        this.scheduleRefresh()
-                    }else{
-                        this.refreshTokens()
-                            .subscribe( () => this.scheduleRefresh())
-                    }
-
+                    this.refreshTokens()
+                        .subscribe( () => this.scheduleRefresh() )
                 }
-            )
+            })
     }
 
     scheduleRefresh(): void {
-        let source = this.authHttp.tokenStream.flatMap(
-            streamToken => {
-                let token = this.jwtHelper.decodeToken(streamToken) as ProfileModel;
-                let iat = new Date(localStorage.getItem('.issued')).getTime()/1000;
+        let source = this.store.select( state => state.tokens)
+            .take(1)
+            .flatMap(tokens => {
+                let issued = new Date(tokens[".issued"]).getTime() / 1000;
+                let expires = new Date(tokens[".expires"]).getTime() / 1000;
+
                 let refreshTokenThreshold = 10; //seconds
-                let delay = ((token.exp - iat) - refreshTokenThreshold) * 1000;
-                return Observable.interval(delay);//ms I think
+                let delay = ((expires - issued) - refreshTokenThreshold) * 1000;
+                console.log("refresh time", delay);
+                return Observable.interval(delay);//ms
             });
 
         this.refreshSubscription$ = source.subscribe(() => {
+            console.log("refresh fired");
             this.refreshTokens()
                 .subscribe()
         });

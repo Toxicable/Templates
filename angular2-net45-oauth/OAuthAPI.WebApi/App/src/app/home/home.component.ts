@@ -1,9 +1,11 @@
 import { Component } from '@angular/core'
 import {Router} from "@angular/router";
 import {AlertService} from "../../core/services/alert.service";
-import {AuthHttp} from "angular2-jwt";
+import {AuthHttp, tokenNotExpired, JwtHelper} from "angular2-jwt";
 import {Observable} from "rxjs/Observable";
 import {TokenService} from '../../core/auth/token.service';
+import {AppState} from '../app-store';
+import {Store} from '@ngrx/store';
 
 
 @Component({
@@ -14,8 +16,8 @@ export class HomeComponent {
 constructor(    private router: Router,
                 private alertService: AlertService,
                 private authHttp: AuthHttp,
-                private tokens: TokenService
-
+                private tokens: TokenService,
+                private store: Store<AppState>
     ){}
 
     testAuth() {
@@ -26,6 +28,15 @@ constructor(    private router: Router,
             )
     }
 
+    testToken(){
+        this.store.select( state => state.tokens.access_token)
+            .subscribe(
+
+                token => {
+                    let jwtHelper: JwtHelper = new JwtHelper();
+                    console.log(jwtHelper.isTokenExpired(token))}
+            )
+    }
 
     refreshTokens() {
         this.tokens.refreshTokens()

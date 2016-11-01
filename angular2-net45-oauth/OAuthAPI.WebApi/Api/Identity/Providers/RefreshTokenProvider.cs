@@ -71,9 +71,6 @@ namespace OAuthAPI.WebApi.Api.Identity.Providers
         public async Task ReceiveAsync(AuthenticationTokenReceiveContext context)
         {
 
-            //var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
-            //context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
-
             string hashedTokenId = AuthHelper.GetHash(context.Token);
 
             var clientManager = new ClientManager();
@@ -81,6 +78,12 @@ namespace OAuthAPI.WebApi.Api.Identity.Providers
 
             var refreshToken = await refreshTokenManager.FindRefreshToken(hashedTokenId);
             //if it is null then this probably means that you're trying with an old token
+
+            if(refreshToken == null)
+            {
+                //tokens expired
+                //context.Response.Response.errSetError("invalid_clientId", "ClientId should be sent.");
+            }
 
             if (refreshToken != null)
             {

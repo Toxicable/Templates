@@ -24,8 +24,8 @@ export class ProfileService{
     }
 
     storeProfile(profile: ProfileModel){
-        this.storage.setItem('profile', profile);
-        this.store.dispatch({type: "STORE_PROFILE", payload: profile});
+        this.storage.setItem('profile', JSON.stringify(profile));
+        this.store.dispatch({type: "GET_PROFILE", payload: profile});
     }
 
 }
