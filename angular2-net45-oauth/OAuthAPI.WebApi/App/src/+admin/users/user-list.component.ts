@@ -1,6 +1,3 @@
-/**
- * Created by Fabian on 31/10/2016.
- */
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {UserService} from './user.service';
 import {RoleService} from '../roles.service';
@@ -29,10 +26,7 @@ export class UserListComponent implements OnInit {
 
     getUsers(){
         this.userService.getUsers()
-            .subscribe(
-                res => console.log("it should be working through the store"),
-                error => console.log(error)
-            )
+            .subscribe()
     }
 
     removeFromRole(userId: string, roleId: string){

@@ -42,8 +42,10 @@ export class AuthService {
     }
 
     public login(user: LoginModel)  {
-        return this.tokens.getTokens(user, "password")
-            .do(res => this.scheduleRefresh() )
+        return this.loadingBar.doWithLoader(
+            this.tokens.getTokens(user, "password")
+                .do(res => this.scheduleRefresh() )
+        )
     }
 
     public register(data: RegisterModel): Observable<Response> {

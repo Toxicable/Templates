@@ -11,21 +11,20 @@ import {Router} from "@angular/router";
 })
 export class RegisterComponent  implements OnInit {
     constructor(private formBuilder: FormBuilder,
-                private authService: AuthService,
-                private alertService: AlertService,
+                private auth: AuthService,
+                private alert: AlertService,
                 private router: Router,
-                private validator: FormValidationService
+                private formValidator: FormValidationService
     ) {   }
     registerForm: FormGroup;
-    errors: string[];
 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
-            userName: ['', [Validators.required, this.validator.emailValidator]],
+            userName: ['', [Validators.required, this.formValidator.emailValidator]],
             passwords: this.formBuilder.group({
-                password: ['', [Validators.required, this.validator.passwordValidator]],
-                confirmPassword: ['', [Validators.required, this.validator.passwordValidator]]
-            }, {validator: this.validator.passwordComparisonValidator})
+                password: ['', [Validators.required, this.formValidator.passwordValidator]],
+                confirmPassword: ['', [Validators.required, this.formValidator.passwordValidator]]
+            }, {validator: this.formValidator.passwordComparisonValidator})
         });
     }
 
@@ -33,12 +32,12 @@ export class RegisterComponent  implements OnInit {
     onSubmit(){
         let data = Object.assign({}, this.registerForm.value, this.registerForm.value.passwords);
         //TODO: find better way to do this :/
-        this.authService.register(data)
+
+        this.auth.register(data)
             .subscribe( x => {
-                    this.alertService.sendSuccess("Successfully registered");
+                    this.alert.sendSuccess("Successfully registered");
                     this.router.navigateByUrl("/+auth/login");
-                },
-                errors => this.errors = errors
+                }
             )
     };
 

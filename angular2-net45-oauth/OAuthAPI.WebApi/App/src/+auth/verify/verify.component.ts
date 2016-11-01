@@ -1,6 +1,3 @@
-/**
- * Created by Fabian on 7/10/2016.
- */
 import {Component, OnInit} from "@angular/core";
 import {ProfileService} from "../../core/profile/profile.service";
 import {AlertService} from "../../core/services/alert.service";
