@@ -4,8 +4,10 @@ import {AlertService} from "../../core/services/alert.service";
 import {ActivatedRoute} from "@angular/router";
 import {Http} from "@angular/http";
 import {LoadingBarService} from "../../core/services/loading-bar.service";
-import {AuthService} from "../../core/auth/auth.service";
 import {AuthHttp} from "angular2-jwt";
+import {AppState} from '../../app/app-store';
+import {Store} from '@ngrx/store';
+import {TokenService} from '../../core/auth/token.service';
 
 @Component({
     selector: 'verify',
@@ -18,13 +20,10 @@ export class VerifyComponent implements OnInit{
                 private route: ActivatedRoute,
                 private http: Http,
                 private loadingBar: LoadingBarService,
-                private auth: AuthService
+                private tokens: TokenService,
+                private store: Store<AppState>
     ){}
     ngOnInit(): void {
-        if(!this.auth.isLoggedIn){
-            this.alert.sendWarning("You are not logged in");
-            return;
-        }
 
         if(!this.profile.isEmailConfirmed()){
             let code = this.route.snapshot.queryParams['code'];
@@ -43,7 +42,8 @@ export class VerifyComponent implements OnInit{
         this.http.get("api/account/ConfirmEmail?userId=" + id + "&code=" + code)
             .subscribe(
                 (res) => {
-                    this.auth.refreshTokens().subscribe(
+                    this.tokens.refreshTokens()
+                        .subscribe(
                         () => this.alert.sendSuccess("Your email has been confirmed"),
                         (res) => this.alert.sendError("an error occured soz")
                     );

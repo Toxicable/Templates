@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core'
 import { FormGroup, Validators,    FormBuilder }    from '@angular/forms';
-import {AuthService} from "../../core/auth/auth.service";
 import {FormValidationService} from "../../core/services/form-validation.service";
 import {AlertService} from "../../core/services/alert.service";
 import {Router} from "@angular/router";
+import {AccountService} from '../../core/auth/account.service';
 
 @Component({
     selector: 'register',
@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 })
 export class RegisterComponent  implements OnInit {
     constructor(private formBuilder: FormBuilder,
-                private auth: AuthService,
+                private account: AccountService,
                 private alert: AlertService,
                 private router: Router,
                 private formValidator: FormValidationService
@@ -33,7 +33,7 @@ export class RegisterComponent  implements OnInit {
         let data = Object.assign({}, this.registerForm.value, this.registerForm.value.passwords);
         //TODO: find better way to do this :/
 
-        this.auth.register(data)
+        this.account.register(data)
             .subscribe( x => {
                     this.alert.sendSuccess("Successfully registered");
                     this.router.navigateByUrl("/+auth/login");

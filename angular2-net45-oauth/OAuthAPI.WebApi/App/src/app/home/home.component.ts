@@ -1,12 +1,9 @@
-/**
- * Created by Fabian on 30/09/2016.
- */
 import { Component } from '@angular/core'
 import {Router} from "@angular/router";
 import {AlertService} from "../../core/services/alert.service";
-import {AuthService} from "../../core/auth/auth.service";
 import {AuthHttp} from "angular2-jwt";
 import {Observable} from "rxjs/Observable";
+import {TokenService} from '../../core/auth/token.service';
 
 
 @Component({
@@ -17,11 +14,9 @@ export class HomeComponent {
 constructor(    private router: Router,
                 private alertService: AlertService,
                 private authHttp: AuthHttp,
-                private auth: AuthService
+                private tokens: TokenService
 
     ){}
-
-    test$ = Observable.of([1, 2 ]).delay(3000);
 
     testAuth() {
         this.authHttp.get("api/account/isauthenticated")
@@ -33,7 +28,7 @@ constructor(    private router: Router,
 
 
     refreshTokens() {
-        this.auth.refreshTokens()
+        this.tokens.refreshTokens()
             .subscribe()
     }
 

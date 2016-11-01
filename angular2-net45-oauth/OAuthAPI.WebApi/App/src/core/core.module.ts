@@ -6,31 +6,29 @@ import {LocalStorageBackend, Storage} from "./storage";
 import {authProvider} from "./auth-factory";
 import {LoadingBarService} from "./services/loading-bar.service";
 import {AlertService} from "./services/alert.service";
-import {AuthService} from "./auth/auth.service";
 import {ProfileService} from "./profile/profile.service";
-import {TokenStorageService} from "./auth/token-storage.service";
 import {HttpExceptionService} from "./services/http-exceptions.service";
 import {AuthApiService} from "./services/auth-api.service";
 import {FormValidationService} from "./services/form-validation.service";
 import {AuthGuard} from './guards/auth-guard.service';
 import {TokenService} from './auth/token.service';
+import {AccountService} from './auth/account.service';
 
 
 @NgModule({
     providers:[
         LoadingBarService,
         AlertService,
-        AuthService,
         ProfileService,
         SuperAdminAuthGuard,
         AuthenticatedAuthGuard,
-        TokenStorageService,
         Title,
         AuthApiService,
         HttpExceptionService,
         FormValidationService,
         AuthGuard,
         TokenService,
+        AccountService,
         { provide: Storage, useClass: LocalStorageBackend },
         authProvider
     ]

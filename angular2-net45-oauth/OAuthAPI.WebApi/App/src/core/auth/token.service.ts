@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {Response, Headers, RequestOptions, Http} from '@angular/http';
 import {LoadingBarService} from '../services/loading-bar.service';
 import {HttpExceptionService} from '../services/http-exceptions.service';
 import {AppState} from '../../app/app-store';
 import {Store} from '@ngrx/store';
 import {ProfileModel} from '../models/profile-model';
-import {JwtHelper, tokenNotExpired} from 'angular2-jwt';
+import {JwtHelper, tokenNotExpired, AuthHttp} from 'angular2-jwt';
 import {LoginModel} from '../../+auth/models/login-model';
 import {Storage} from "../storage";
 import {Tokens} from '../models/tokens';
@@ -19,9 +19,11 @@ export class TokenService {
                 private http: Http,
                 private httpExceptions: HttpExceptionService,
                 private profile: ProfileService,
+                private authHttp: AuthHttp,
                 private store: Store<AppState>
-) { }
+    ) { }
 
+    refreshSubscription$: Subscription;
 
     jwtHelper: JwtHelper = new JwtHelper();
 
@@ -72,21 +74,53 @@ export class TokenService {
         this.store.dispatch({type: "DELETE_TOKENS"})
     }
 
-    getAccessToken(): Observable<string> {
-        return this.storage.getItem("access_token");
+    unsubscribeRefresh() {
+        if (this.refreshSubscription$) {
+            this.refreshSubscription$.unsubscribe();
+        }
     }
-    getRefreshToken(): Observable<string> {
-        return this.storage.getItem("refresh_token");
-    }
-    getProfile(): Observable<ProfileModel>{
-        return this.storage.getItem("profile")
-            .map(profile => {
 
-                return JSON.parse(profile) as ProfileModel;
+    refreshTokens(): Observable<Response>{
+        return this.storage.getItem("refresh_token")
+            .flatMap( refreshToken => {
+                return this.getTokens(
+                    { refresh_token: refreshToken } as RefreshGrant, "refresh_token")
+                    .catch( error => Observable.throw("refresh tokens has expired"));
+                //pretty sure the only way this can fail is with a expired tokens
             })
-
     }
 
+    startupTokenRefresh() {
+        this.storage.getItem("access_token")
+            .subscribe(
+                token => {
+
+                    if(tokenNotExpired(token)) {
+                        this.scheduleRefresh()
+                    }else{
+                        this.refreshTokens()
+                            .subscribe( () => this.scheduleRefresh())
+                    }
+
+                }
+            )
+    }
+
+    scheduleRefresh(): void {
+        let source = this.authHttp.tokenStream.flatMap(
+            streamToken => {
+                let token = this.jwtHelper.decodeToken(streamToken) as ProfileModel;
+                let iat = new Date(localStorage.getItem('.issued')).getTime()/1000;
+                let refreshTokenThreshold = 10; //seconds
+                let delay = ((token.exp - iat) - refreshTokenThreshold) * 1000;
+                return Observable.interval(delay);//ms I think
+            });
+
+        this.refreshSubscription$ = source.subscribe(() => {
+            this.refreshTokens()
+                .subscribe()
+        });
+    }
 
     private encodeObjectToParams(obj: any): string {
         return Object.keys(obj)

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core'
 import { OnInit } from '@angular/core';
-import { AuthService } from '../../core/auth/auth.service';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FormValidationService} from "../../core/services/form-validation.service";
+import {AccountService} from '../../core/auth/account.service';
 
 @Component({
     selector: 'login',
@@ -10,7 +10,7 @@ import {FormValidationService} from "../../core/services/form-validation.service
 })
 export class LoginComponent implements OnInit{
     constructor(private formBuilder: FormBuilder,
-                private auth: AuthService,
+                private account: AccountService,
                 private formValidator: FormValidationService,
     ) { }
 
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit{
     }
 
     onSubmit(){
-        this.auth.login(this.loginForm.value)
+        this.account.login(this.loginForm.value)
             .subscribe();
 
     }

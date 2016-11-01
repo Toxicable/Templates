@@ -1,5 +1,4 @@
 import { Injectable, OnInit } from '@angular/core';
-import { TokenStorageService } from "../auth/token-storage.service";
 import { Observable } from "rxjs";
 import {AppState} from '../../app/app-store';
 import {Store} from '@ngrx/store';

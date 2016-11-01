@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../core/auth/auth.service";
 import {FormValidationService} from "../../core/services/form-validation.service";
 import {LoadingBarService} from "../../core/services/loading-bar.service";
 import {AlertService} from "../../core/services/alert.service";
 import {AuthHttp} from "angular2-jwt";
+import {AccountService} from '../../core/auth/account.service';
 
 @Component({
     selector: 'forgot-password',
@@ -12,9 +12,8 @@ import {AuthHttp} from "angular2-jwt";
 })
 export class ForgotPasswordComponent implements OnInit{
     constructor(private formBuilder: FormBuilder,
-                private auth: AuthService,
                 private alert: AlertService,
-                private authHttp: AuthHttp,
+                private account: AccountService,
                 private formValidator: FormValidationService
     ) { }
 
@@ -27,12 +26,7 @@ export class ForgotPasswordComponent implements OnInit{
     }
 
     onSubmit(){
-        this.authHttp.post("api/account/SendForgotPassword", this.forgotPasswordForm.value)
-            .subscribe(
-                res => this.alert.sendSuccess("A message has been send to your email"),
-                error => this.alert.sendError(error),
-
-        )
+        this.account.sendForgotPassword(this.forgotPasswordForm.value)
     }
 
 }
