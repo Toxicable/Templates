@@ -1,5 +1,4 @@
-import {Component, OnInit, OnDestroy, ChangeDetectionStrategy} from '@angular/core'
-import {LoadingBarService} from "../../core/services/loading-bar.service";
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core'
 import { Observable} from "rxjs/Observable";
 import {AppState} from '../../app/app-store';
 import {Store} from '@ngrx/store';
@@ -16,9 +15,7 @@ import {Store} from '@ngrx/store';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoadingBarComponent implements OnInit {
-    constructor(private loadingBar: LoadingBarService,
-                private store: Store<AppState>
-
+    constructor(private store: Store<AppState>
     ) { }
 
     loading$ : Observable<boolean>;
