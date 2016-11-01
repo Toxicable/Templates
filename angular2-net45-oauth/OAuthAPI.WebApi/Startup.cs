@@ -23,9 +23,7 @@ namespace OAuthAPI.WebApi
         public void Configuration(IAppBuilder app)
         {
             HttpConfiguration httpConfig = new HttpConfiguration();
-
-
-            ConfigureExternalLogin(app);
+            
             ConfigureOAuthTokenGeneration(app);
             ConfigureOAuthTokenConsumption(app);
 
@@ -36,31 +34,6 @@ namespace OAuthAPI.WebApi
 
         private const string Issuer = "http://localhost:59822/";
 
-        public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
-        public static GoogleOAuth2AuthenticationOptions googleAuthOptions { get; private set; }
-        public static FacebookAuthenticationOptions facebookAuthOptions { get; private set; }
-
-        private void ConfigureExternalLogin(IAppBuilder app)
-        {
-            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-
-            googleAuthOptions = new GoogleOAuth2AuthenticationOptions()
-            {
-                ClientId = "137170270322-3ik6cl5m55i4ft3ff6t7l9tm2f1abkvh.apps.googleusercontent.com",
-                ClientSecret = "doD3vfJda8FArt9Apva9Plxu",
-                Provider = new GoogleAuthProvider()
-            };
-            app.UseGoogleAuthentication(googleAuthOptions);
-
-            //Configure Facebook External Login
-            facebookAuthOptions = new FacebookAuthenticationOptions()
-            {
-                AppId = "1841204649444154",
-                AppSecret = "626707abbeb4edb292536723729ff3d3",
-                Provider = new FacebookAuthProvider()
-            };
-            app.UseFacebookAuthentication(facebookAuthOptions);
-        }
 
         private void ConfigureOAuthTokenGeneration(IAppBuilder app)
         {
@@ -74,7 +47,7 @@ namespace OAuthAPI.WebApi
                 //For Dev enviroment only (on production should be AllowInsecureHttp = false)
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/api/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(5),
                 Provider = new OAuthProvider(),
                 AccessTokenFormat = new CustomJwtFormat(Issuer),
                 RefreshTokenProvider = new RefreshTokenProvider()

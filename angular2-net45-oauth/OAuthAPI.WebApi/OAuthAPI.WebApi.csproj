@@ -244,9 +244,7 @@
     <Compile Include="Api\Identity\Models\ViewModels\RoleViewModel.cs" />
     <Compile Include="Api\Identity\Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Api\Identity\Providers\CustomJwtFormat.cs" />
-    <Compile Include="Api\Identity\Providers\FacebookAuthProvider.cs" />
     <Compile Include="Api\Identity\Providers\OAuthProvider.cs" />
-    <Compile Include="Api\Identity\Providers\GoogleAuthProvider.cs" />
     <Compile Include="Api\Identity\Providers\RefreshTokenProvider.cs" />
     <Compile Include="Api\Identity\Results\ChallangeResult.cs" />
     <Compile Include="Api\Services\EmailService.cs" />
