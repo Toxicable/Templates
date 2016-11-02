@@ -12,6 +12,7 @@ import {Storage} from "../storage";
 import {Tokens} from '../models/tokens';
 import {ProfileService} from '../profile/profile.service';
 import {AlertService} from '../services/alert.service';
+import {AccountService} from './account.service';
 
 @Injectable()
 export class TokenService {
@@ -21,7 +22,8 @@ export class TokenService {
                 private httpExceptions: HttpExceptionService,
                 private profile: ProfileService,
                 private store: Store<AppState>,
-                private alert: AlertService
+                private alert: AlertService,
+              //  private account: AccountService
     ) { }
 
     refreshSubscription$: Subscription;
@@ -31,7 +33,7 @@ export class TokenService {
     checkLoginStatus(){
         this.store.select( state => state.tokens)
             .subscribe( tokens => {
-                let isLoggedIn = tokenNotExpired(tokens.access_token);
+                let isLoggedIn = tokenNotExpired(undefined, tokens.access_token);
                 this.store.dispatch({type: "UPDATE_LOGIN_STATUS", payload: isLoggedIn})
             })
 
@@ -48,8 +50,8 @@ export class TokenService {
             client_id: "AngularApp"
         });
 
-        //return this.loadingBar.doWithLoader(
-         return this.http.post("api/token", this.encodeObjectToParams(data) , options)
+        return this.loadingBar.doWithLoader(
+            this.http.post("api/token", this.encodeObjectToParams(data) , options)
                 .map( res => res.json())
                 .do( tokens => {
                     this.store.dispatch({type: "GET_TOKENS", payload: tokens});
@@ -62,7 +64,7 @@ export class TokenService {
                     this.storage.setItem("tokens", JSON.stringify(tokens));
                 })
                 .catch( error => this.httpExceptions.handleError(error))
-       // )
+        )
     }
 
     deleteTokens(){
@@ -86,7 +88,7 @@ export class TokenService {
             .flatMap( refreshToken => {
                 return this.getTokens(
                     { refresh_token: refreshToken } as RefreshGrant, "refresh_token")
-                    .catch( error => this.alert.sendError("Your session has expired"));
+                    .catch( error => Observable.throw("Refresh token expired"));
                 //pretty sure the only way this can fail is with a expired tokens
             })
     }
@@ -113,14 +115,14 @@ export class TokenService {
 
                 let refreshTokenThreshold = 10; //seconds
                 let delay = ((expires - issued) - refreshTokenThreshold) * 1000;
-                console.log("refresh time", delay);
+                delay = delay > 1800000 ? 1800000 : delay;
                 return Observable.interval(delay);//ms
             });
 
         this.refreshSubscription$ = source.subscribe(() => {
             console.log("refresh fired");
             this.refreshTokens()
-                .subscribe()
+                .subscribe( )
         });
     }
 

@@ -24,7 +24,7 @@ export class AuthGuard {
                         return false;
                     }
                     return true;
-                });
+                }).first();
     }
 
     isInRole(role: string): Observable<boolean>{
@@ -46,6 +46,6 @@ export class AuthGuard {
                         return true;
                     })
 
-            })
+            }).first();
     }
 }

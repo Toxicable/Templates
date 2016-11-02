@@ -18,9 +18,16 @@ export class ProfileService{
 
     }
 
-    isInRole(role: string): Observable<boolean>{
-        return this.store.select( state => state.profile.roles)
-            .map( roles => roles.indexOf(role, 0) > -1 )
+    isInRole(pageRole: string): Observable<boolean>{
+        return this.store.select( state => state.profile.role)
+            .map( role => {
+                if(role){
+                    return role.indexOf(pageRole, 0) > -1
+                }else{
+                    return false;
+                }
+
+            })
     }
 
     storeProfile(profile: ProfileModel){
