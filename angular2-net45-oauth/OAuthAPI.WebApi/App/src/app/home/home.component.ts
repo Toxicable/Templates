@@ -29,7 +29,7 @@ constructor(    private router: Router,
     }
 
     testToken(){
-        this.store.select( state => state.tokens.access_token)
+        this.store.select( state => state.auth.tokens.access_token)
             .subscribe(
 
                 token => {
