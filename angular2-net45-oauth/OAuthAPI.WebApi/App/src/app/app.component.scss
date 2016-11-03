@@ -1,7 +1,7 @@
+$primary-color : rgb(124, 77, 255);
+
 body{
   font-family: Arial;
-  margin:10px;
-
 }
 
 .flex-grid {
@@ -9,4 +9,14 @@ body{
 }
 .col {
   flex: 1;
+}
+
+button{
+  min-width: 64px;
+  height:36px;
+  background-color:$primary-color;
+  color: white;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 2px ;
 }

@@ -6,13 +6,15 @@ import {HttpExceptionService} from '../services/http-exceptions.service';
 import {AppState} from '../../app/app-store';
 import {Store} from '@ngrx/store';
 import {ProfileModel} from '../models/profile-model';
-import {JwtHelper, tokenNotExpired, AuthHttp} from 'angular2-jwt';
+import {JwtHelper} from 'angular2-jwt';
 import {LoginModel} from '../../+auth/models/login-model';
 import {Storage} from "../storage";
 import {Tokens} from '../models/tokens';
 import {ProfileService} from '../profile/profile.service';
 import {AlertService} from '../services/alert.service';
-import {AccountService} from './account.service';
+import {AuthActions} from './auth.store';
+import {TokenActions} from './token.store';
+import {ProfileActions} from '../profile/profile.reducers';
 
 @Injectable()
 export class TokenService {
@@ -23,21 +25,13 @@ export class TokenService {
                 private profile: ProfileService,
                 private store: Store<AppState>,
                 private alert: AlertService,
-              //  private account: AccountService
+                private authActions: AuthActions,
+                private tokenActions: TokenActions,
+                private profileActions: ProfileActions
     ) { }
 
     refreshSubscription$: Subscription;
-
     jwtHelper: JwtHelper = new JwtHelper();
-
-    checkLoginStatus(){
-        this.store.select( state => state.tokens)
-            .subscribe( tokens => {
-                let isLoggedIn = tokenNotExpired(undefined, tokens.access_token);
-                this.store.dispatch({type: "UPDATE_LOGIN_STATUS", payload: isLoggedIn})
-            })
-
-    }
 
     getTokens(data: LoginModel | RefreshGrant, grantType: string): Observable<void> {
         //data can be any since it can either be a refresh tokens or login details
@@ -53,27 +47,23 @@ export class TokenService {
         return this.loadingBar.doWithLoader(
             this.http.post("api/token", this.encodeObjectToParams(data) , options)
                 .map( res => res.json())
-                .do( tokens => {
-                    this.store.dispatch({type: "GET_TOKENS", payload: tokens});
-                    this.store.dispatch({type: "UPDATE_LOGIN_STATUS", payload: true});
-                })
                 .map( (tokens: Tokens) => {
-                    let profile = this.jwtHelper.decodeToken(tokens.access_token) as ProfileModel
-                    this.profile.storeProfile(profile);
+                    this.tokenActions.setTokens(tokens);
+                    this.authActions.isLoggedIn();
+
+                    let profile = this.jwtHelper.decodeToken(tokens.access_token) as ProfileModel;
+                    this.profileActions.storeProfile(profile);
 
                     this.storage.setItem("tokens", JSON.stringify(tokens));
                 })
+                .do( _ => this.authActions.authReady())
                 .catch( error => this.httpExceptions.handleError(error))
-        )
+        );
     }
 
     deleteTokens(){
-        this.storage.removeItem("access_token");
-        this.storage.removeItem("refresh_token");
-        this.storage.removeItem("profile");
-        this.storage.removeItem(".issued");
-
-        this.store.dispatch({type: "DELETE_TOKENS"})
+        this.storage.removeItem("tokens");
+        this.tokenActions.deleteTokens();
     }
 
     unsubscribeRefresh() {
@@ -83,7 +73,7 @@ export class TokenService {
     }
 
     refreshTokens(): Observable<Response>{
-        return this.store.select( state => state.tokens.refresh_token)
+        return this.store.select( state => state.auth.tokens.refresh_token)
             .take(1)
             .flatMap( refreshToken => {
                 return this.getTokens(
@@ -95,19 +85,51 @@ export class TokenService {
 
     startupTokenRefresh() {
         this.storage.getItem("tokens")
-            .subscribe( tokens => {
-                if(tokens) {
-                    let tokensModel = JSON.parse(tokens) as Tokens;
-                    this.store.dispatch({type: "GET_TOKENS", payload: tokensModel});
+            .subscribe( (rawTokens: string) => {
+                //check if the token is even if localStorage, if it isn't tell them it's not and return
+                if(!rawTokens){
+                    this.authActions.authReady();
+                    return
+                }
+                //parse the token into a model and throw it into the store
+                let tokens = JSON.parse(rawTokens) as Tokens;
+                this.tokenActions.setTokens(tokens);
+
+                if(!this.jwtHelper.isTokenExpired(tokens.access_token)){
+                    //grab the profile out so we can store it
+                    let profile = this.jwtHelper.decodeToken(tokens.access_token) as ProfileModel;
+                    this.profileActions.storeProfile(profile);
+
+                    //let the app know we're good to go on the auth side of things
+                    this.authActions.isLoggedIn();
+                    this.authActions.authReady();
 
                     this.refreshTokens()
-                        .subscribe( () => this.scheduleRefresh() )
+                        .subscribe(
+                            () => this.scheduleRefresh()
+                        )
+
+                }else{
+                    //the token is expired so try use our refresh token to get a new one
+                    this.refreshTokens()
+                        .subscribe(
+                            // we manage to refresh the tokens so we can carry with the scheduleRefresh
+                            () => this.scheduleRefresh(),
+                            error => {
+                                //couldn't refresh it, this means our refresh token has expired
+                                console.warn(error);
+                                this.alert.sendWarning("Your session has expired");
+
+                                this.authActions.isNotLoggedIn();
+                                this.authActions.authReady();
+                            }
+                        );
                 }
             })
     }
 
     scheduleRefresh(): void {
-        let source = this.store.select( state => state.tokens)
+        let source = this.store.select( state => state.auth.tokens)
             .take(1)
             .flatMap(tokens => {
                 let issued = new Date(tokens[".issued"]).getTime() / 1000;

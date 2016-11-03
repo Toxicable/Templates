@@ -5,6 +5,8 @@ import {ProfileService} from "../profile/profile.service";
 import {AppState} from '../../app/app-store';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
+import {Auth} from '../auth/auth.store';
+
 
 @Injectable()
 export class AuthGuard {
@@ -15,10 +17,14 @@ export class AuthGuard {
                 private store: Store<AppState>
     ) {}
 
+
     isLoggedIn(): Observable<boolean>{
-        return this.store.select(state => state.loggedIn)
-            .map( isLoggedIn => {
-                    if (!isLoggedIn) {
+        return this.store.select(state => state.auth)
+            .skipWhile( auth => !auth.authReady)
+        //.retryWhen( state => state.authReady)
+           // .let( state => state.filter( (auth: Auth) => auth.authReady) )
+            .map( (auth: Auth) => {
+                    if (!auth.loggedIn) {
                         this.alertService.sendError("You are not logged in");
                         this.router.navigate(['auth/login']);
                         return false;
@@ -29,10 +35,11 @@ export class AuthGuard {
 
     isInRole(role: string): Observable<boolean>{
 
-        return this.isLoggedIn()
-            .flatMap( isLoggedIn =>{
-
-                if(!isLoggedIn){
+        return this.store.select( state => state)
+            .flatMap( (state: AppState) =>{
+                if(!state.auth.loggedIn){
+                    this.alertService.sendError("Unauthorized");
+                    this.router.navigate(['unauthorized']);
                     return Observable.of(false);
                 }
 

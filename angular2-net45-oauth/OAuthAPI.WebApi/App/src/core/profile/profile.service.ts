@@ -13,26 +13,17 @@ export class ProfileService{
 
     isEmailConfirmed(): Observable<boolean>{
         //TODO: fix this sill serilization bug
-        return this.store.select( state => state.profile.email_confirmed)
+        return this.store.select( state => state.auth.profile.email_confirmed)
             .map(emailConfirmed => emailConfirmed.toString() == "True");
 
     }
 
+
     isInRole(pageRole: string): Observable<boolean>{
-        return this.store.select( state => state.profile.role)
-            .map( role => {
-                if(role){
-                    return role.indexOf(pageRole, 0) > -1
-                }else{
-                    return false;
-                }
-
+        return this.store.select( state => state.auth.profile.role)
+            .map( (role: string[]) => {
+                return role.indexOf(pageRole, 0) > -1
             })
-    }
-
-    storeProfile(profile: ProfileModel){
-        this.storage.setItem('profile', JSON.stringify(profile));
-        this.store.dispatch({type: "GET_PROFILE", payload: profile});
     }
 
 }

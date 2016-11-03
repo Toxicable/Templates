@@ -1,13 +1,27 @@
-import { ActionReducer, Action } from '@ngrx/store';
+import {ActionReducer, Action, Store} from '@ngrx/store';
 import {ProfileModel} from '../models/profile-model';
+import {Injectable} from '@angular/core';
+import {AppState} from '../../app/app-store';
 
+const initialState = {
+    role: []
+} as ProfileModel;
 
-export const profileReducer: ActionReducer<ProfileModel> = (state: ProfileModel, action: Action) => {
+@Injectable()
+export class ProfileActions{
+    constructor(private store: Store<AppState>){}
+
+    storeProfile(profile: ProfileModel){
+        this.store.dispatch({type: "STORE_PROFILE", payload: profile});
+    }
+}
+
+export const profileReducer: ActionReducer<ProfileModel> = (state = initialState, action: Action) => {
     switch (action.type){
-        case "GET_PROFILE":
+        case "STORE_PROFILE":
             return action.payload;
         case "DELETE_PROFILE":
-            return {};
+            return initialState;
         default:
             return state;
     }

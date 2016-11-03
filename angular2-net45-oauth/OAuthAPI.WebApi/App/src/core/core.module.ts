@@ -13,6 +13,9 @@ import {FormValidationService} from "./services/form-validation.service";
 import {AuthGuard} from './guards/auth-guard.service';
 import {TokenService} from './auth/token.service';
 import {AccountService} from './auth/account.service';
+import {AuthActions} from './auth/auth.store';
+import {TokenActions} from './auth/token.store';
+import {ProfileActions} from './profile/profile.reducers';
 
 
 @NgModule({
@@ -29,6 +32,11 @@ import {AccountService} from './auth/account.service';
         AuthGuard,
         TokenService,
         AccountService,
+
+        AuthActions,
+        TokenActions,
+        ProfileActions,
+
         { provide: Storage, useClass: LocalStorageBackend },
         authProvider
     ]

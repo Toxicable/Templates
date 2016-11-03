@@ -21,7 +21,7 @@ export class NavigationComponent implements OnInit{
     loggedIn$: Observable<boolean>
 
     ngOnInit(): void {
-        this.username$ = this.store.select( state => state.profile.unique_name);
-        this.loggedIn$ = this.store.select( state => state.loggedIn);
+        this.username$ = this.store.select( state => state.auth.profile.unique_name);
+        this.loggedIn$ = this.store.select( state => state.auth.loggedIn);
     }
 }
