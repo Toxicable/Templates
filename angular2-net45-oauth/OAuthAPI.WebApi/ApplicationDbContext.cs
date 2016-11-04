@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using OAuthAPI.Data.Identity;
 
-namespace OAuthAPI.Data
+namespace OAuthAPI.WebApi
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

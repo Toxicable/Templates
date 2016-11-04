@@ -15,6 +15,8 @@ using Owin;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.Facebook;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin.StaticFiles;
+using Microsoft.Owin.FileSystems;
 
 namespace OAuthAPI.WebApi
 {
@@ -22,14 +24,24 @@ namespace OAuthAPI.WebApi
     {
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration httpConfig = new HttpConfiguration();
             
+            HttpConfiguration httpConfig = new HttpConfiguration();
+
             ConfigureOAuthTokenGeneration(app);
             ConfigureOAuthTokenConsumption(app);
-
             ConfigureWebApi(httpConfig);
 
             app.UseWebApi(httpConfig);
+
+
+            app.Use((context, next) =>
+            {
+                context.Request.Path = new PathString("/wwwroot/index.html");
+
+                return next();
+            });
+
+            app.UseStaticFiles();
         }
 
         private const string Issuer = "http://localhost:59822/";

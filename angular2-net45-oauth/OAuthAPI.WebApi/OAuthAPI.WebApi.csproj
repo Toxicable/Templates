@@ -76,6 +76,10 @@
       <HintPath>..\packages\Microsoft.Owin.Cors.3.0.1\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Owin.FileSystems, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.FileSystems.3.0.1\lib\net45\Microsoft.Owin.FileSystems.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
       <Private>True</Private>
@@ -102,6 +106,10 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.StaticFiles, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.StaticFiles.3.0.1\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -176,34 +184,48 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\config\helpers.js" />
-    <Content Include="App\config\webpack.common.js" />
-    <Content Include="App\config\webpack.dev.js" />
-    <Content Include="App\config\webpack.prod.js" />
-    <Content Include="App\favicon.ico" />
-    <Content Include="App\src\admin\roles\roles.component.html" />
-    <Content Include="App\src\admin\users\users.component.html" />
-    <Content Include="App\src\app\alert\alert.component.html" />
-    <Content Include="App\src\app\home\home.component.html" />
-    <Content Include="App\src\app\navigation\navigation.component.html" />
-    <Content Include="App\src\app\not-found\not-found.component.html" />
-    <Content Include="App\src\auth\login\login.template.html" />
-    <Content Include="App\src\auth\register\register.template.html" />
-    <Content Include="App\src\index.html" />
+    <Content Include="wwwroot\1.6f74221c65a99f0fab38.chunk.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\2.6f74221c65a99f0fab38.chunk.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\3.6f74221c65a99f0fab38.chunk.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\app.6f74221c65a99f0fab38.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="packages.config" />
-    <Content Include="App\package.json" />
-    <Content Include="App\src\app\alert\alert.component.scss" />
-    <Content Include="App\src\app\app.component.scss" />
-    <Content Include="App\tsconfig.json" />
-    <Content Include="App\typings.json" />
-    <Content Include="App\typings\globals\core-js\typings.json" />
-    <Content Include="App\typings\globals\jasmine\typings.json" />
-    <Content Include="App\typings\globals\node\typings.json" />
-    <Content Include="wwwroot\app.33affc107ed224eca928.js" />
-    <Content Include="index.html" />
-    <Content Include="wwwroot\polyfills.33affc107ed224eca928.js" />
-    <Content Include="wwwroot\vendor.33affc107ed224eca928.js" />
-    <Content Include="OAuthAPI.Entities.xproj" />
+    <Content Include="wwwroot\1.6f74221c65a99f0fab38.chunk.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\2.6f74221c65a99f0fab38.chunk.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\3.6f74221c65a99f0fab38.chunk.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\app.6f74221c65a99f0fab38.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\polyfills.6f74221c65a99f0fab38.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Properties\PublishProfiles\oauthapitest - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\oauthapitest - Web Deploy.pubxml" />
+    <Content Include="wwwroot\vendor.6f74221c65a99f0fab38.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Web.AppSettings.Local.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Web.ConnectionStrings.Local.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -211,11 +233,14 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="wwwroot\app.33affc107ed224eca928.js.map" />
-    <Content Include="wwwroot\polyfills.33affc107ed224eca928.js.map" />
-    <Content Include="wwwroot\vendor.33affc107ed224eca928.js.map" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="wwwroot\polyfills.6f74221c65a99f0fab38.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\vendor.6f74221c65a99f0fab38.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -248,6 +273,8 @@
     <Compile Include="Api\Identity\Providers\RefreshTokenProvider.cs" />
     <Compile Include="Api\Identity\Results\ChallangeResult.cs" />
     <Compile Include="Api\Services\EmailService.cs" />
+    <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -258,55 +285,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="App\src\admin\admin.component.ts" />
-    <TypeScriptCompile Include="App\src\admin\admin.module.ts" />
-    <TypeScriptCompile Include="App\src\admin\admin.routes.ts" />
-    <TypeScriptCompile Include="App\src\admin\roles\roles.component.ts" />
-    <TypeScriptCompile Include="App\src\admin\users\users.component.ts" />
-    <TypeScriptCompile Include="App\src\app\alert\alert.component.ts" />
-    <TypeScriptCompile Include="App\src\app\alert\alert.service.ts" />
-    <TypeScriptCompile Include="App\src\app\alert\AlertTypes.ts" />
-    <TypeScriptCompile Include="App\src\app\app.component.ts" />
-    <TypeScriptCompile Include="App\src\app\app.module.ts" />
-    <TypeScriptCompile Include="App\src\app\app.routing.ts" />
-    <TypeScriptCompile Include="App\src\app\home\home.component.ts" />
-    <TypeScriptCompile Include="App\src\app\navigation\navigation.component.ts" />
-    <TypeScriptCompile Include="App\src\app\not-found\not-found.component.ts" />
-    <TypeScriptCompile Include="App\src\app\validation\control-messages.component.ts" />
-    <TypeScriptCompile Include="App\src\app\validation\validation.service.ts" />
-    <TypeScriptCompile Include="App\src\auth-http\models\auth-http-result.ts" />
-    <TypeScriptCompile Include="App\src\auth-http\models\AuthHttpResult.ts" />
-    <TypeScriptCompile Include="App\src\auth\auth-guard.service.ts" />
-    <TypeScriptCompile Include="App\src\auth\auth-http.service.ts" />
-    <TypeScriptCompile Include="App\src\auth\auth.component.ts" />
-    <TypeScriptCompile Include="App\src\auth\auth.module.ts" />
-    <TypeScriptCompile Include="App\src\auth\auth.routing.ts" />
-    <TypeScriptCompile Include="App\src\auth\auth.service.ts" />
-    <TypeScriptCompile Include="App\src\auth\index.ts" />
-    <TypeScriptCompile Include="App\src\auth\login\login.component.ts" />
-    <TypeScriptCompile Include="App\src\auth\models\bad-request-response.ts" />
-    <TypeScriptCompile Include="App\src\auth\models\bad-token-request-response.ts" />
-    <TypeScriptCompile Include="App\src\auth\models\login-model.ts" />
-    <TypeScriptCompile Include="App\src\auth\models\profile-model.ts" />
-    <TypeScriptCompile Include="App\src\auth\models\register-model.ts" />
-    <TypeScriptCompile Include="App\src\auth\models\register-response.model.ts" />
-    <TypeScriptCompile Include="App\src\auth\models\token-response-model.ts" />
-    <TypeScriptCompile Include="App\src\auth\register\register.component.ts" />
-    <TypeScriptCompile Include="App\src\main.ts" />
-    <TypeScriptCompile Include="App\src\polyfills.ts" />
-    <TypeScriptCompile Include="App\src\vendor.ts" />
-    <TypeScriptCompile Include="App\typings\globals\core-js\index.d.ts" />
-    <TypeScriptCompile Include="App\typings\globals\jasmine\index.d.ts" />
-    <TypeScriptCompile Include="App\typings\globals\node\index.d.ts" />
-    <TypeScriptCompile Include="App\typings\index.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App\src\auth\forget-password\" />
-    <Folder Include="App\src\auth\verify\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
