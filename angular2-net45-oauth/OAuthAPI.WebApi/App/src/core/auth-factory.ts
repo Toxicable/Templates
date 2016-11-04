@@ -14,7 +14,7 @@ export function authFactory(http: Http, options: RequestOptions) {
             if(tokens)
                 return tokens.access_token
         }),
-        globalHeaders: [{'Content-Type':'application/json', Accept: 'application/json'}],
+        globalHeaders: [{'Content-Type':'application/json', 'Accept': 'application/json'}],
         noJwtError: true,
         noTokenScheme: true
     }), http, options);

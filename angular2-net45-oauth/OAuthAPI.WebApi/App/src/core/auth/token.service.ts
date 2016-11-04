@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
-import {Response, Headers, RequestOptions, Http} from '@angular/http';
-import {LoadingBarService} from '../services/loading-bar.service';
-import {HttpExceptionService} from '../services/http-exceptions.service';
-import {AppState} from '../../app/app-store';
-import {Store} from '@ngrx/store';
-import {ProfileModel} from '../models/profile-model';
+import { Observable, Subscription } from 'rxjs';
+import { Response, Headers, RequestOptions, Http } from '@angular/http';
+import { LoadingBarService } from '../services/loading-bar.service';
+import { HttpExceptionService } from '../services/http-exceptions.service';
+import { AppState } from '../../app/app-store';
+import { Store } from '@ngrx/store';
+import { ProfileModel } from '../models/profile-model';
+import { LoginModel } from '../../+auth/models/login-model';
+import { Storage } from "../storage";
+import { Tokens } from '../models/tokens';
+import { AlertService } from '../services/alert.service';
+import { AuthActions } from './auth.store';
+import { TokenActions } from './token.store';
+import { ProfileActions } from '../profile/profile.reducers';
 import {JwtHelper} from 'angular2-jwt';
-import {LoginModel} from '../../+auth/models/login-model';
-import {Storage} from "../storage";
-import {Tokens} from '../models/tokens';
-import {ProfileService} from '../profile/profile.service';
-import {AlertService} from '../services/alert.service';
-import {AuthActions} from './auth.store';
-import {TokenActions} from './token.store';
-import {ProfileActions} from '../profile/profile.reducers';
 
 @Injectable()
 export class TokenService {
@@ -22,7 +21,6 @@ export class TokenService {
                 private loadingBar: LoadingBarService,
                 private http: Http,
                 private httpExceptions: HttpExceptionService,
-                private profile: ProfileService,
                 private store: Store<AppState>,
                 private alert: AlertService,
                 private authActions: AuthActions,
@@ -73,7 +71,7 @@ export class TokenService {
     }
 
     refreshTokens(): Observable<Response>{
-        return this.store.select( state => state.auth.tokens.refresh_token)
+        return this.store.map( state => state.auth.tokens.refresh_token)
             .take(1)
             .flatMap( refreshToken => {
                 return this.getTokens(
@@ -132,12 +130,16 @@ export class TokenService {
         let source = this.store.select( state => state.auth.tokens)
             .take(1)
             .flatMap(tokens => {
-                let issued = new Date(tokens[".issued"]).getTime() / 1000;
-                let expires = new Date(tokens[".expires"]).getTime() / 1000;
+                // let issued = new Date(tokens[".issued"]).getTime() / 1000;
+                // let expires = new Date(tokens[".expires"]).getTime() / 1000;
+                //
+                // let refreshTokenThreshold = 10; //seconds
+                // let delay = ((expires - issued) - refreshTokenThreshold) * 1000;
+                // delay = delay > 1800000 ? 1800000 : delay;
 
-                let refreshTokenThreshold = 10; //seconds
-                let delay = ((expires - issued) - refreshTokenThreshold) * 1000;
-                delay = delay > 1800000 ? 1800000 : delay;
+                //the token should be new here so that means take half of it's expiry time should be fine
+                let delay = tokens["expires_in"] /2 * 1000;
+                console.log(delay);
                 return Observable.interval(delay);//ms
             });
 
