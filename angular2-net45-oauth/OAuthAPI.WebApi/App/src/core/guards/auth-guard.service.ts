@@ -19,25 +19,22 @@ export class AuthGuard {
 
 
     isLoggedIn(): Observable<boolean>{
-        return this.store.select(state => state.auth)
-            .skipWhile( auth => !auth.authReady)
-        //.retryWhen( state => state.authReady)
-           // .let( state => state.filter( (auth: Auth) => auth.authReady) )
-            .map( (auth: Auth) => {
-                    if (!auth.loggedIn) {
-                        this.alertService.sendError("You are not logged in");
-                        this.router.navigate(['auth/login']);
-                        return false;
-                    }
-                    return true;
-                }).first();
+        return this.store.map(state => state.auth)
+            .first( (auth: Auth) => auth.authReady)
+            .map( (auth: Auth) => auth.loggedIn)
+            .do( (loggedIn: boolean) => {
+                if (!loggedIn) {
+                    this.alertService.sendError("You are not logged in");
+                    this.router.navigate(['auth/login']);
+                }
+            });
     }
 
     isInRole(role: string): Observable<boolean>{
 
-        return this.store.select( state => state)
-            .flatMap( (state: AppState) =>{
-                if(!state.auth.loggedIn){
+        return this.store.map( state => state.auth.loggedIn)
+            .flatMap( (loggedIn: boolean) =>{
+                if(!loggedIn){
                     this.alertService.sendError("Unauthorized");
                     this.router.navigate(['unauthorized']);
                     return Observable.of(false);
