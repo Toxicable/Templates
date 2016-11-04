@@ -3,7 +3,7 @@ import {ProfileModel} from '../models/profile-model';
 import {Tokens} from '../models/tokens';
 import {Injectable} from '@angular/core';
 import {AppState} from '../../app/app-store';
-import {profileReducer} from '../profile/profile.reducers';
+import {profileReducer} from '../profile/profile.store';
 import {tokensReducer} from './token.store';
 
 export interface Auth{

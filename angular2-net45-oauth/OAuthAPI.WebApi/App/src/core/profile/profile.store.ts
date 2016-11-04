@@ -14,6 +14,9 @@ export class ProfileActions{
     storeProfile(profile: ProfileModel){
         this.store.dispatch({type: "STORE_PROFILE", payload: profile});
     }
+    deleteProfile(){
+        this.store.dispatch({type: "DELETE_PROFILE"});
+    }
 }
 
 export const profileReducer: ActionReducer<ProfileModel> = (state = initialState, action: Action) => {

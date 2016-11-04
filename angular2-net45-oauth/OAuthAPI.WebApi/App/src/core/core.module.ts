@@ -15,7 +15,7 @@ import {TokenService} from './auth/token.service';
 import {AccountService} from './auth/account.service';
 import {AuthActions} from './auth/auth.store';
 import {TokenActions} from './auth/token.store';
-import {ProfileActions} from './profile/profile.reducers';
+import {ProfileActions} from './profile/profile.store';
 
 
 @NgModule({

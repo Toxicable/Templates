@@ -12,7 +12,7 @@ import { Tokens } from '../models/tokens';
 import { AlertService } from '../services/alert.service';
 import { AuthActions } from './auth.store';
 import { TokenActions } from './token.store';
-import { ProfileActions } from '../profile/profile.reducers';
+import { ProfileActions } from '../profile/profile.store';
 import {JwtHelper} from 'angular2-jwt';
 
 @Injectable()
@@ -55,7 +55,7 @@ export class TokenService {
                     this.storage.setItem("tokens", JSON.stringify(tokens));
                 })
                 .do( _ => this.authActions.authReady())
-                .catch( error => this.httpExceptions.handleError(error))
+                .catch( error => this.httpExceptions.handleTokenBadRequest(error))
         );
     }
 

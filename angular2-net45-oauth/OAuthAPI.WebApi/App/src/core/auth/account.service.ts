@@ -9,6 +9,9 @@ import {HttpExceptionService} from '../services/http-exceptions.service';
 import {LoginModel} from '../../+auth/models/login-model';
 import {TokenService} from './token.service';
 import {AuthApiService} from '../services/auth-api.service';
+import {AuthActions} from './auth.store';
+import {TokenActions} from './token.store';
+import {ProfileActions} from '../profile/profile.store';
 
 @Injectable()
 export class AccountService {
@@ -18,7 +21,10 @@ export class AccountService {
                 private http: Http,
                 private httpExceptions: HttpExceptionService,
                 private tokens: TokenService,
-                private authApi: AuthApiService
+                private authApi: AuthApiService,
+                private authActions: AuthActions,
+                private tokenActions: TokenActions,
+                private profileActions: ProfileActions
     ) { }
 
     register(data: RegisterModel): Observable<Response> {
@@ -30,10 +36,9 @@ export class AccountService {
     }
 
     login(user: LoginModel)  {
-        return this.loadingBar.doWithLoader(
-            this.tokens.getTokens(user, "password")
-                .do(res => this.tokens.scheduleRefresh() )
-        )
+        return this.tokens.getTokens(user, "password")
+            .do(res => this.tokens.scheduleRefresh() )
+
     }
 
     sendForgotPassword( data ){
@@ -43,10 +48,10 @@ export class AccountService {
     logout(){
         this.tokens.deleteTokens();
         this.tokens.unsubscribeRefresh();
-        this.store.dispatch({type: "DELETE_TOKENS"});
-        this.store.dispatch({type: "DELETE_PROFILE"});
-        this.store.dispatch({type: "UPDATE_LOGIN_STATUS", payload: false});
 
+        this.authActions.isNotLoggedIn();
+        this.tokenActions.deleteTokens();
+        this.profileActions.deleteProfile();
     }
 
 }

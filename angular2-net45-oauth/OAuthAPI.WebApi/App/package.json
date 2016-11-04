@@ -7,7 +7,6 @@
     "test": "karma start",
     "build": "rimraf ../wwwroot && webpack --config config/webpack.prod.js  --progress --profile --bail",
     "buildaot": "ngc -p tsconfig-aot.json",
-    "postinstall": "typings install",
     "typings": "typings"
   },
   "dependencies": {

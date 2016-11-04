@@ -9,26 +9,26 @@ import {AppState} from '../../app/app-store';
 export class AlertService{
     constructor(private store: Store<AppState>){}
 
-    sendSuccess(message: string) {
-        this.sendAlert({message:message, type: AlertType.success} as Alert)
+    sendSuccess(message: string, delay?:number) {
+        this.sendAlert({message:message, type: AlertType.success} as Alert, delay)
     }
 
-    sendInfo(message: string) {
-        this.sendAlert({message:message, type: AlertType.info} as Alert)
+    sendInfo(message: string, delay?:number) {
+        this.sendAlert({message:message, type: AlertType.info} as Alert, delay)
     }
 
-    sendWarning(message: string) {
-        this.sendAlert({message:message, type: AlertType.warning} as Alert)
+    sendWarning(message: string, delay?:number) {
+        this.sendAlert({message:message, type: AlertType.warning} as Alert, delay)
     }
 
-    sendError(message: string) {
-        this.sendAlert({message:message, type: AlertType.error} as Alert)
+    sendError(message: string, delay?:number) {
+        this.sendAlert({message:message, type: AlertType.error} as Alert, delay)
     }
 
-    private sendAlert(alert: Alert){
+    private sendAlert(alert: Alert, delay:number = 3000){
         this.store.dispatch({type: "ADD_ALERT", payload: alert});
         Observable.of(true)
-            .delay(3000)
+            .delay(delay)
             .subscribe(
                 () => this.store.dispatch({type: "REMOVE_ALERT", payload: alert.message})
             );

@@ -1,5 +1,4 @@
 .alert-container{
-  z-index: -1;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -7,8 +6,21 @@
   width: 100%;
 }
 .alert{
-  z-index:1;
-  max-width: 300px;
+  width: 300px;
   text-align: center;
   background-color: lightgray;
+  padding: 5px;
+}
+
+.alert-type-0{
+  background-color: green;
+}
+.alert-type-1{
+  background-color: #5eb2ff;
+}
+.alert-type-2{
+  background-color: #fdba2c;
+}
+.alert-type-3{
+  background-color: #da4733;
 }
