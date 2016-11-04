@@ -4,14 +4,12 @@
 
     <div class="form-label">Last Name: </div>
     <div class="form-value">{{profile.lastName | async | defaultValue: "last name specified"}}</div>
-
-
 </div>
 
 <hr>
 
 <div>
-    <form [formGroup]="resetPasswordForm">
+    <form [formGroup]="resetPasswordForm" (submit)="submitChangePassword()">
         <div>
             <label>Old Password</label>
             <input type="text" formControlName="oldPassword" />
@@ -35,6 +33,6 @@
             </div>
         </div>
 
-        <button type="submit">Submit</button>
+        <button [disabled]="!resetPasswordForm.valid" type="submit">Submit</button>
     </form>
 </div>

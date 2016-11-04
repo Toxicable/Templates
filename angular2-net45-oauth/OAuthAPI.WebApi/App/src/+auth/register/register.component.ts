@@ -36,7 +36,7 @@ export class RegisterComponent  implements OnInit {
         this.account.register(data)
             .subscribe( x => {
                     this.alert.sendSuccess("Successfully registered");
-                    this.router.navigateByUrl("/+auth/login");
+                    this.router.navigateByUrl("/auth/login");
                 }
             )
     };

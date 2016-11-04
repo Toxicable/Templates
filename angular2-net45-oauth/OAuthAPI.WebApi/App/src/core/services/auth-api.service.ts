@@ -28,7 +28,7 @@ export class AuthApiService{
         return this.loadingBar.doWithLoader(
             this.authHttp.post(this.baseUrl + path, body)
                 .map( this.checkForError)
-                .catch( error => Observable.throw(error))
+                .catch( error => this.httpExceptions.handleError(error))
                 .map(this.getJson)
         )
     }
@@ -51,6 +51,6 @@ export class AuthApiService{
             return res;
         }
 
-        this.httpExceptions.handleError(res);
+        throw res;
     }
 }

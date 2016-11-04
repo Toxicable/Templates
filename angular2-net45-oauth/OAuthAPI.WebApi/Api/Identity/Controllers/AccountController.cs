@@ -116,7 +116,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await AppUserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            IdentityResult result = await AppUserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.Password);
 
             if (!result.Succeeded)
             {
