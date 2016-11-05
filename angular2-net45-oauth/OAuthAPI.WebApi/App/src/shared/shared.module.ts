@@ -8,13 +8,15 @@ import {ControlMessagesComponent} from "./form-validation/control-messages.compo
 import {LoadingBarComponent} from "./loading-bar/loading-bar.component";
 import {FileUploadComponent} from "./file-upload/file-upload.component";
 import {DefaultValuePipe} from "./pipes/default-value/default-value.pipe";
+import {MaterialModule} from '@angular/material';
 
 
 @NgModule({
     imports: [
         ReactiveFormsModule,
         CommonModule,
-        HttpModule
+        HttpModule,
+        MaterialModule.forRoot()
     ],
     declarations: [
         DefaultValuePipe,
@@ -25,6 +27,7 @@ import {DefaultValuePipe} from "./pipes/default-value/default-value.pipe";
         FileUploadComponent
     ],
     exports: [
+        MaterialModule,
         DefaultValuePipe,
         ReactiveFormsModule,
         HttpModule,
