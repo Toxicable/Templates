@@ -12,7 +12,7 @@ import {TokenService} from '../core/auth/token.service';
 <router-outlet></router-outlet>
 `,
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss', './deeppurple-amber.css']
 })
 export class AppComponent implements OnInit, OnDestroy{
 

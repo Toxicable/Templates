@@ -10,13 +10,3 @@ body{
 .col {
   flex: 1;
 }
-
-button{
-  min-width: 64px;
-  height:36px;
-  background-color:$primary-color;
-  color: white;
-  text-transform: uppercase;
-  border: none;
-  border-radius: 2px ;
-}
