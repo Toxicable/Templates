@@ -6,8 +6,7 @@
     "start": "webpack-dev-server --config config/webpack.dev.js --hot --inline --progress ",
     "test": "karma start",
     "build": "rimraf ../wwwroot && webpack --config config/webpack.prod.js  --progress --profile --bail",
-    "buildaot": "ngc -p tsconfig-aot.json",
-    "typings": "typings"
+    "build:aot": "ngc -p tsconfig-aot.json"
   },
   "dependencies": {
     "@angular/common": "^2.1.0",

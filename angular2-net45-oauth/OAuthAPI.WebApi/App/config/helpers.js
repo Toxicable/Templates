@@ -1,6 +1,3 @@
-/**
- * Created by Fabian on 24/09/2016.
- */
 var path = require('path');
 var _root = path.resolve(__dirname, '..');
 function root(args) {
