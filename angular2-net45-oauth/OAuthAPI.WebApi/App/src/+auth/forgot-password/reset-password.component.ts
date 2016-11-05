@@ -5,6 +5,7 @@ import {AlertService} from "../../core/services/alert.service";
 import {Http} from "@angular/http";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {FormValidationService} from "../../core/services/form-validation.service";
+import {AccountService} from '../../core/auth/account.service';
 
 @Component({
     selector: 'reset-password',
@@ -13,11 +14,11 @@ import {FormValidationService} from "../../core/services/form-validation.service
 export class ResetPasswordComponent implements OnInit {
     constructor(private alert: AlertService,
                 private route: ActivatedRoute,
-                private router: Router,
-                private http: Http,
                 private loadingBar: LoadingBarService,
                 private formBuilder: FormBuilder,
-                private formValidator: FormValidationService
+                private formValidator: FormValidationService,
+                private account: AccountService,
+                private router: Router
     ){}
 
     private id: string;
@@ -44,17 +45,14 @@ export class ResetPasswordComponent implements OnInit {
 
 
     onSubmit(){
-        this.loadingBar.load();
         let data = Object.assign({}, this.resetPasswordForm.value, {userId: this.id, code: this.code});
-        this.http.post("api/account/resetpassword", data )
-            .subscribe(
-                () => {
-                    this.alert.sendSuccess("Successfully reset password");
-                    this.router.navigate(['+auth/login']);
-                },
-                error => this.alert.sendError(error),
-                () => this.loadingBar.done()
-            )
+        this.account.resetPassword(data).subscribe(
+            () => {
+                this.alert.sendSuccess("Successfully reset password");
+                this.router.navigate(['auth/login']);
+            },
+            error => this.alert.sendError(error),
+        );
     }
 
 

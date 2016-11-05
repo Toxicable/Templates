@@ -11,6 +11,7 @@ import {AuthActions} from './auth.store';
 import {TokenActions} from './token.store';
 import {ProfileActions} from '../profile/profile.store';
 import {ChangePasswordModel} from '../models/change-password';
+import {ResetPasswordModel} from '../models/ResetPasswordModel';
 
 @Injectable()
 export class AccountService {
@@ -42,6 +43,11 @@ export class AccountService {
 
     changePassword(data: ChangePasswordModel){
         return this.authApi.post("/account/changePassword", data)
+    }
+
+    resetPassword(data: ResetPasswordModel){
+        return this.authApi.post("/account/resetPassword", data )
+
     }
 
     logout(){

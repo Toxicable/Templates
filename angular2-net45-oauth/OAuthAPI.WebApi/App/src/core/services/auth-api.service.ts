@@ -43,7 +43,11 @@ export class AuthApiService{
     }
 
     private getJson(res: Response){
-        return res.json();
+        //check to see if it's an empty response
+        if(res.text() != ""){
+            return res.json();
+        }
+
     }
 
     private checkForError(res: Response){
