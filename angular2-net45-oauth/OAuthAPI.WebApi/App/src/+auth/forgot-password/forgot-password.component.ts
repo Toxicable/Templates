@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FormValidationService} from "../../core/services/form-validation.service";
-import {LoadingBarService} from "../../core/services/loading-bar.service";
 import {AlertService} from "../../core/services/alert.service";
-import {AuthHttp} from "angular2-jwt";
 import {AccountService} from '../../core/auth/account.service';
 
 @Component({
@@ -27,6 +25,11 @@ export class ForgotPasswordComponent implements OnInit{
 
     onSubmit(){
         this.account.sendForgotPassword(this.forgotPasswordForm.value)
+            .subscribe(
+                () => this.alert.sendSuccess("Please check your email")
+
+            )
+
     }
 
 }
