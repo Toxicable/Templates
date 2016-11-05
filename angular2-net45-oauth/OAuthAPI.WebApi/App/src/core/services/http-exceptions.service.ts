@@ -29,7 +29,6 @@ export class HttpExceptionService{
         return Observable.throw(res);
     }
     public handleTokenBadRequest(res: Response) {
-        //bad request
         let badRequest = res.json() as BadTokenRequest;
         let error = badRequest.error_description;
 
