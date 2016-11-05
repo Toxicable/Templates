@@ -4,19 +4,17 @@
     <validation-summary [errorMessages]="errors" ></validation-summary>
 
     <div>
-        <label>User Name: </label>
-        <input type="text" formControlName="userName" />
+        <md-input placeholder="Username" formControlName="userName"></md-input>
         <control-messages [control]="loginForm.controls.userName"></control-messages>
     </div>
 
     <div>
-        <label>Password: </label>
-        <input type="text" formControlName="password" />
+        <md-input placeholder="Password" formControlName="password"></md-input>
         <control-messages [control]="loginForm.controls.password"></control-messages>
     </div>
 
 
-    <button type="submit" [disabled]="!loginForm.valid" >Submit</button>
+    <button md-raised-button color="primary" type="submit" [disabled]="!loginForm.valid" >Submit</button>
     <a  routerLink="/auth/forgot-password" >Forgot your password?</a>
 </form>
 

@@ -5,21 +5,18 @@
     <validation-summary [errorMessages]="errors"></validation-summary>
 
     <div>
-        <label>User name (Email) </label>
-        <input type="text" formControlName="userName" />
+        <md-input placeholder="Username" formControlName="userName"></md-input>
         <control-messages [control]="registerForm.controls.userName"></control-messages>
     </div>
 
     <div [formGroup]="registerForm.controls.passwords">
         <div>
-            <label>password</label>
-            <input type="text" formControlName="password" />
+            <md-input placeholder="Password" formControlName="password"></md-input>
             <control-messages [control]="registerForm.controls.passwords.controls.password"></control-messages>
         </div>
 
         <div>
-           <label>confirmPassword</label>
-           <input type="text" formControlName="confirmPassword" />
+            <md-input placeholder="Confirm Password" formControlName="confirmPassword"></md-input>
             <control-messages [control]="registerForm.controls.passwords.controls.confirmPassword"></control-messages>
         </div>
         <div *ngIf="registerForm.controls.passwords.errors?.invalidCompare && registerForm.controls.passwords.touched">
@@ -27,5 +24,5 @@
         </div>
     </div>
 
-    <button type="submit" [disabled]="!registerForm.valid" >Submit</button>
+    <button md-raised-button color="primary" type="submit" [disabled]="!registerForm.valid" >Submit</button>
 </form>

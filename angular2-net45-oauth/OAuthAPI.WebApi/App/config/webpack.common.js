@@ -35,6 +35,11 @@ module.exports = {
                 loader: 'file?name=assets/[name].[hash].[ext]',
                 exclude: /node_modules/
             },{
+                test: /\.css$/,
+                exclude: /node_modules/,
+                loader: 'to-string!style-loader!css-loader!postcss-loader'
+            },
+            {
                 test: /\.scss$/,
                 exclude: /node_modules/,
                 loader: 'to-string!css-loader!postcss-loader!sass-loader'
