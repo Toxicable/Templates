@@ -42,21 +42,20 @@ export class TokenService {
             client_id: "AngularApp"
         });
 
-        return this.loadingBar.doWithLoader(
-            this.http.post("api/token", this.encodeObjectToParams(data) , options)
-                .map( res => res.json())
-                .map( (tokens: Tokens) => {
-                    this.tokenActions.setTokens(tokens);
-                    this.authActions.isLoggedIn();
+        return this.http.post("api/token", this.encodeObjectToParams(data) , options)
+            .map( res => res.json())
+            .map( (tokens: Tokens) => {
+                this.tokenActions.setTokens(tokens);
+                this.authActions.isLoggedIn();
 
-                    let profile = this.jwtHelper.decodeToken(tokens.access_token) as ProfileModel;
-                    this.profileActions.storeProfile(profile);
+                let profile = this.jwtHelper.decodeToken(tokens.access_token) as ProfileModel;
+                this.profileActions.storeProfile(profile);
 
-                    this.storage.setItem("tokens", JSON.stringify(tokens));
-                })
-                .do( _ => this.authActions.authReady())
-                .catch( error => this.httpExceptions.handleTokenBadRequest(error))
-        );
+                this.storage.setItem("tokens", JSON.stringify(tokens));
+            })
+            .do( _ => this.authActions.authReady())
+            .catch( error => this.httpExceptions.handleTokenBadRequest(error));
+
     }
 
     deleteTokens(){
