@@ -32,9 +32,10 @@ export class AuthGuard {
 
     isInRole(role: string): Observable<boolean>{
 
-        return this.store.map( state => state.auth.loggedIn)
-            .flatMap( (loggedIn: boolean) =>{
-                if(!loggedIn){
+        return this.store.map( state => state.auth)
+            .first( (auth: Auth) => auth.authReady)
+            .flatMap( (auth: Auth) =>{
+                if(!auth.loggedIn){
                     this.alertService.sendError("Unauthorized");
                     this.router.navigate(['unauthorized']);
                     return Observable.of(false);
@@ -50,6 +51,7 @@ export class AuthGuard {
                         return true;
                     })
 
-            }).first();
+            })
+            .first();
     }
 }

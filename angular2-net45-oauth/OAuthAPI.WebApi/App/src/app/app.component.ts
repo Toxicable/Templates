@@ -2,6 +2,8 @@
 import {Store} from '@ngrx/store';
 import {AppState} from './app-store';
 import {TokenService} from '../core/auth/token.service';
+import {AuthActions} from '../core/auth/auth.store';
+import {AlertService} from '../core/services/alert.service';
 
 @Component({
     selector: 'my-app',
@@ -17,11 +19,27 @@ import {TokenService} from '../core/auth/token.service';
 export class AppComponent implements OnInit, OnDestroy{
 
     constructor(private tokens: TokenService,
-                private store: Store<AppState>
+                private store: Store<AppState>,
+                private authActions: AuthActions,
+                private alert: AlertService
     ){    }
 
     ngOnInit(): void {
-        this.tokens.startupTokenRefresh();
+        this.tokens.startupTokenRefresh()
+            .subscribe(
+            () => {
+                console.info("startup done");
+                // we manage to refresh the tokens so we can carry with the scheduleRefresh
+                this.tokens.scheduleRefresh();
+            }, error => {
+                console.error(error);
+                this.authActions.isNotLoggedIn();
+                this.authActions.authReady();
+
+                //keep it silent if there's nothing in storage
+                if(error != "No token in Storage")
+                    this.alert.sendWarning("error");
+            })
     }
 
     ngOnDestroy(): void {

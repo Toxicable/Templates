@@ -72,22 +72,22 @@ export class TokenService {
 
     refreshTokens(): Observable<Response>{
         return this.store.map( state => state.auth.tokens.refresh_token)
-            .take(1)
+            .first()
             .flatMap( refreshToken => {
                 return this.getTokens(
                     { refresh_token: refreshToken } as RefreshGrant, "refresh_token")
-                    .catch( error => Observable.throw("Refresh token expired"));
+                    .catch( error => Observable.throw("Session Expired"));
                 //pretty sure the only way this can fail is with a expired tokens
             })
     }
 
     startupTokenRefresh() {
-        this.storage.getItem("tokens")
-            .subscribe( (rawTokens: string) => {
+        return this.storage.getItem("tokens")
+            .flatMap( (rawTokens: string) => {
                 //check if the token is even if localStorage, if it isn't tell them it's not and return
                 if(!rawTokens){
                     this.authActions.authReady();
-                    return
+                    return Observable.throw("No token in Storage");
                 }
                 //parse the token into a model and throw it into the store
                 let tokens = JSON.parse(rawTokens) as Tokens;
@@ -98,38 +98,21 @@ export class TokenService {
                     let profile = this.jwtHelper.decodeToken(tokens.access_token) as ProfileModel;
                     this.profileActions.storeProfile(profile);
 
-                    //let the app know we're good to go on the auth side of things
+                    //we can let the app know that we're good to go ahead of time
                     this.authActions.isLoggedIn();
                     this.authActions.authReady();
-
-                    this.refreshTokens()
-                        .subscribe(
-                            () => this.scheduleRefresh()
-                        )
-
-                }else{
-                    //the token is expired so try use our refresh token to get a new one
-                    this.refreshTokens()
-                        .subscribe(
-                            // we manage to refresh the tokens so we can carry with the scheduleRefresh
-                            () => this.scheduleRefresh(),
-                            error => {
-                                //couldn't refresh it, this means our refresh token has expired
-                                console.warn(error);
-                                this.alert.sendWarning("Your session has expired");
-
-                                this.authActions.isNotLoggedIn();
-                                this.authActions.authReady();
-                            }
-                        );
                 }
-            })
+
+                //it if is able to refresh then the getTokens method will let the app know that we're auth ready
+                return this.refreshTokens()
+            });
     }
 
     scheduleRefresh(): void {
         let source = this.store.select( state => state.auth.tokens)
             .take(1)
             .flatMap(tokens => {
+                //this is the other method for getting a refresh timer
                 // let issued = new Date(tokens[".issued"]).getTime() / 1000;
                 // let expires = new Date(tokens[".expires"]).getTime() / 1000;
                 //

@@ -59,7 +59,7 @@ namespace OAuthAPI.WebApi
                 //For Dev enviroment only (on production should be AllowInsecureHttp = false)
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/api/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(5),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(1),
                 Provider = new OAuthProvider(),
                 AccessTokenFormat = new CustomJwtFormat(Issuer),
                 RefreshTokenProvider = new RefreshTokenProvider()
