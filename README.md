@@ -1,3 +1,3 @@
 # Templates
 
-Discontinued
+Just a few templates for React/AngularJS
