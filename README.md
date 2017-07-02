@@ -1,3 +1,1 @@
-# Templates
-
-Just a few templates for React/AngularJS
+Justing out various frameworks and comparing similar build configs
